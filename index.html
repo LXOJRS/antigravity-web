@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex | AI Adoption Trainer</title>
+    <meta name="description"
+        content="Unlock your potential with AI. Alex is a professional AI adoption trainer helping you navigate the future.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css?v=12">
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+</head>
+
+<body>
+    <div class="cursor-follower"></div>
+    <div class="cursor-trail"></div>
+
+    <nav class="nav">
+        <div class="nav-logo" data-glitch="ALEX.AI">ALEX.AI</div>
+        <div class="nav-links desktop-only">
+            <a href="#about" data-magnetic>About</a>
+            <a href="#services" data-magnetic>Services</a>
+            <a href="#insights" data-magnetic>Insights</a>
+            <a href="#contact" data-magnetic>Contact</a>
+        </div>
+        <div class="hamburger-btn" data-magnetic>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-nav-overlay">
+        <a href="#about" data-magnetic>About</a>
+        <a href="#services" data-magnetic>Services</a>
+        <a href="#insights" data-magnetic>Insights</a>
+        <a href="#contact" data-magnetic>Contact</a>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <div class="line"><span>MAKE</span></div>
+                    <div class="line"><span>THINKING</span></div>
+                    <div class="line"><span class="highlight" data-magnetic>ACTIONABLE</span></div>
+                </h1>
+                <p class="hero-subtitle">AI Adoption & Training for the Future</p>
+            </div>
+        </section>
+
+        <section class="visual-hook">
+            <video autoplay loop muted playsinline>
+                <source src="../../Clipchamp/Video Project 1.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label">01 / WHO IS ALEX?</span>
+                    <h2>I help professionals think, decide, and create better with AI.</h2>
+                </div>
+                <div class="about-content">
+                    <p>I train teams to use AI in ways that fit their work, culture, and values.</p>
+                    <p>My background in film, rhetoric, and strategy helps bridge human thinking and machine output.</p>
+                    <br>
+                    <a href="#" class="contact-btn" data-magnetic>Read more <span class="btn-arrow">&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label">02 / SERVICES</span>
+                    <h2>Capabilities</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=600"
+                            alt="R&D - Consultancy - Workshops">
+                        <span class="card-index">01</span>
+                        <h3>R&D - Consultancy - Workshops</h3>
+                        <p>From messy thinking to clear visions.</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&q=80&w=600"
+                            alt="AI-Rated Podcast">
+                        <span class="card-index">02</span>
+                        <h3>AI-Rated Podcast</h3>
+                        <p>AI, culture, and common sense.</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=600"
+                            alt="Creative Building">
+                        <span class="card-index">03</span>
+                        <h3>Creative Building</h3>
+                        <p>Turning ideas into branded visuals with AI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="insights" id="insights">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label">03 / INSIGHTS</span>
+                    <h2>Latest Thinking</h2>
+                </div>
+                <!-- Removed separate insights-grid wrapper if container is the grid, but checking CSS strategy first -->
+                <!-- As per plan: flattened structure, cards are direct info container -->
+                <article class="insight-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600"
+                            alt="AI Strategy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">LinkedIn Blog</span>
+                        <h3>Strategic AI Adoption for Modern Enterprise</h3>
+                        <a href="#" class="read-more" data-magnetic>Read Article <span
+                                class="btn-arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="insight-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=600"
+                            alt="Human-AI Collaboration">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">LinkedIn Blog</span>
+                        <h3>The Future of Human-AI Collaboration</h3>
+                        <a href="#" class="read-more" data-magnetic>Read Article <span
+                                class="btn-arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="insight-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600"
+                            alt="Digital Transformation">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">LinkedIn Blog</span>
+                        <h3>Navigating Digital Transformation</h3>
+                        <a href="#" class="read-more" data-magnetic>Read Article <span
+                                class="btn-arrow">&rarr;</span></a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <h2 class="contact-title">Let's Evolve.</h2>
+                    <a href="mailto:hello@alex.ai" class="contact-btn" data-magnetic>Get in Touch</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <span>&copy; 2025 Alex AI Trainer</span>
+                <div class="socials">
+                    <a href="#" data-magnetic>LinkedIn</a>
+                    <a href="#" data-magnetic>Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js?v=5"></script>
+</body>
+
+</html>
