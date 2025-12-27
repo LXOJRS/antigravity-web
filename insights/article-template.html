@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title | Alex AI</title>
+    <meta name="description" content="Article description goes here.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../style.css?v=12">
+
+    <!-- Article Specific Styles -->
+    <style>
+        /* Article Banner */
+        .article-banner {
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+        }
+
+        .article-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Article Container */
+        .article {
+            padding: 128px 0;
+        }
+
+        .article .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 32px;
+        }
+
+        .article-content {
+            grid-column: 3 / span 8;
+            max-width: 800px;
+        }
+
+        .article-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 48px;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--gray-color);
+            margin-bottom: 32px;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            margin-top: 64px;
+            margin-bottom: 24px;
+        }
+
+        /* AI Deep Dive Section */
+        .ai-deep-dive {
+            margin-top: 64px;
+            padding: 48px;
+            background: rgba(0, 0, 197, 0.05);
+            border-radius: 24px;
+            box-shadow: 0 0 60px rgba(0, 0, 197, 0.15);
+            border: 1px solid rgba(0, 0, 197, 0.1);
+        }
+
+        .ai-deep-dive h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: #0000C5;
+        }
+
+        .ai-deep-dive p,
+        .ai-deep-dive code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .ai-deep-dive .prompt-example {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            border-left: 3px solid #0000C5;
+        }
+
+        .ai-deep-dive .prompt-example code {
+            color: var(--text-color);
+            white-space: pre-wrap;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 64px;
+            padding: 1rem 2rem;
+            border: 1px solid var(--text-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            transition: all 0.3s var(--easing);
+        }
+
+        .back-btn:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .back-btn .btn-arrow {
+            margin-right: 8px;
+            transition: transform 0.3s var(--easing);
+        }
+
+        .back-btn:hover .btn-arrow {
+            transform: translateX(-4px);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .article-content {
+                grid-column: 1 / -1;
+                padding: 0 1rem;
+            }
+
+            .article {
+                padding: 64px 0;
+            }
+
+            .ai-deep-dive {
+                padding: 24px;
+            }
+        }
+    </style>
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+</head>
+
+<body>
+    <div class="cursor-follower"></div>
+    <div class="cursor-trail"></div>
+
+    <nav class="nav">
+        <a href="../index.html" class="nav-logo" data-glitch="ALEX.AI">ALEX.AI</a>
+        <div class="nav-links desktop-only">
+            <a href="../index.html#about" data-magnetic>About</a>
+            <a href="../index.html#services" data-magnetic>Services</a>
+            <a href="../index.html#insights" data-magnetic>Insights</a>
+            <a href="../index.html#contact" data-magnetic>Contact</a>
+        </div>
+        <div class="hamburger-btn" data-magnetic>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-nav-overlay">
+        <a href="../index.html#about" class="mobile-link" data-magnetic>About</a>
+        <a href="../index.html#services" class="mobile-link" data-magnetic>Services</a>
+        <a href="../index.html#insights" class="mobile-link" data-magnetic>Insights</a>
+        <a href="../index.html#contact" class="mobile-link" data-magnetic>Contact</a>
+    </div>
+
+    <main>
+        <!-- Banner Image -->
+        <div class="article-banner">
+            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766870781/linkedinpostcamera_f9267f.jpg"
+                alt="Article Banner">
+        </div>
+
+        <!-- Article Content -->
+        <article class="article">
+            <div class="container">
+                <div class="article-content">
+                    <h1>Article Title Goes Here</h1>
+
+                    <p>
+                        This is placeholder text for the article introduction. Replace this with your actual content.
+                        The layout is optimized for readability with a maximum width of 800px.
+                    </p>
+
+                    <h2>Section Heading</h2>
+
+                    <p>
+                        Continue your article content here. The 12-column grid ensures the text stays in the middle
+                        8 columns for optimal reading experience on desktop.
+                    </p>
+
+                    <!-- AI Deep Dive Section -->
+                    <div class="ai-deep-dive">
+                        <h3>🤖 AI Deep Dive</h3>
+                        <p>
+                            This section is for technical insights, prompts, or code examples related to AI.
+                        </p>
+                        <div class="prompt-example">
+                            <code>// Example prompt or code snippet
+You are an expert in [domain].
+Analyze the following and provide insights...</code>
+                        </div>
+                    </div>
+
+                    <!-- Back Button -->
+                    <a href="../index.html#insights" class="back-btn" data-magnetic>
+                        <span class="btn-arrow">&larr;</span> Back to Insights
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <span>&copy; 2025 Alex AI Trainer</span>
+                <div class="socials">
+                    <a href="#" data-magnetic>LinkedIn</a>
+                    <a href="#" data-magnetic>Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js?v=5"></script>
+</body>
+
+</html>
