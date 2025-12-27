@@ -492,8 +492,9 @@ h2 {
 .about .section-header {
     grid-column: 1 / span 7;
     margin-bottom: 0;
-    /* Let grid gap handle spacing if vertical, but here it is side-by-side */
-    /* If mobile needs spacing, media query will handle it */
+    position: sticky;
+    top: 128px;
+    align-self: start;
 }
 
 .about-content {
@@ -798,6 +799,7 @@ footer {
     .about .section-header,
     .about-content {
         grid-column: auto;
+        position: static;
     }
 
     .about-content p {
