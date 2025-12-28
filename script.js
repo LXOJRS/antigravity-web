@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(raf);
 
-    // Register GSAP ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
+    // Register GSAP ScrollTrigger and TextPlugin
+    gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
     // --- Custom Cursor with Trail ---
     const cursor = document.querySelector('.cursor-follower');
@@ -175,12 +175,11 @@ document.addEventListener("DOMContentLoaded", () => {
             stagger: 0.1,
             delay: 0.5
         })
-        .to('.hero-subtitle', {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=1');
+        .to('.type-text', {
+            text: "AI Adoption & Training for the Future",
+            duration: 3,
+            ease: "none"
+        }, '-=0.5');
 
     // --- Section Animations ---
     const sections = document.querySelectorAll('section:not(.hero)');
@@ -261,12 +260,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // --- Mobile Optimizations ---
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isMobile = window.innerWidth < 1024;
 
-    if (isTouch) {
-        // Disable custom cursor
+    // Only disable custom cursor on mobile touch devices
+    if (isTouch && isMobile) {
         if (cursor) cursor.style.display = 'none';
         if (trailContainer) trailContainer.style.display = 'none';
         document.body.style.cursor = 'auto';
+    } else {
+        // Ensure cursor is visible on desktop
+        if (cursor) cursor.style.display = 'block';
+        if (trailContainer) trailContainer.style.display = 'block';
     }
 
     // --- Hamburger Menu Logic ---
