@@ -344,7 +344,7 @@ a {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background-color: var(--bg-color);
     z-index: 99;
@@ -750,8 +750,8 @@ footer {
     /* Visual Hook Mobile */
     .visual-hook {
         padding: 0;
-        height: 35vh;
-        /* Updated to 35vh for panoramic look */
+        height: 20vh;
+        /* Updated to 20vh for mobile */
     }
 
     .visual-hook video {
@@ -1032,11 +1032,15 @@ footer {
     }
 
     .insights .container {
-        gap: 48px;
+        display: block;
     }
 
     .insight-card {
-        grid-column: span 12;
+        margin-bottom: 48px;
+    }
+
+    .insight-card:last-child {
+        margin-bottom: 0;
     }
 
     .insights .section-header {
