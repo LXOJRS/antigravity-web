@@ -976,7 +976,7 @@ footer {
 }
 
 .insight-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 197, 0.15);
 }
 
@@ -985,6 +985,7 @@ footer {
     flex-direction: column;
     height: 100%;
     color: inherit;
+    cursor: pointer;
 }
 
 .card-image {
@@ -994,7 +995,7 @@ footer {
 
 .card-image img {
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 16/9;
     object-fit: cover;
     border-radius: 16px;
     display: block;
