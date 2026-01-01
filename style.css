@@ -1226,6 +1226,12 @@ footer {
 .back-btn {
     display: inline-flex;
     align-items: center;
+    flex-direction: row;
+    /* Forceer horizontale richting */
+    white-space: nowrap;
+    /* Voorkom dat woorden onder elkaar springen */
+    width: fit-content;
+    /* Zorg dat de knop precies om de tekst past */
     margin-top: 64px;
     padding: 1rem 2rem;
     border: 1px solid var(--text-color);
