@@ -1266,8 +1266,9 @@ footer {
     align-items: center;
     overflow: hidden;
     position: relative;
-    background-color: var(--bg-color);
-    transition: background-color 0.8s var(--easing);
+    /* Gebruik een gradient voor onmiddellijke diepte */
+    background: radial-gradient(circle at center, rgba(5, 5, 5, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    transition: background 1.2s var(--easing);
     padding: 0;
     z-index: 5;
 }
@@ -1281,17 +1282,25 @@ footer {
     font-size: clamp(8rem, 20vw, 15rem);
     font-weight: 800;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    /* Dikkere en lichtere omlijning */
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
     text-transform: uppercase;
     line-height: 1;
     display: inline-block;
     will-change: transform;
+    transition: -webkit-text-stroke 0.8s var(--easing), text-shadow 0.8s var(--easing);
 }
 
-/* De Blue Pulse */
+/* De Verbeterde Blue Pulse */
 .typography-portal.pulse {
-    background-color: rgba(0, 0, 197, 0.1);
-    /* Subtiele brand-blue gloed */
+    /* Creëer een atmosferische gloed vanuit het centrum */
+    background: radial-gradient(circle at center, rgba(0, 0, 197, 0.25) 0%, rgba(5, 5, 5, 1) 75%);
+}
+
+.typography-portal.pulse .marquee-content {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
+    /* De tekst gaat 'gloeien' */
+    text-shadow: 0 0 30px rgba(0, 0, 197, 0.5);
 }
 
 @media (max-width: 768px) {

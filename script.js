@@ -318,8 +318,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Achtergrond Pulse trigger
         ScrollTrigger.create({
             trigger: portal,
-            start: 'top 50%',
-            end: 'bottom 50%',
+            start: 'top 70%',
+            end: 'bottom 30%',
             onEnter: () => portal.classList.add('pulse'),
             onLeave: () => portal.classList.remove('pulse'),
             onEnterBack: () => portal.classList.add('pulse'),
