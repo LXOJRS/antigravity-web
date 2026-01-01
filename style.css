@@ -1259,6 +1259,52 @@ footer {
     transform: translateX(-4px);
 }
 
+/* Typography Portal */
+.typography-portal {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--bg-color);
+    transition: background-color 0.8s var(--easing);
+    padding: 0;
+    z-index: 5;
+}
+
+.portal-marquee {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    font-size: clamp(8rem, 20vw, 15rem);
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    line-height: 1;
+    display: inline-block;
+    will-change: transform;
+}
+
+/* De Blue Pulse */
+.typography-portal.pulse {
+    background-color: rgba(0, 0, 197, 0.1);
+    /* Subtiele brand-blue gloed */
+}
+
+@media (max-width: 768px) {
+    .typography-portal {
+        height: 40vh;
+    }
+
+    .marquee-content {
+        font-size: 25vw;
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+    }
+}
+
 @media (max-width: 768px) {
     .about-page .container {
         display: block !important;

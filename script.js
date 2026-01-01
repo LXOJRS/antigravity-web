@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, '-=0.5');
 
     // --- Section Animations ---
-    const sections = document.querySelectorAll('section:not(.hero)');
+    const sections = document.querySelectorAll('section:not(.hero):not(.insights):not(.typography-portal)');
 
     sections.forEach(section => {
         gsap.fromTo(section,
@@ -296,6 +296,51 @@ document.addEventListener("DOMContentLoaded", () => {
                 mobileNavOverlay.classList.remove('active');
                 lenis.start();
             });
+        });
+    }
+    // --- Typography Portal ---
+    const portal = document.querySelector('.typography-portal');
+    const marquee = document.querySelector('.marquee-content');
+
+    if (portal && marquee) {
+        // Horizontale Parallax beweging
+        gsap.to(marquee, {
+            xPercent: -30,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: portal,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // Achtergrond Pulse trigger
+        ScrollTrigger.create({
+            trigger: portal,
+            start: 'top 50%',
+            end: 'bottom 50%',
+            onEnter: () => portal.classList.add('pulse'),
+            onLeave: () => portal.classList.remove('pulse'),
+            onEnterBack: () => portal.classList.add('pulse'),
+            onLeaveBack: () => portal.classList.remove('pulse')
+        });
+    }
+
+    // Update de Insights animatie naar een 'staggered reveal'
+    const insightCards = document.querySelectorAll('.insight-card');
+    if (insightCards.length > 0) {
+        gsap.from(insightCards, {
+            opacity: 0,
+            y: 60,
+            duration: 1,
+            stagger: 0.2, // Kaarten verschijnen één voor één
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.insights .container',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
         });
     }
 });
