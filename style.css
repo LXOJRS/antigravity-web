@@ -1266,10 +1266,9 @@ footer {
     align-items: center;
     overflow: hidden;
     position: relative;
-    /* Gebruik een gradient voor onmiddellijke diepte */
-    background: radial-gradient(circle at center, rgba(5, 5, 5, 1) 0%, rgba(0, 0, 0, 1) 100%);
-    transition: background 1.2s var(--easing);
-    padding: 0;
+    background: #050505;
+    /* Solid startpunt */
+    transition: background 1s var(--easing);
     z-index: 5;
 }
 
@@ -1282,25 +1281,28 @@ footer {
     font-size: clamp(8rem, 20vw, 15rem);
     font-weight: 800;
     color: transparent;
-    /* Dikkere en lichtere omlijning */
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+    /* Dikkere, meer aanwezige lijnen */
+    -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     line-height: 1;
     display: inline-block;
     will-change: transform;
-    transition: -webkit-text-stroke 0.8s var(--easing), text-shadow 0.8s var(--easing);
+    transition: all 0.8s var(--easing);
 }
 
-/* De Verbeterde Blue Pulse */
+/* De Krachtige Blue Pulse */
 .typography-portal.pulse {
-    /* Creëer een atmosferische gloed vanuit het centrum */
-    background: radial-gradient(circle at center, rgba(0, 0, 197, 0.25) 0%, rgba(5, 5, 5, 1) 75%);
+    /* Sterkere blauwe kern */
+    background: radial-gradient(circle at center, rgba(0, 0, 197, 0.45) 0%, rgba(5, 5, 5, 1) 85%);
 }
 
 .typography-portal.pulse .marquee-content {
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
-    /* De tekst gaat 'gloeien' */
-    text-shadow: 0 0 30px rgba(0, 0, 197, 0.5);
+    -webkit-text-stroke: 2.5px rgba(255, 255, 255, 1);
+    /* Gelaagde gloed voor meer intensiteit */
+    text-shadow: 0 0 40px rgba(0, 0, 197, 0.8), 0 0 10px rgba(0, 0, 197, 1);
+    /* Subtiele 'body' aan de letters */
+    background: rgba(255, 255, 255, 0.03);
+    -webkit-background-clip: text;
 }
 
 @media (max-width: 768px) {

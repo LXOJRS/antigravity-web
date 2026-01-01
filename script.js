@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (portal && marquee) {
         // Horizontale Parallax beweging
         gsap.to(marquee, {
-            xPercent: -30,
+            xPercent: -20,
             ease: 'none',
             scrollTrigger: {
                 trigger: portal,
