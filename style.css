@@ -1222,6 +1222,37 @@ footer {
     }
 }
 
+/* Global Back Button */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 64px;
+    padding: 1rem 2rem;
+    border: 1px solid var(--text-color);
+    border-radius: 50px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: all 0.3s var(--easing);
+    color: var(--text-color);
+    text-decoration: none;
+    /* Added for safety */
+}
+
+.back-btn:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.back-btn .btn-arrow {
+    margin-right: 12px;
+    transition: transform 0.3s var(--easing);
+    display: inline-block;
+}
+
+.back-btn:hover .btn-arrow {
+    transform: translateX(-4px);
+}
+
 @media (max-width: 768px) {
     .about-page .container {
         display: block !important;
