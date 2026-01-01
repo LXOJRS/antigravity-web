@@ -55,7 +55,7 @@ a {
     background-color: white;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 2000000;
+    z-index: 2000001;
     mix-blend-mode: difference;
     transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, opacity 0.3s;
@@ -1196,6 +1196,10 @@ footer {
     margin-bottom: 0;
 }
 
+.about-page h1 {
+    margin-top: 64px;
+}
+
 /* Mobile Responsiveness for About Page */
 @media (max-width: 1024px) {
     .about-hero {
@@ -1215,5 +1219,19 @@ footer {
 
     .text-content {
         margin-bottom: 64px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-page .container {
+        display: block !important;
+        padding: 0 24px;
+    }
+
+    .about-page h1,
+    .about-page h2,
+    .about-page p {
+        grid-column: span 12 !important;
+        width: 100% !important;
     }
 }
