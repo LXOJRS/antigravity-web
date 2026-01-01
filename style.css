@@ -1266,9 +1266,9 @@ footer {
     align-items: center;
     overflow: hidden;
     position: relative;
-    background: #050505;
-    /* Solid startpunt */
-    transition: background 1s var(--easing);
+    background-color: #050505;
+    /* Terug naar solide zwart */
+    padding: 0;
     z-index: 5;
 }
 
@@ -1281,28 +1281,30 @@ footer {
     font-size: clamp(8rem, 20vw, 15rem);
     font-weight: 800;
     color: transparent;
-    /* Dikkere, meer aanwezige lijnen */
+    /* Behoud de duidelijke witte omlijning voor de woorden */
     -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     line-height: 1;
     display: inline-block;
     will-change: transform;
-    transition: all 0.8s var(--easing);
 }
 
-/* De Krachtige Blue Pulse */
+/* De Blauwe Accent Stippen */
+.marquee-content .dot {
+    color: #0000C5;
+    /* De blauwe brand kleur */
+    -webkit-text-stroke: 0;
+    /* Geen omlijning, maar een solide stip */
+}
+
+/* Verwijder de .pulse overrides voor achtergrond en tekstgloed */
 .typography-portal.pulse {
-    /* Sterkere blauwe kern */
-    background: radial-gradient(circle at center, rgba(0, 0, 197, 0.45) 0%, rgba(5, 5, 5, 1) 85%);
+    background-color: #050505;
 }
 
 .typography-portal.pulse .marquee-content {
-    -webkit-text-stroke: 2.5px rgba(255, 255, 255, 1);
-    /* Gelaagde gloed voor meer intensiteit */
-    text-shadow: 0 0 40px rgba(0, 0, 197, 0.8), 0 0 10px rgba(0, 0, 197, 1);
-    /* Subtiele 'body' aan de letters */
-    background: rgba(255, 255, 255, 0.03);
-    -webkit-background-clip: text;
+    text-shadow: none;
+    background: none;
 }
 
 @media (max-width: 768px) {
