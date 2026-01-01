@@ -1135,3 +1135,85 @@ footer {
         margin-bottom: 48px;
     }
 }
+
+/* Long-read About Page */
+.about-page {
+    padding-top: 192px;
+    /* Fixed nav offset */
+    padding-bottom: 128px;
+}
+
+.about-page .container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 48px;
+    max-width: 1400px;
+}
+
+.about-hero {
+    grid-column: span 10;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 96px;
+    letter-spacing: -0.04em;
+}
+
+.intro-block {
+    grid-column: 5 / -1;
+    margin-bottom: 96px;
+}
+
+.intro-block p,
+.text-content p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    color: var(--text-color);
+    /* Ensure high contrast */
+}
+
+.intro-block p:last-child,
+.text-content p:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    grid-column: span 4;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #0000C5;
+    margin-top: 0;
+}
+
+.text-content {
+    grid-column: span 8;
+    margin-bottom: 96px;
+}
+
+.text-content:last-child {
+    margin-bottom: 0;
+}
+
+/* Mobile Responsiveness for About Page */
+@media (max-width: 1024px) {
+    .about-hero {
+        grid-column: span 12;
+        margin-bottom: 64px;
+    }
+
+    .intro-block,
+    .section-title,
+    .text-content {
+        grid-column: span 12;
+    }
+
+    .section-title {
+        margin-bottom: 24px;
+    }
+
+    .text-content {
+        margin-bottom: 64px;
+    }
+}
