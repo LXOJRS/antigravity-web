@@ -362,13 +362,24 @@ a {
     pointer-events: auto;
 }
 
-.mobile-nav-overlay a {
+/* Mobile Nav Links */
+.mobile-nav-overlay a,
+.mobile-link {
     font-size: 2rem;
     margin: 1.5rem 0;
     text-transform: uppercase;
     font-weight: 600;
     color: var(--text-color);
     text-decoration: none;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-link:focus,
+.mobile-link:active {
+    outline: none;
+    background: transparent;
 }
 
 /* Hero */
