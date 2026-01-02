@@ -1282,7 +1282,7 @@ footer {
     font-weight: 800;
     color: transparent;
     /* Behoud de duidelijke witte omlijning voor de woorden */
-    -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.7);
+    -webkit-text-stroke: 5px rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     line-height: 1;
     display: inline-block;
@@ -1314,7 +1314,35 @@ footer {
 
     .marquee-content {
         font-size: 25vw;
-        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+        -webkit-text-stroke: 4px rgba(255, 255, 255, 0.7) !important;
+    }
+}
+
+/* About Portrait Styles */
+.about-portrait {
+    grid-column: span 4;
+    align-self: start;
+    margin-top: 48px;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.about-portrait img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 197, 0.15));
+    border-radius: 0 0 100px 100px;
+    /* Matcht de ronde onderkant van de foto */
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .about-portrait {
+        grid-column: span 12;
+        max-width: 280px;
+        margin: 0 auto 32px auto;
+        text-align: center;
     }
 }
 

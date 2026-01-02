@@ -343,4 +343,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // Parallax voor About Portrait
+    const aboutImg = document.querySelector('.about-portrait img');
+    if (aboutImg) {
+        gsap.to(aboutImg, {
+            yPercent: -15,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".about-portrait",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    }
 });
