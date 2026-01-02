@@ -1473,3 +1473,17 @@ footer {
         gap: 16px;
     }
 }
+
+.about-actions {
+    margin-top: 64px;
+    margin-bottom: 32px;
+    display: block;
+}
+
+/* We hergebruiken de secondary knop stijl die we al voor de homepage hebben gemaakt */
+.about-actions .contact-btn.secondary {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    /* Zorg dat de knop niet de volle breedte inneemt */
+    display: inline-block;
+}
