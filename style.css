@@ -1445,3 +1445,31 @@ footer {
         justify-content: center;
     }
 }
+
+.contact-actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+/* Secundaire knop stijl */
+.contact-btn.secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--gray-color);
+}
+
+.contact-btn.secondary:hover {
+    border-color: var(--text-color);
+    color: var(--text-color);
+    background: transparent;
+}
+
+@media (max-width: 768px) {
+    .contact-actions {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
