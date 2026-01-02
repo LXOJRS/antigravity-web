@@ -1346,6 +1346,40 @@ footer {
     }
 }
 
+/* Service Article Banner */
+.article-banner {
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+    margin-bottom: 64px;
+}
+
+.article-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-intro {
+    grid-column: 3 / span 8;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 96px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .article-banner {
+        height: 40vh;
+    }
+
+    .service-intro {
+        grid-column: 1 / -1;
+        font-size: 1.25rem;
+        margin-bottom: 64px;
+    }
+}
+
 @media (max-width: 768px) {
     .about-page .container {
         display: block !important;

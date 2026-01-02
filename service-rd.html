@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R&D, Consultancy & Workshops | Alex AI</title>
+    <meta name="description"
+        content="R&D, Consultancy & Workshops for AI adoption. Helping teams working with uncertainty.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css?v=34">
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+</head>
+
+<body>
+    <div class="cursor-follower"></div>
+    <div class="cursor-trail"></div>
+
+    <nav class="nav">
+        <a href="index.html" class="nav-logo" data-glitch="ALEX.AI">ALEX.AI</a>
+        <div class="nav-links desktop-only">
+            <a href="index.html#about" data-magnetic>About</a>
+            <a href="index.html#services" data-magnetic>Services</a>
+            <a href="index.html#insights" data-magnetic>Insights</a>
+            <a href="index.html#contact" data-magnetic>Contact</a>
+        </div>
+        <div class="hamburger-btn" data-magnetic>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-nav-overlay">
+        <a href="index.html#about" class="mobile-link" data-magnetic>About</a>
+        <a href="index.html#services" class="mobile-link" data-magnetic>Services</a>
+        <a href="index.html#insights" class="mobile-link" data-magnetic>Insights</a>
+        <a href="index.html#contact" class="mobile-link" data-magnetic>Contact</a>
+    </div>
+
+    <main class="service-page">
+        <!-- Banner -->
+        <div class="article-banner">
+            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/IMG_0005_3_iy1hjr.jpg"
+                alt="R&D Workshop">
+        </div>
+
+        <div class="container">
+            <h1 style="grid-column: span 10; margin-bottom: 48px; min-height: auto;" class="about-hero">R&D, Consultancy
+                & Workshops</h1>
+
+            <p class="service-intro">
+                This work starts when things are still unclear.
+            </p>
+
+            <!-- Section 1 -->
+            <h2 class="section-title">Context</h2>
+            <div class="text-content">
+                <p>Teams often sense that AI matters, but struggle to place it in their daily work. Questions are open,
+                    assumptions collide, and decisions feel premature. My role is to help create clarity early, before
+                    momentum turns into confusion.</p>
+            </div>
+
+            <!-- Section 2 -->
+            <h2 class="section-title">Focus</h2>
+            <div class="text-content">
+                <p>I work with professionals across sectors to explore how AI influences thinking, decision-making, and
+                    creative work in practice. The focus is on interpretation, judgment, and responsibility, especially
+                    once machine output begins to shape human choices.</p>
+            </div>
+
+            <!-- Section 3 -->
+            <h2 class="section-title">Format</h2>
+            <div class="text-content">
+                <p>Some projects take the form of research and experimentation. Others revolve around structured
+                    conversations that surface what is actually at stake. In workshops, teams develop a shared language
+                    that helps them work with AI more deliberately the next day.</p>
+            </div>
+
+            <!-- Section 4 -->
+            <h2 class="section-title">Background</h2>
+            <div class="text-content">
+                <p>My background in film, rhetoric, and business strategy informs this approach. I pay close attention
+                    to how meaning is constructed, how language guides decisions, and how structure affects outcomes.
+                </p>
+            </div>
+
+            <!-- Section 5 -->
+            <h2 class="section-title">Perspective</h2>
+            <div class="text-content">
+                <p>Workshops, consultancy, and R&D are not separate tracks. They’re different formats for the same kind
+                    of thinking.</p>
+                <p>I work in the space where uncertainty is still present, and direction hasn’t fully formed yet.</p>
+            </div>
+
+            <a href="index.html#services" class="back-btn" data-magnetic style="margin-top: 64px;">
+                <span class="btn-arrow">&larr;</span> Back to Services
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <span>&copy; 2025 Alex AI Trainer</span>
+                <div class="socials">
+                    <a href="#" data-magnetic>LinkedIn</a>
+                    <a href="#" data-magnetic>Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js?v=34"></script>
+</body>
+
+</html>
