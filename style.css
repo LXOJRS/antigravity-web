@@ -727,19 +727,19 @@ h2 {
 
 /* Footer */
 footer {
-    padding: 2rem;
+    padding: 40px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-between;
-    color: var(--gray-color);
-    font-size: 0.9rem;
+    display: block;
 }
 
-.socials a {
-    margin-left: 1.5rem;
+.footer-content p {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin: 0;
 }
 
 /* Responsive Design */
