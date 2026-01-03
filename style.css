@@ -1566,3 +1566,71 @@ footer {
         width: 100%;
     }
 }
+
+/* R&D Grid Styling */
+.rd-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 128px;
+}
+
+.rd-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* De structuurlijn */
+    align-items: start;
+}
+
+/* Zorg dat de elementen binnen de row goed staan */
+.rd-row .section-title {
+    grid-column: span 4;
+    margin: 0;
+    /* Reset margin voor strakke uitlijning */
+}
+
+.rd-row .text-content {
+    grid-column: span 8;
+    margin: 0;
+    /* Reset margin */
+}
+
+/* De Outro Statement */
+.service-outro {
+    grid-column: 2 / span 10;
+    /* Iets ingesprongen */
+    text-align: center;
+    margin-bottom: 96px;
+    padding: 0 1rem;
+}
+
+.service-outro p {
+    font-size: clamp(2rem, 4vw, 3rem);
+    /* Groot! */
+    line-height: 1.2;
+    color: var(--text-color);
+    /* Helder wit */
+    font-weight: 500;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Mobile Fixes */
+@media (max-width: 768px) {
+    .rd-row {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .service-outro p {
+        font-size: 1.75rem;
+        text-align: left;
+    }
+}
