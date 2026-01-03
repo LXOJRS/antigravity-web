@@ -732,14 +732,43 @@ footer {
     text-align: left;
 }
 
+/* Footer Layout Update */
 .footer-content {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .footer-content p {
     color: var(--gray-color);
     font-size: 0.9rem;
     margin: 0;
+}
+
+/* Scroll Up Button Styling */
+.scroll-top-btn {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.scroll-top-btn:hover {
+    color: var(--text-color);
+}
+
+.scroll-top-btn .btn-arrow {
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.scroll-top-btn:hover .btn-arrow {
+    transform: translateY(-3px);
 }
 
 /* Responsive Design */
