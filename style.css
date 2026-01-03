@@ -501,6 +501,9 @@ h2 {
     will-change: transform;
     transform: scale(1.1);
     /* Scaling up to allow room for parallax movement */
+
+    /* NIEUW: Subtiele tint voor betere integratie */
+    filter: brightness(0.85);
 }
 
 /* About */
