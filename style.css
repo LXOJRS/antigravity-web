@@ -1567,36 +1567,101 @@ footer {
     }
 }
 
-/* R&D Grid Styling */
+/* R&D Grid Layout Update */
 .rd-grid {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-bottom: 128px;
+    counter-reset: section-counter;
 }
 
 .rd-row {
+    position: relative;
+    /* Voor positionering van het nummer */
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 32px;
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 64px;
+    padding-bottom: 64px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    /* De structuurlijn */
     align-items: start;
+    overflow: hidden;
+    /* Zorgt dat het grote nummer niet uitsteekt */
 }
 
-/* Zorg dat de elementen binnen de row goed staan */
+/* Typografisch Nummer (Het visuele element) */
+.rd-number {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    font-family: var(--font-main);
+    font-size: 12rem;
+    /* Zeer groot */
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.05);
+    /* Zeer subtiel op de achtergrond */
+    z-index: 0;
+    pointer-events: none;
+    transform: translateY(-20%);
+}
+
+/* Standaard Layout: Titel Links, Tekst Rechts */
 .rd-row .section-title {
-    grid-column: span 4;
+    grid-column: 1 / span 4;
     margin: 0;
-    /* Reset margin voor strakke uitlijning */
+    position: relative;
+    z-index: 1;
 }
 
 .rd-row .text-content {
-    grid-column: span 8;
+    grid-column: 6 / span 7;
+    /* Iets meer witruimte tussen titel en tekst */
     margin: 0;
-    /* Reset margin */
+    position: relative;
+    z-index: 1;
+}
+
+/* Reversed Layout: Tekst Links, Titel Rechts */
+.rd-row.reversed .section-title {
+    grid-column: 9 / span 4;
+    text-align: right;
+}
+
+.rd-row.reversed .text-content {
+    grid-column: 1 / span 7;
+}
+
+.rd-row.reversed .rd-number {
+    left: auto;
+    right: 0;
+    /* Nummer ook naar rechts */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+
+    .rd-row,
+    .rd-row.reversed {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .rd-row.reversed .section-title,
+    .rd-row.reversed .text-content {
+        text-align: left;
+        /* Reset naar links op mobiel */
+    }
+
+    .rd-number {
+        font-size: 6rem;
+        /* Kleiner op mobiel */
+        top: 10px;
+    }
 }
 
 /* De Outro Statement */
@@ -1619,16 +1684,7 @@ footer {
     margin: 0 auto;
 }
 
-/* Mobile Fixes */
 @media (max-width: 768px) {
-    .rd-row {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        padding-top: 32px;
-        padding-bottom: 32px;
-    }
-
     .service-outro p {
         font-size: 1.75rem;
         text-align: left;
