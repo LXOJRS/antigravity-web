@@ -1690,3 +1690,72 @@ footer {
         text-align: left;
     }
 }
+
+/* Podcast Editorial Layout */
+.podcast-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 48px;
+    margin-bottom: 96px;
+    align-items: start;
+}
+
+.podcast-text-col {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    /* Ruimte tussen de tekstblokken */
+}
+
+.podcast-visual-col {
+    grid-column: 9 / span 4;
+    position: sticky;
+    top: 150px;
+    /* Blijft hangen als je scrollt (desktop) */
+}
+
+.podcast-image-wrapper {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.podcast-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Brand Consistency: Zwart/wit filter standaard */
+    filter: grayscale(100%) brightness(0.8) contrast(1.1);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Kleur komt terug bij hover */
+.podcast-image-wrapper:hover img {
+    filter: grayscale(0%) brightness(1) contrast(1);
+    transform: scale(1.03);
+}
+
+.podcast-footer-section {
+    grid-column: 1 / -1;
+    margin-top: 64px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .podcast-grid {
+        display: flex;
+        flex-direction: column-reverse;
+        /* Foto boven tekst op tablet/mobiel */
+        gap: 48px;
+    }
+
+    .podcast-visual-col {
+        width: 100%;
+        max-width: 500px;
+        position: static;
+        /* Geen sticky op mobiel */
+    }
+}
