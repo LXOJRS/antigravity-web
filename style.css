@@ -1270,6 +1270,12 @@ footer {
     margin-top: 64px;
     /* Move the inline style to CSS for consistency */
 
+    /* Hardening the layout */
+    white-space: nowrap;
+    /* PREVENTS VERTICAL STACKING */
+    flex-shrink: 0;
+    /* PREVENTS SQUASHING */
+
     /* Visuals */
     border: 1px solid var(--gray-color);
     /* Subtle border */
