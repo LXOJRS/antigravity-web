@@ -1256,23 +1256,50 @@ footer {
 
 /* Global Back Button */
 .back-btn {
-    border: 1px solid var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    /* Space between arrow and text */
+    padding: 12px 24px;
+    margin-top: 64px;
+    /* Move the inline style to CSS for consistency */
+
+    /* Visuals */
+    border: 1px solid var(--gray-color);
+    /* Subtle border */
+    border-radius: 100px;
+    /* Pill shape */
     color: var(--text-color);
+    background-color: transparent;
+
+    /* Typography */
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+
+    /* Interaction */
+    cursor: pointer;
+    /* Override global cursor: none if necessary, or integrate with custom cursor */
+    transition: all 0.4s var(--easing);
 }
 
 .back-btn:hover {
+    border-color: var(--text-color);
     background-color: var(--text-color);
     color: var(--bg-color);
+    /* Invert colors on hover */
+    transform: translateY(-2px);
 }
 
 .back-btn .btn-arrow {
-    margin-right: 12px;
-    transition: transform 0.3s var(--easing);
-    display: inline-block;
+    transition: transform 0.4s var(--easing);
 }
 
 .back-btn:hover .btn-arrow {
     transform: translateX(-4px);
+    /* Animate arrow slightly */
 }
 
 /* Typography Portal */
