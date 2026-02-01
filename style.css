@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --bg-color: #050505;
     --text-color: #ffffff;
     --accent-color: #3b82f6;
@@ -501,6 +501,9 @@ h2 {
     will-change: transform;
     transform: scale(1.1);
     /* Scaling up to allow room for parallax movement */
+
+    /* NIEUW: Subtiele tint voor betere integratie */
+    filter: brightness(0.85);
 }
 
 /* About */
@@ -732,14 +735,43 @@ footer {
     text-align: left;
 }
 
+/* Footer Layout Update */
 .footer-content {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .footer-content p {
     color: var(--gray-color);
     font-size: 0.9rem;
     margin: 0;
+}
+
+/* Scroll Up Button Styling */
+.scroll-top-btn {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.scroll-top-btn:hover {
+    color: var(--text-color);
+}
+
+.scroll-top-btn .btn-arrow {
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.scroll-top-btn:hover .btn-arrow {
+    transform: translateY(-3px);
 }
 
 /* Responsive Design */
@@ -1458,16 +1490,260 @@ footer {
     }
 }
 
-.about-actions {
-    margin-top: 64px;
-    margin-bottom: 32px;
-    display: block;
+
+/* Grid Helpers */
+.grid-split-section,
+.grid-stacked-section {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+    align-items: start;
+    width: 100%;
 }
 
-/* We hergebruiken de secondary knop stijl die we al voor de homepage hebben gemaakt */
-.about-actions .contact-btn.secondary {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    /* Zorg dat de knop niet de volle breedte inneemt */
-    display: inline-block;
+/* Portrait Video Styling */
+.visual-portrait video {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    filter: brightness(0.9);
+    /* Subtiel iets donkerder voor sfeer */
+    transition: transform 0.6s var(--easing), filter 0.6s ease;
+}
+
+.visual-portrait:hover video {
+    transform: scale(1.02);
+    filter: brightness(1);
+}
+
+/* Landscape Video Styling */
+.visual-landscape video {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    aspect-ratio: 16 / 9;
+    /* Of 21/9 voor ultra-wide effect */
+    object-fit: cover;
+    transition: transform 0.6s var(--easing);
+}
+
+.visual-landscape:hover video {
+    transform: scale(1.01);
+}
+
+/* Mobile Responsiveness for Mixed Media */
+@media (max-width: 768px) {
+
+    .grid-split-section,
+    .grid-stacked-section {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .visual-portrait {
+        width: 100%;
+        max-width: 300px;
+        /* Niet te gigantisch op mobiel */
+        margin: 0 auto;
+    }
+
+    .visual-landscape {
+        width: 100%;
+    }
+}
+
+/* R&D Grid Layout Update */
+.rd-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 128px;
+    counter-reset: section-counter;
+}
+
+.rd-row {
+    position: relative;
+    /* Voor positionering van het nummer */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    align-items: start;
+    overflow: hidden;
+    /* Zorgt dat het grote nummer niet uitsteekt */
+}
+
+/* Typografisch Nummer (Het visuele element) */
+.rd-number {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    font-family: var(--font-main);
+    font-size: 12rem;
+    /* Zeer groot */
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.05);
+    /* Zeer subtiel op de achtergrond */
+    z-index: 0;
+    pointer-events: none;
+    transform: translateY(-20%);
+}
+
+/* Standaard Layout: Titel Links, Tekst Rechts */
+.rd-row .section-title {
+    grid-column: 1 / span 4;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.rd-row .text-content {
+    grid-column: 6 / span 7;
+    /* Iets meer witruimte tussen titel en tekst */
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Reversed Layout: Tekst Links, Titel Rechts */
+.rd-row.reversed .section-title {
+    grid-column: 9 / span 4;
+    text-align: right;
+}
+
+.rd-row.reversed .text-content {
+    grid-column: 1 / span 7;
+}
+
+.rd-row.reversed .rd-number {
+    left: auto;
+    right: 0;
+    /* Nummer ook naar rechts */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+
+    .rd-row,
+    .rd-row.reversed {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .rd-row.reversed .section-title,
+    .rd-row.reversed .text-content {
+        text-align: left;
+        /* Reset naar links op mobiel */
+    }
+
+    .rd-number {
+        font-size: 6rem;
+        /* Kleiner op mobiel */
+        top: 10px;
+    }
+}
+
+/* De Outro Statement */
+.service-outro {
+    grid-column: 2 / span 10;
+    /* Iets ingesprongen */
+    text-align: center;
+    margin-bottom: 96px;
+    padding: 0 1rem;
+}
+
+.service-outro p {
+    font-size: clamp(2rem, 4vw, 3rem);
+    /* Groot! */
+    line-height: 1.2;
+    color: var(--text-color);
+    /* Helder wit */
+    font-weight: 500;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .service-outro p {
+        font-size: 1.75rem;
+        text-align: left;
+    }
+}
+
+/* Podcast Editorial Layout */
+.podcast-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 48px;
+    margin-bottom: 96px;
+    align-items: start;
+}
+
+.podcast-text-col {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    /* Ruimte tussen de tekstblokken */
+}
+
+.podcast-visual-col {
+    grid-column: 9 / span 4;
+    position: sticky;
+    top: 150px;
+    /* Blijft hangen als je scrollt (desktop) */
+}
+
+.podcast-image-wrapper {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.podcast-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Brand Consistency: Zwart/wit filter standaard */
+    filter: grayscale(100%) brightness(0.8) contrast(1.1);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Kleur komt terug bij hover */
+.podcast-image-wrapper:hover img {
+    filter: grayscale(0%) brightness(1) contrast(1);
+    transform: scale(1.03);
+}
+
+.podcast-footer-section {
+    grid-column: 1 / -1;
+    margin-top: 64px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .podcast-grid {
+        display: flex;
+        flex-direction: column-reverse;
+        /* Foto boven tekst op tablet/mobiel */
+        gap: 48px;
+    }
+
+    .podcast-visual-col {
+        width: 100%;
+        max-width: 500px;
+        position: static;
+        /* Geen sticky op mobiel */
+    }
 }

@@ -358,4 +358,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // Smooth Scroll to Top
+    const scrollBtn = document.querySelector('.scroll-top-btn');
+    if (scrollBtn) {
+        scrollBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            lenis.scrollTo(0); // Gebruik Lenis voor smooth scroll
+        });
+    }
 });
