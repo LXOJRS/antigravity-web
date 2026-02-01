@@ -480,32 +480,27 @@ h2 {
 
 /* Visual Hook */
 .visual-hook {
-    /* 1. Force Full Width (Break out of parent padding) */
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: 50%;
-    transform: translateX(-50%) scale(1.05);
-    /* 2. Scale 1.05 to crop black bars */
-
-    /* 3. Maintain Aspect Ratio */
-    height: auto;
-    min-height: 400px;
-    /* Prevent it from being too thin */
-    object-fit: cover;
-
-    /* 4. Reset spacing */
-    padding: 0;
-    display: block;
+    width: 100%;
+    /* Use 100% instead of 100vw to avoid scrollbar */
+    height: 60vh;
+    padding: 0 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 0;
 }
 
 .visual-hook video {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
     object-fit: cover;
+    border-radius: 24px;
     border: none;
-    /* Removed border-radius and shadow for full bleed effect */
+    box-shadow: 0 20px 80px rgba(0, 0, 197, 0.25);
     will-change: transform;
+    transform: scale(1.1);
+    /* Scaling up to allow room for parallax movement */
 
     /* NIEUW: Subtiele tint voor betere integratie */
     filter: brightness(0.85);
