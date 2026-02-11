@@ -1597,50 +1597,48 @@ footer {
     counter-reset: section-counter;
 }
 
+/* 1. Architecturale Lijnen & 8-point Spacing */
 .rd-row {
     position: relative;
-    /* Voor positionering van het nummer */
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 32px;
-    padding-top: 64px;
-    padding-bottom: 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 80px;
+    /* 8-point grid: 10 * 8 */
+    padding-bottom: 80px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    /* Intentional thickness (2px) */
     align-items: start;
     overflow: hidden;
-    /* Zorgt dat het grote nummer niet uitsteekt */
 }
 
 /* Typografisch Nummer (Het visuele element) */
+/* 2. Zichtbare Achtergrond Nummers */
 .rd-number {
     position: absolute;
-    top: 0px;
+    top: 16px;
+    /* Iets naar beneden (8-pt scale) */
     left: 0;
     font-family: var(--font-main);
-    font-size: 12rem;
-    /* Zeer groot */
+    font-size: 14rem;
     font-weight: 800;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.05);
-    /* Zeer subtiel op de achtergrond */
+    color: rgba(255, 255, 255, 0.12);
+    /* Verhoogde zichtbaarheid */
     z-index: 0;
     pointer-events: none;
-    transform: translateY(-20%);
 }
 
 /* Standaard Layout: Titel Links, Tekst Rechts */
 /* 1. Maak de titels dominant (Visual Anchors) */
+/* 3. Standaard Layout: 4 kolommen titel, 1 lege buffer, 7 kolommen tekst */
 .rd-row .section-title {
     grid-column: 1 / span 4;
     margin: 0;
     position: relative;
     z-index: 1;
-    font-size: clamp(2.5rem, 4vw, 3.5rem) !important;
-    /* Flink groter dan de standaard 1.5rem */
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin-top: -5px;
-    /* Optische uitlijning met de tekst ernaast */
+    text-align: left;
+    /* ALTIJD links uitgelijnd */
 }
 
 /* 2. Verzacht de tekst om de "Lap" te voorkomen */
@@ -1657,62 +1655,60 @@ footer {
 
 /* 3. Grid Aantrekken: Standaard Layout */
 .rd-row .text-content {
-    grid-column: 5 / span 7;
-    /* Iets meer naar links geschoven (was 6) */
+    grid-column: 6 / span 7;
+    /* Kolom 5 is de vaste, lege buffer-ruimte! */
     position: relative;
     z-index: 1;
 }
 
-/* 4. Grid Aantrekken: Reversed Layout */
+/* 4. Reversed Layout: 7 kolommen tekst, 1 lege buffer, 4 kolommen titel */
 .rd-row.reversed .section-title {
-    grid-column: 8 / span 5;
-    /* Schuift de titel iets meer naar het midden */
-    text-align: right;
+    grid-column: 9 / span 4;
+    /* Kolom 8 is de vaste, lege buffer */
+    text-align: left;
+    /* FIX: Geen text-align: right meer. Dit sluit de 'vallei' */
 }
 
 .rd-row.reversed .text-content {
-    grid-column: 2 / span 6;
-    /* Schuift de tekst van de rand af, richting het midden */
+    grid-column: 1 / span 7;
 }
 
 .rd-row.reversed .rd-number {
     left: auto;
     right: 0;
-    /* Nummer ook naar rechts */
 }
 
-/* Mobile Fixes voor de grotere titels */
+/* Mobile Responsiveness Polish */
 @media (max-width: 768px) {
 
     .rd-row,
     .rd-row.reversed {
+        padding-top: 56px;
+        /* 7 * 8 */
+        padding-bottom: 56px;
         display: flex;
         flex-direction: column;
         gap: 16px;
-        padding-top: 48px;
-        padding-bottom: 48px;
     }
 
     .rd-row .section-title,
     .rd-row.reversed .section-title {
         font-size: 2.5rem !important;
         text-align: left;
+        grid-column: auto;
     }
 
     .rd-row .text-content p {
         font-size: 1.25rem;
     }
 
-    .rd-row.reversed .section-title,
     .rd-row.reversed .text-content {
         text-align: left;
-        /* Reset naar links op mobiel */
     }
 
     .rd-number {
-        font-size: 6rem;
-        /* Kleiner op mobiel */
-        top: 10px;
+        font-size: 8rem;
+        top: 8px;
     }
 }
 
