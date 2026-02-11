@@ -1613,40 +1613,41 @@ footer {
 }
 
 /* Typografisch Nummer (Het visuele element) */
-/* 2. Zichtbare Achtergrond Nummers */
+/* 3. Achtergrond Nummers (Duidelijker & correct gelaagd) */
 .rd-number {
     position: absolute;
-    top: 16px;
-    /* Iets naar beneden (8-pt scale) */
+    top: 0;
     left: 0;
     font-family: var(--font-main);
     font-size: 14rem;
     font-weight: 800;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.12);
-    /* Verhoogde zichtbaarheid */
+    color: rgba(255, 255, 255, 0.15);
+    /* Helderheid iets verhoogd voor betere zichtbaarheid */
     z-index: 0;
     pointer-events: none;
+    user-select: none;
 }
 
 /* Standaard Layout: Titel Links, Tekst Rechts */
 /* 1. Maak de titels dominant (Visual Anchors) */
-/* 3. Standaard Layout: 4 kolommen titel, 1 lege buffer, 7 kolommen tekst */
-/* 2. Maak de blauwe titels massief (Visual Anchors) */
+/* 1. Standaard Layout: 5 kolommen titel, 1 lege buffer, 6 kolommen tekst */
 .rd-row .section-title {
-    grid-column: 1 / span 4;
+    grid-column: 1 / span 5;
+    /* Krijgt meer ruimte om te ademen */
     margin: 0;
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    /* Ligt altijd bóven de nummers */
     text-align: left;
-    font-size: clamp(3rem, 6vw, 5rem) !important;
-    /* FLINK GROTER: Schaalt mee met scherm */
+    font-size: clamp(2.5rem, 4.5vw, 4.2rem) !important;
+    /* Iets getemd om binnen de 5 kolommen te blijven */
     line-height: 0.95;
     letter-spacing: -0.03em;
     color: #0000C5;
-    /* De brand kleur */
     margin-top: -8px;
-    /* Optische correctie zodat het uitlijnt met de tekst */
+    white-space: nowrap;
+    /* Zorgt dat het woord strak op 1 regel blijft */
 }
 
 /* 2. Verzacht de tekst om de "Lap" te voorkomen */
@@ -1663,22 +1664,22 @@ footer {
 
 /* 3. Grid Aantrekken: Standaard Layout */
 .rd-row .text-content {
-    grid-column: 6 / span 7;
-    /* Kolom 5 is de vaste, lege buffer-ruimte! */
+    grid-column: 7 / span 6;
+    /* Kolom 6 is de absolute, onzichtbare muur (buffer) */
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
-/* 4. Reversed Layout: 7 kolommen tekst, 1 lege buffer, 4 kolommen titel */
-/* 3. Zorg dat de reversed titels ook meegroeien */
+/* 2. Reversed Layout: 6 kolommen tekst, 1 lege buffer, 5 kolommen titel */
 .rd-row.reversed .section-title {
-    grid-column: 9 / span 4;
+    grid-column: 8 / span 5;
+    /* Start vroeger om te voorkomen dat het woord uit het scherm loopt */
     text-align: left;
-    /* Blijft strak links uitgelijnd binnen zijn kolom */
 }
 
 .rd-row.reversed .text-content {
-    grid-column: 1 / span 7;
+    grid-column: 1 / span 6;
+    /* Kolom 7 is de lege buffer */
 }
 
 .rd-row.reversed .rd-number {
@@ -1687,6 +1688,18 @@ footer {
 }
 
 /* Mobile Fixes voor de gigantische titels */
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1024px) {
+
+    /* Trigger de responsive scaling iets eerder voor iPads/Tablets */
+    .rd-row .section-title,
+    .rd-row.reversed .section-title {
+        font-size: 3rem !important;
+        white-space: normal;
+        /* Laat afbreken weer toe als het scherm echt krap wordt */
+    }
+}
+
 @media (max-width: 768px) {
 
     .rd-row,
@@ -1697,17 +1710,12 @@ footer {
 
     .rd-row .section-title,
     .rd-row.reversed .section-title {
-        font-size: 3rem !important;
-        /* Iets getemd voor telefoons, maar nog steeds groot */
-        text-align: left;
+        grid-column: span 12;
     }
 
-    .rd-row .text-content p {
-        font-size: 1.25rem;
-    }
-
+    .rd-row .text-content,
     .rd-row.reversed .text-content {
-        text-align: left;
+        grid-column: span 12;
     }
 
     .rd-number {
