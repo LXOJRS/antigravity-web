@@ -367,4 +367,51 @@ document.addEventListener("DOMContentLoaded", () => {
             lenis.scrollTo(0); // Gebruik Lenis voor smooth scroll
         });
     }
+    // --- R&D Cinematic Scroll Animations ---
+
+    // 1. De verspringende rijen (Slide up + Fade in)
+    const rdRows = document.querySelectorAll('.rd-row');
+    rdRows.forEach(row => {
+        gsap.fromTo(row,
+            {
+                opacity: 0,
+                y: 60
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 85%', // Begint als de bovenkant van de rij 85% in beeld is
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    });
+
+    // 2. De Mic-Drop Outro (Subtiele Scale + Fade in)
+    const outroText = document.querySelector('.service-outro p');
+    if (outroText) {
+        gsap.fromTo(outroText,
+            {
+                opacity: 0,
+                scale: 0.95,
+                y: 40
+            },
+            {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power4.out',
+                scrollTrigger: {
+                    trigger: '.service-outro',
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    }
 });
