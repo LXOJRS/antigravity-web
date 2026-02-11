@@ -1629,29 +1629,50 @@ footer {
 }
 
 /* Standaard Layout: Titel Links, Tekst Rechts */
+/* 1. Maak de titels dominant (Visual Anchors) */
 .rd-row .section-title {
     grid-column: 1 / span 4;
     margin: 0;
     position: relative;
     z-index: 1;
+    font-size: clamp(2.5rem, 4vw, 3.5rem) !important;
+    /* Flink groter dan de standaard 1.5rem */
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-top: -5px;
+    /* Optische uitlijning met de tekst ernaast */
 }
 
+/* 2. Verzacht de tekst om de "Lap" te voorkomen */
+.rd-row .text-content p {
+    font-size: 1.5rem;
+    /* Iets groter voor leesbaarheid */
+    font-weight: 300;
+    /* Dunner font voor elegantie */
+    color: rgba(255, 255, 255, 0.75);
+    /* Minder hard contrast dan puur wit */
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* 3. Grid Aantrekken: Standaard Layout */
 .rd-row .text-content {
-    grid-column: 6 / span 7;
-    /* Iets meer witruimte tussen titel en tekst */
-    margin: 0;
+    grid-column: 5 / span 7;
+    /* Iets meer naar links geschoven (was 6) */
     position: relative;
     z-index: 1;
 }
 
-/* Reversed Layout: Tekst Links, Titel Rechts */
+/* 4. Grid Aantrekken: Reversed Layout */
 .rd-row.reversed .section-title {
-    grid-column: 9 / span 4;
+    grid-column: 8 / span 5;
+    /* Schuift de titel iets meer naar het midden */
     text-align: right;
 }
 
 .rd-row.reversed .text-content {
-    grid-column: 1 / span 7;
+    grid-column: 2 / span 6;
+    /* Schuift de tekst van de rand af, richting het midden */
 }
 
 .rd-row.reversed .rd-number {
@@ -1660,7 +1681,7 @@ footer {
     /* Nummer ook naar rechts */
 }
 
-/* Mobile Responsiveness */
+/* Mobile Fixes voor de grotere titels */
 @media (max-width: 768px) {
 
     .rd-row,
@@ -1670,6 +1691,16 @@ footer {
         gap: 16px;
         padding-top: 48px;
         padding-bottom: 48px;
+    }
+
+    .rd-row .section-title,
+    .rd-row.reversed .section-title {
+        font-size: 2.5rem !important;
+        text-align: left;
+    }
+
+    .rd-row .text-content p {
+        font-size: 1.25rem;
     }
 
     .rd-row.reversed .section-title,
