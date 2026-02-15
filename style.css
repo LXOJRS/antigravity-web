@@ -1196,17 +1196,14 @@ footer {
     margin-bottom: 96px;
 }
 
-.intro-block p,
-.text-content p {
+.intro-block p {
     font-size: 1.25rem;
     line-height: 1.8;
     margin-bottom: 32px;
     color: var(--text-color);
-    /* Ensure high contrast */
 }
 
-.intro-block p:last-child,
-.text-content p:last-child {
+.intro-block p:last-child {
     margin-bottom: 0;
 }
 
@@ -1587,7 +1584,7 @@ footer {
     }
 }
 
-/* --- R&D & Manifesto Grid Layout (CLEAN V65) --- */
+/* --- R&D & Manifesto Grid Layout (FINAL V66) --- */
 .rd-grid {
     display: flex;
     flex-direction: column;
@@ -1596,7 +1593,7 @@ footer {
     counter-reset: section-counter;
 }
 
-/* De Container: Geen lijnen, veel witruimte */
+/* De Container */
 .rd-row {
     position: relative;
     display: grid;
@@ -1605,31 +1602,26 @@ footer {
     padding-top: 64px;
     padding-bottom: 64px;
     border-top: none;
-    /* Geen lijnen */
     align-items: start;
     overflow: hidden;
 }
 
-/* De Achtergrond Nummers (Alleen zichtbaar als ze in HTML staan) */
+/* Nummers */
 .rd-number {
     position: absolute;
     top: -20px;
-    /* Iets hoger voor mooie overlapping */
     left: -10px;
     font-family: var(--font-main);
     font-size: 14rem;
     font-weight: 800;
     line-height: 1;
     color: rgba(255, 255, 255, 0.12);
-    /* Subtiel */
     z-index: 0;
     pointer-events: none;
     user-select: none;
 }
 
-/* --- Standaard Layout (Titel Links) --- */
-/* Grid: 5 (Titel) - 1 (Buffer) - 6 (Tekst) */
-
+/* --- Standaard Layout --- */
 .rd-row .section-title {
     grid-column: 1 / span 5;
     margin: 0;
@@ -1637,25 +1629,23 @@ footer {
     z-index: 2;
     text-align: left;
     font-size: clamp(3rem, 5vw, 4.5rem) !important;
-    /* Groot & Responsief */
     line-height: 0.95;
     letter-spacing: -0.03em;
     color: #0000C5;
     margin-top: -6px;
     white-space: nowrap;
-    /* Voorkom afbreken op desktop */
 }
 
 .rd-row .text-content {
     grid-column: 7 / span 6;
-    /* Start na de buffer */
     position: relative;
     z-index: 2;
 }
 
-/* Stylin van de broodtekst */
+/* Hier fixen we de tekst stijl specifiek voor dit grid */
 .rd-row .text-content p {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
+    /* Forceer de grootte */
     font-weight: 300;
     color: rgba(255, 255, 255, 0.75);
     line-height: 1.6;
@@ -1666,13 +1656,10 @@ footer {
     margin-bottom: 0;
 }
 
-/* --- Reversed Layout (Titel Rechts) --- */
-/* Grid: 6 (Tekst) - 1 (Buffer) - 5 (Titel) */
-
+/* --- Reversed Layout --- */
 .rd-row.reversed .section-title {
     grid-column: 8 / span 5;
     text-align: left;
-    /* Blijft links uitgelijnd in zijn vak */
 }
 
 .rd-row.reversed .text-content {
@@ -1684,11 +1671,9 @@ footer {
     right: -10px;
 }
 
-/* --- Mobile & Tablet Responsiveness --- */
-
+/* --- Mobile --- */
 @media (max-width: 1024px) {
 
-    /* Op tablets mag de titel wrappen als hij te lang is */
     .rd-row .section-title,
     .rd-row.reversed .section-title {
         white-space: normal;
@@ -1710,11 +1695,6 @@ footer {
     .rd-row .section-title,
     .rd-row.reversed .section-title {
         font-size: 2.8rem !important;
-        width: 100%;
-    }
-
-    .rd-row .text-content,
-    .rd-row.reversed .text-content {
         width: 100%;
     }
 
