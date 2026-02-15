@@ -1714,3 +1714,66 @@ footer {
         /* Geen sticky op mobiel */
     }
 }
+
+/* --- About Page Header Repair (V69) --- */
+
+/* 1. De Titel: Weer gigantisch en strak */
+.about-hero {
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 64px;
+    margin-top: 0;
+    max-width: 100%;
+}
+
+/* 2. De Portretfoto: Getemd naar een normaal formaat */
+.about-portrait {
+    width: 100%;
+    max-width: 500px;
+    /* Voorkomt dat hij beeldvullend wordt */
+    margin: 0 0 64px 0;
+    /* Ruimte aan de onderkant */
+    position: relative;
+    z-index: 1;
+}
+
+.about-portrait img {
+    width: 100%;
+    height: auto;
+    border-radius: 0 0 100px 100px;
+    /* De kenmerkende ronding */
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 197, 0.15));
+}
+
+/* 3. De Introductietekst: Groot en leesbaar (Lead Paragraph) */
+.intro-block {
+    margin-bottom: 96px;
+    max-width: 900px;
+    /* Niet te breed voor leesbaarheid */
+}
+
+.intro-block p {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    /* Veel groter dan standaard tekst */
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+/* Mobile aanpassing voor de header */
+@media (max-width: 768px) {
+    .about-hero {
+        font-size: 14vw;
+        margin-bottom: 48px;
+    }
+
+    .about-portrait {
+        max-width: 100%;
+        /* Op mobiel mag hij wel breed */
+        margin-bottom: 48px;
+    }
+}
