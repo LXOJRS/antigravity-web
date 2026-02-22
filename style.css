@@ -1423,7 +1423,7 @@ footer {
 }
 
 
-/* --- Creative Building Cinematic Gallery (V75) --- */
+/* --- Creative Building Cinematic Gallery (V76) --- */
 
 /* Act 1 */
 .creative-act1 {
@@ -1455,40 +1455,48 @@ footer {
     filter: brightness(1);
 }
 
-/* Act 2: Main Feature */
+/* Act 2: Main Feature (Unobstructed Showcase V76) */
 .creative-act2-feature {
-    position: relative;
-    width: 100%;
-    margin-bottom: 128px;
-    border-radius: 24px;
-    overflow: hidden;
-    min-height: 600px;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    gap: 48px;
+    margin-bottom: 128px;
+    width: 100%;
 }
 
-.cinematic-video {
-    position: absolute;
-    top: 0;
-    left: 0;
+.cinematic-showcase {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 21/9;
+    background: var(--bg-color);
+}
+
+.cinematic-showcase video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.85);
-    /* Helderder nu, tekst heeft eigen glassmorphism card */
+    filter: brightness(0.9);
+    transition: filter 0.5s ease;
 }
 
-.feature-overlay {
-    position: relative;
-    z-index: 2;
-    max-width: 700px;
-    margin: 48px;
-    padding: 48px;
-    background: rgba(5, 5, 5, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.cinematic-showcase:hover video {
+    filter: brightness(1);
+}
+
+.cinematic-caption-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+    align-items: start;
+}
+
+.caption-title {
+    grid-column: 1 / span 4;
+}
+
+.caption-text {
+    grid-column: 6 / span 7;
 }
 
 /* Act 3: Editorial Staart */
@@ -1541,25 +1549,17 @@ footer {
     }
 
     .creative-act2-feature {
-        flex-direction: column;
-        min-height: auto;
-        background: #0d0d0d;
+        gap: 32px;
     }
 
-    .cinematic-video {
-        position: relative;
-        height: auto;
+    .cinematic-showcase {
         aspect-ratio: 16/9;
     }
 
-    .feature-overlay {
-        margin: 0;
-        padding: 32px 24px;
-        border-radius: 0 0 24px 24px;
-        border: none;
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+    .cinematic-caption-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
     .tail-row.reversed {
