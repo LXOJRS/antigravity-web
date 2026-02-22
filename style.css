@@ -1502,6 +1502,30 @@ footer {
     }
 }
 
+/* --- General Service & Typography Utilities (V70) --- */
+.section-title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #0000C5;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+.text-content p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    color: var(--text-color);
+}
+.text-content p:last-child {
+    margin-bottom: 0;
+}
+.service-intro {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 96px;
+    font-weight: 500;
+}
+
 /* --- R&D & Manifesto Grid Layout (FINAL V66) --- */
 .rd-grid {
     display: flex;
