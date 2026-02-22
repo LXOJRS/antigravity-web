@@ -506,7 +506,6 @@ h2 {
 }
 
 /* About */
-/* About */
 .about {
     padding: 128px 0;
 }
@@ -678,8 +677,6 @@ h2 {
 }
 
 .service-card p {
-    color: var(--gray-color);
-    /* Might need to be lighter if on image */
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.5;
     position: relative;
@@ -915,10 +912,6 @@ footer {
         display: flex;
     }
 
-    .desktop-only {
-        display: none !important;
-    }
-
     /* About Section Mobile */
     .about {
         padding: 64px 0;
@@ -1042,10 +1035,6 @@ footer {
             flex-direction: column;
             gap: 1.5rem;
             text-align: center;
-        }
-
-        .socials a {
-            margin: 0 0.75rem;
         }
     }
 }
@@ -1182,7 +1171,6 @@ footer {
 
 .read-more {
     margin-top: auto;
-    color: #0000C5;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
@@ -1191,7 +1179,6 @@ footer {
     border: none;
     background: none;
     color: var(--gray-color);
-    /* Removed blue color */
 }
 
 .read-more .btn-arrow {
@@ -1352,8 +1339,6 @@ footer {
 }
 
 /* About Portrait Styles — overridden by V71 split header below */
-    will-change: transform;
-}
 
 @media (max-width: 768px) {
     .about-portrait {
@@ -1654,12 +1639,6 @@ footer {
 }
 .text-content p:last-child {
     margin-bottom: 0;
-}
-.service-intro {
-    font-size: 1.5rem;
-    line-height: 1.6;
-    margin-bottom: 96px;
-    font-weight: 500;
 }
 
 /* --- R&D & Manifesto Grid Layout (FINAL V66) --- */
