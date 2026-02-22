@@ -1423,7 +1423,7 @@ footer {
 }
 
 
-/* --- Creative Building Cinematic Gallery (V74) --- */
+/* --- Creative Building Cinematic Gallery (V75) --- */
 
 /* Act 1 */
 .creative-act1 {
@@ -1462,8 +1462,9 @@ footer {
     margin-bottom: 128px;
     border-radius: 24px;
     overflow: hidden;
-    aspect-ratio: 21/9;
-    /* Super wide cinematic look */
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .cinematic-video {
@@ -1473,22 +1474,21 @@ footer {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.7);
-    /* Donkerder zodat tekst leesbaar is */
+    filter: brightness(0.85);
+    /* Helderder nu, tekst heeft eigen glassmorphism card */
 }
 
 .feature-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 64px;
-    background: linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0) 100%);
+    position: relative;
     z-index: 2;
-}
-
-.feature-overlay .text-content {
-    max-width: 800px;
+    max-width: 700px;
+    margin: 48px;
+    padding: 48px;
+    background: rgba(5, 5, 5, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Act 3: Editorial Staart */
@@ -1522,7 +1522,8 @@ footer {
     grid-column: 1 / span 6;
 }
 
-.tail-visual img {
+.tail-visual img,
+.tail-visual video {
     width: 100%;
     border-radius: 24px;
     object-fit: cover;
@@ -1540,12 +1541,25 @@ footer {
     }
 
     .creative-act2-feature {
+        flex-direction: column;
+        min-height: auto;
+        background: #0d0d0d;
+    }
+
+    .cinematic-video {
+        position: relative;
+        height: auto;
         aspect-ratio: 16/9;
-        /* Minder extreem breed op mobiel */
     }
 
     .feature-overlay {
-        padding: 24px;
+        margin: 0;
+        padding: 32px 24px;
+        border-radius: 0 0 24px 24px;
+        border: none;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     .tail-row.reversed {
