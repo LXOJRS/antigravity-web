@@ -1730,6 +1730,7 @@ footer {
     grid-template-columns: repeat(12, 1fr);
     gap: 32px;
     margin-bottom: 128px;
+    padding-top: 160px;
     align-items: center;
 }
 
