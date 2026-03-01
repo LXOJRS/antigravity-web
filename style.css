@@ -1889,6 +1889,8 @@ footer {
     /* Right-bleed: 8pt-grid linkermarge, rechts bloedt van scherm af */
     width: calc(50vw + 50% - 64px);
     height: 100vh;
+    min-height: 100vh;
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
 
