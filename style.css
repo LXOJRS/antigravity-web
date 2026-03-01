@@ -1800,27 +1800,23 @@ footer {
 }
 
 /* Act 2: Cinematic Break */
-/* --- Typographic Monuments (V82) --- */
+/* --- Typographic Monuments (V83) --- */
 .typo-monument {
     width: 100vw;
+    margin-left: calc(50% - 50vw);
     position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
     padding: 8vh 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     overflow: hidden;
     pointer-events: none;
 }
 
 .monument-text {
-    font-size: clamp(8rem, 16vw, 15rem);
+    font-size: clamp(6rem, 15vw, 15rem);
     font-weight: 800;
     color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.08);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.25);
     text-transform: uppercase;
     line-height: 0.85;
     letter-spacing: -0.04em;
@@ -1829,22 +1825,27 @@ footer {
     padding-left: max(24px, calc((100vw - 1200px) / 2));
 }
 
-/* --- Full Bleed Cinematic Breaks (V81) --- */
-.full-bleed-break {
+/* --- Full Bleed Cinematic Breaks (V83) --- */
+.full-bleed {
     width: 100vw;
+    margin-left: calc(50% - 50vw);
     position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    height: 75vh;
     overflow: hidden;
     margin-top: 128px;
     margin-bottom: 128px;
 }
 
-.full-bleed-break img,
-.full-bleed-break video {
+/* De specifieke formaten */
+.full-bleed-banner {
+    height: 50vh;
+}
+
+.full-bleed-massive {
+    height: 90vh;
+}
+
+.full-bleed img,
+.full-bleed video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1852,16 +1853,29 @@ footer {
     transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.full-bleed-break:hover img,
-.full-bleed-break:hover video {
+.full-bleed:hover img,
+.full-bleed:hover video {
     filter: grayscale(0%) brightness(0.9) contrast(1.1);
 }
 
+/* Mobiele Responsiveness */
 @media (max-width: 768px) {
-    .full-bleed-break {
-        height: 50vh;
+    .typo-monument {
+        padding: 4vh 0;
+    }
+    .monument-text {
+        font-size: 20vw;
+        -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3);
+    }
+    .full-bleed {
         margin-top: 64px;
         margin-bottom: 64px;
+    }
+    .full-bleed-banner {
+        height: 35vh;
+    }
+    .full-bleed-massive {
+        height: 70vh;
     }
 }
 
