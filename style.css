@@ -1840,7 +1840,7 @@ footer {
     filter: grayscale(100%) brightness(0.6) contrast(1.1);
 }
 
-/* --- Creative Cinematic Showcase (Massive Full-Bleed Effect) --- */
+/* --- Creative Cinematic Showcase (HERSTELD NAAR ORIGINELE V81 FULL BLEED) --- */
 .creative-act2-feature {
     display: flex;
     flex-direction: column;
@@ -1851,10 +1851,12 @@ footer {
 
 .cinematic-showcase {
     width: 100vw;
-    height: 85vh;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 75vh;
     overflow: hidden;
     border-radius: 0;
 }
