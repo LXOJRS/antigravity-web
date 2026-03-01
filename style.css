@@ -1876,7 +1876,7 @@ footer {
     }
 }
 
-/* --- Creative Cinematic Showcase (legacy) --- */
+/* --- Creative Cinematic Showcase (Asymmetric Right-Bleed V87) --- */
 .creative-act2-feature {
     display: flex;
     flex-direction: column;
@@ -1886,15 +1886,21 @@ footer {
 }
 
 .cinematic-showcase {
-    width: 100vw;
+    /* De magische Awwwards-formule voor een perfecte Right-Bleed */
+    width: calc(50vw + 50%);
+    height: 80vh;
     position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    height: 75vh;
     overflow: hidden;
-    border-radius: 0;
+
+    /* Ronde hoek links (lijnt op met tekst), harde snede rechts (bleed) */
+    border-radius: 24px 0 0 24px;
+
+    /* Reset alle oude hacky margins/left properties */
+    margin-left: 0;
+    margin-right: 0;
+    left: 0;
+    right: 0;
+    transform: none;
 }
 
 .cinematic-showcase video {
@@ -1909,21 +1915,6 @@ footer {
     filter: brightness(1);
 }
 
-.cinematic-caption-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 32px;
-    align-items: start;
-}
-
-.caption-title {
-    grid-column: 1 / span 4;
-}
-
-.caption-text {
-    grid-column: 6 / span 7;
-}
-
 /* Mobiele Responsiveness */
 @media (max-width: 768px) {
     .typo-monument {
@@ -1934,14 +1925,12 @@ footer {
     }
     .cinematic-showcase {
         height: 60vh;
+        width: calc(100vw - 1rem);
+        margin-left: -1rem;
+        border-radius: 0 24px 24px 0;
     }
     .creative-act2-feature {
         gap: 32px;
-    }
-    .cinematic-caption-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
     }
 }
 
