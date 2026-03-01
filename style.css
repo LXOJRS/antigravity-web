@@ -1800,6 +1800,35 @@ footer {
 }
 
 /* Act 2: Cinematic Break */
+/* --- Typographic Monuments (V82) --- */
+.typo-monument {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 8vh 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.monument-text {
+    font-size: clamp(8rem, 16vw, 15rem);
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    user-select: none;
+    white-space: nowrap;
+    padding-left: max(24px, calc((100vw - 1200px) / 2));
+}
+
 /* --- Full Bleed Cinematic Breaks (V81) --- */
 .full-bleed-break {
     width: 100vw;
