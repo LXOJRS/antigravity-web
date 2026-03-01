@@ -1876,7 +1876,7 @@ footer {
     }
 }
 
-/* --- Creative Cinematic Showcase (Asymmetric Right-Bleed V87) --- */
+/* --- Creative Cinematic Showcase (Asymmetric Right-Bleed V88) --- */
 .creative-act2-feature {
     display: flex;
     flex-direction: column;
@@ -1886,17 +1886,17 @@ footer {
 }
 
 .cinematic-showcase {
-    /* De magische Awwwards-formule voor een perfecte Right-Bleed */
-    width: calc(50vw + 50%);
-    height: 80vh;
+    /* Right-bleed: linkerrand + extra inspringing, rechts bloedt van scherm af */
+    width: calc(50vw + 50% - 24px);
+    height: 85vh;
     position: relative;
     overflow: hidden;
 
     /* Ronde hoek links (lijnt op met tekst), harde snede rechts (bleed) */
     border-radius: 24px 0 0 24px;
 
-    /* Reset alle oude hacky margins/left properties */
-    margin-left: 0;
+    /* Dubbele linkermarge: 24px hier + 24px container-padding = 48px vanaf container-rand */
+    margin-left: 24px;
     margin-right: 0;
     left: 0;
     right: 0;
