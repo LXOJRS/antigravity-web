@@ -14,10 +14,6 @@
     cursor: none !important;
 }
 
-html {
-    overflow-x: clip;
-}
-
 html.lenis {
     height: auto;
 }
