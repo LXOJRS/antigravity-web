@@ -1,4 +1,4 @@
-console.log("Alex AI Script Loaded v3");
+console.log("Alex AI Script Loaded v4");
 
 document.addEventListener("DOMContentLoaded", () => {
     // Check if libraries are loaded
@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const y = e.clientY - rect.top - rect.height / 2;
 
             gsap.to(el, {
-                x: x * 0.3, // Magnetic strength
-                y: y * 0.3,
+                x: x * 0.15, // Magnetic strength (reduced to prevent nearby buttons from tripping)
+                y: y * 0.15,
                 duration: 0.3,
                 ease: 'power2.out'
             });
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         el.addEventListener('mouseenter', event => {
             let iteration = 0;
-            const target = event.target;
+            const target = event.currentTarget;
 
             clearInterval(target.interval);
 

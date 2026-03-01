@@ -14,6 +14,10 @@
     cursor: none !important;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 html.lenis {
     height: auto;
 }
@@ -650,6 +654,10 @@ h2 {
     transform: translateY(-5px);
 }
 
+.service-card.floating:hover {
+    animation-play-state: paused;
+}
+
 /* Floating Animation Class */
 .floating {
     animation: float 6s ease-in-out infinite;
@@ -782,6 +790,10 @@ h2 {
     background-color: var(--text-color);
     color: var(--bg-color);
     border-color: var(--text-color);
+}
+
+.contact-btn:active {
+    transform: scale(0.97);
 }
 
 .btn-arrow {
@@ -1268,6 +1280,10 @@ footer {
     color: var(--bg-color);
     /* Invert colors on hover */
     transform: translateY(-2px);
+}
+
+.back-btn:active {
+    transform: scale(0.97);
 }
 
 .back-btn .btn-arrow {
