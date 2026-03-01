@@ -1523,48 +1523,6 @@ footer {
 }
 
 /* Act 2: Main Feature (Unobstructed Showcase V76) */
-.creative-act2-feature {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    margin-bottom: 128px;
-    width: 100%;
-}
-
-.cinematic-showcase {
-    width: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-    aspect-ratio: 21/9;
-    background: var(--bg-color);
-}
-
-.cinematic-showcase video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.9);
-    transition: filter 0.5s ease;
-}
-
-.cinematic-showcase:hover video {
-    filter: brightness(1);
-}
-
-.cinematic-caption-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 32px;
-    align-items: start;
-}
-
-.caption-title {
-    grid-column: 1 / span 4;
-}
-
-.caption-text {
-    grid-column: 6 / span 7;
-}
 
 /* Act 3: Editorial Staart */
 .creative-act3-tail {
@@ -1613,20 +1571,6 @@ footer {
         display: flex;
         flex-direction: column;
         gap: 32px;
-    }
-
-    .creative-act2-feature {
-        gap: 32px;
-    }
-
-    .cinematic-showcase {
-        aspect-ratio: 16/9;
-    }
-
-    .cinematic-caption-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
     }
 
     .tail-row.reversed {
@@ -1773,6 +1717,25 @@ footer {
     }
 }
 
+/* --- About Page Asymmetric Manifesto Grid (V81) --- */
+@media (min-width: 769px) {
+    /* Rij 1: Reality (4 links, 4 rechts, 4 leeg) */
+    .about-page .rd-row:nth-child(1) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-row:nth-child(1) .text-content { grid-column: 8 / span 4; }
+
+    /* Rij 2: Scope - Reversed (4 rechts uitgelijnd, 4 links, 4 leeg in het midden) */
+    .about-page .rd-row.reversed:nth-child(2) .section-title { grid-column: 9 / span 4; text-align: right; }
+    .about-page .rd-row.reversed:nth-child(2) .text-content { grid-column: 2 / span 4; }
+
+    /* Rij 3: Origin (Extreem links gewicht) */
+    .about-page .rd-row:nth-child(3) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-row:nth-child(3) .text-content { grid-column: 6 / span 5; }
+
+    /* Rij 4: Method - Reversed (Extreem rechts gewicht) */
+    .about-page .rd-row.reversed:nth-child(4) .section-title { grid-column: 8 / span 5; text-align: left; }
+    .about-page .rd-row.reversed:nth-child(4) .text-content { grid-column: 2 / span 4; }
+}
+
 /* De Outro Statement */
 .service-outro {
     grid-column: 2 / span 10;
@@ -1837,26 +1800,40 @@ footer {
 }
 
 /* Act 2: Cinematic Break */
-.podcast-act2-break {
-    width: 100%;
-    margin-bottom: 96px;
-    border-radius: 24px;
+/* --- Full Bleed Cinematic Breaks (V81) --- */
+.full-bleed-break {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 75vh;
     overflow: hidden;
+    margin-top: 128px;
+    margin-bottom: 128px;
 }
 
-.podcast-act2-break img {
+.full-bleed-break img,
+.full-bleed-break video {
     width: 100%;
-    height: auto;
-    aspect-ratio: 21/9;
-    /* Extra wijd 'cinematic' formaat */
+    height: 100%;
     object-fit: cover;
-    filter: grayscale(100%) brightness(0.6) contrast(1.1);
-    transition: filter 0.5s ease, transform 0.5s ease;
+    filter: grayscale(80%) brightness(0.6) contrast(1.15);
+    transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.podcast-act2-break:hover img {
-    filter: grayscale(0%) brightness(1) contrast(1);
-    transform: scale(1.02);
+.full-bleed-break:hover img,
+.full-bleed-break:hover video {
+    filter: grayscale(0%) brightness(0.9) contrast(1.1);
+}
+
+@media (max-width: 768px) {
+    .full-bleed-break {
+        height: 50vh;
+        margin-top: 64px;
+        margin-bottom: 64px;
+    }
 }
 
 /* Act 3 */
@@ -1909,10 +1886,6 @@ footer {
         flex-direction: column;
     }
 
-    .podcast-act2-break img {
-        aspect-ratio: 16/9;
-        /* Iets minder wijd op telefoons */
-    }
 }
 
 /* --- About Page Split Header (V71) --- */
