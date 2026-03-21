@@ -1587,6 +1587,17 @@ footer {
     margin-top: 0;
     margin-bottom: 24px;
 }
+
+/* Podcast page: section labels at 1.5rem are unreadable at #0000C5 on #050505 */
+.podcast-grid-act1 .section-title,
+.podcast-grid-act3 .section-title,
+.creative-act1 .section-title,
+.creative-act3-tail .section-title,
+.text-block .section-title {
+    color: var(--gray-color);
+    letter-spacing: 0.1em;
+}
+
 .text-content p {
     font-size: 1.25rem;
     line-height: 1.8;
