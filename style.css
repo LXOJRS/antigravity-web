@@ -1976,20 +1976,23 @@ footer {
     margin-bottom: 64px;
 }
 
-.podcast-act3-col {
-    grid-column: span 5;
-}
-
-.podcast-act3-col:first-child {
-    grid-column: 2 / span 5;
-}
-
-.podcast-grid-act3 .platform-links-centered {
-    grid-column: 1 / -1;
+.podcast-grid-act3 .podcast-text-col {
+    grid-column: 3 / span 8;
+    /* Gecentreerd in het midden (8 kolommen breed) */
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    gap: 48px;
+    text-align: center;
+}
+
+.podcast-grid-act3 .section-title {
+    text-align: center;
+}
+
+.platform-links-centered {
+    display: flex;
     gap: 24px;
-    padding-left: calc((100% / 12) + (48px / 12));
+    justify-content: center;
 }
 
 /* Mobile Responsiveness */
@@ -2006,13 +2009,12 @@ footer {
         margin: 0 auto;
     }
 
-    .podcast-act3-col,
-    .podcast-act3-col:first-child {
-        grid-column: 1 / -1;
+    .podcast-grid-act3 .podcast-text-col,
+    .podcast-grid-act3 .section-title {
+        text-align: left;
     }
 
-    .podcast-grid-act3 .platform-links-centered {
-        padding-left: 0;
+    .platform-links-centered {
         flex-direction: column;
     }
 
