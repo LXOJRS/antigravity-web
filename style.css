@@ -1976,23 +1976,20 @@ footer {
     margin-bottom: 64px;
 }
 
-.podcast-grid-act3 .podcast-text-col {
-    grid-column: 3 / span 8;
-    /* Gecentreerd in het midden (8 kolommen breed) */
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    text-align: center;
+.podcast-act3-col {
+    grid-column: span 5;
 }
 
-.podcast-grid-act3 .section-title {
-    text-align: center;
+.podcast-act3-col:first-child {
+    grid-column: 2 / span 5;
 }
 
-.platform-links-centered {
+.podcast-grid-act3 .platform-links-centered {
+    grid-column: 1 / -1;
     display: flex;
+    justify-content: flex-start;
     gap: 24px;
-    justify-content: center;
+    padding-left: calc((100% / 12) + (48px / 12));
 }
 
 /* Mobile Responsiveness */
@@ -2009,12 +2006,13 @@ footer {
         margin: 0 auto;
     }
 
-    .podcast-grid-act3 .podcast-text-col,
-    .podcast-grid-act3 .section-title {
-        text-align: left;
+    .podcast-act3-col,
+    .podcast-act3-col:first-child {
+        grid-column: 1 / -1;
     }
 
-    .platform-links-centered {
+    .podcast-grid-act3 .platform-links-centered {
+        padding-left: 0;
         flex-direction: column;
     }
 
