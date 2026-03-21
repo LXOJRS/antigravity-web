@@ -314,6 +314,28 @@ a {
     opacity: 0.6;
 }
 
+/* Nav Platform Links (Podcast page) */
+.nav-platform-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 2rem;
+}
+
+.nav-platform-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s var(--easing), opacity 0.3s;
+    padding: 4px;
+}
+
+.nav-platform-btn:hover {
+    color: var(--text-color);
+    opacity: 1;
+}
+
 /* Hamburger Menu */
 .hamburger-btn {
     display: none;
@@ -1587,6 +1609,17 @@ footer {
     margin-top: 0;
     margin-bottom: 24px;
 }
+
+/* Podcast page: section labels at 1.5rem are unreadable at #0000C5 on #050505 */
+.podcast-grid-act1 .section-title,
+.podcast-grid-act3 .section-title,
+.creative-act1 .section-title,
+.creative-act3-tail .section-title,
+.text-block .section-title {
+    color: var(--gray-color);
+    letter-spacing: 0.1em;
+}
+
 .text-content p {
     font-size: 1.25rem;
     line-height: 1.8;
@@ -1944,17 +1977,20 @@ footer {
     margin-bottom: 64px;
 }
 
-.podcast-grid-act3 .podcast-text-col {
-    grid-column: 3 / span 8;
-    /* Gecentreerd in het midden (8 kolommen breed) */
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    text-align: center;
+.podcast-act3-col {
+    grid-column: span 5;
 }
 
-.podcast-grid-act3 .section-title {
-    text-align: center;
+.podcast-act3-col:first-child {
+    grid-column: 2 / span 5;
+}
+
+.podcast-grid-act3 .platform-links-centered {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+    padding-left: calc((100% / 12) + (48px / 12));
 }
 
 .platform-links-centered {
@@ -1977,12 +2013,13 @@ footer {
         margin: 0 auto;
     }
 
-    .podcast-grid-act3 .podcast-text-col,
-    .podcast-grid-act3 .section-title {
-        text-align: left;
+    .podcast-act3-col,
+    .podcast-act3-col:first-child {
+        grid-column: 1 / -1;
     }
 
-    .platform-links-centered {
+    .podcast-grid-act3 .platform-links-centered {
+        padding-left: 0;
         flex-direction: column;
     }
 
