@@ -314,6 +314,27 @@ a {
     opacity: 0.6;
 }
 
+.nav-platform-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 2rem;
+}
+
+.nav-platform-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s var(--easing), opacity 0.3s;
+    padding: 4px;
+}
+
+.nav-platform-btn:hover {
+    color: var(--text-color);
+    opacity: 1;
+}
+
 /* Hamburger Menu */
 .hamburger-btn {
     display: none;
