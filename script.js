@@ -516,8 +516,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Full-Bleed Break Parallax ---
     const fullBleedMedia = document.querySelectorAll('.full-bleed-break img, .full-bleed-break video');
     fullBleedMedia.forEach(media => {
+        const isVideo = media.tagName === 'VIDEO';
         gsap.to(media, {
-            yPercent: 15,
+            yPercent: isVideo ? 5 : 15, // Reduced travel for video to avoid showing edges
             ease: 'none',
             scrollTrigger: {
                 trigger: media.closest('.full-bleed-break'),

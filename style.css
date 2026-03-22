@@ -2279,11 +2279,6 @@ footer {
 
 /* --- Creative Building Page Elevation (V89) --- */
 
-/* Creative page scoped container padding */
-.creative-page .container {
-    padding-bottom: 128px;
-}
-
 /* Creative page section titles — proper hierarchy */
 .creative-page .section-title {
     font-size: clamp(2rem, 3.5vw, 3rem);
@@ -2295,6 +2290,19 @@ footer {
 /* Text-block spacing in Act 1 (replaces inline style) */
 .creative-act1 .text-block + .text-block {
     margin-top: 64px;
+}
+
+/* Act 1 portrait video — depth and atmosphere */
+.creative-act1 .portrait-video {
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Sticky video — pins while reading Medium + Perspective text */
+.creative-act1 .creative-visual-col {
+    position: sticky;
+    top: 120px;
+    align-self: start;
 }
 
 /* --- Creative Page: Application Section (Visual + Text Paired) --- */
@@ -2325,6 +2333,11 @@ footer {
         flex-direction: column;
         gap: 32px;
     }
+}
+
+/* Reduced zoom for video in full-bleed break — avoids compression artifacts */
+.creative-page .full-bleed-break video {
+    transform: scale(1.05);
 }
 
 /* Creative page outro separator */
