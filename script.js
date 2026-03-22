@@ -414,4 +414,122 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
+
+    // --- Podcast Episode Expand/Collapse ---
+    const episodeRows = document.querySelectorAll('.episode-row');
+    episodeRows.forEach(row => {
+        const header = row.querySelector('.episode-header');
+        const toggle = row.querySelector('.episode-toggle');
+
+        if (header) {
+            header.addEventListener('click', () => {
+                const isExpanded = row.classList.contains('expanded');
+
+                // Close all other rows first (accordion behavior)
+                episodeRows.forEach(otherRow => {
+                    if (otherRow !== row) {
+                        otherRow.classList.remove('expanded');
+                        const otherToggle = otherRow.querySelector('.episode-toggle');
+                        if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Toggle this row
+                row.classList.toggle('expanded');
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', !isExpanded);
+                }
+            });
+        }
+    });
+
+    // --- Episode Row Stagger Reveal ---
+    const episodeRowsForAnim = document.querySelectorAll('.episode-row');
+    if (episodeRowsForAnim.length > 0) {
+        gsap.fromTo(episodeRowsForAnim,
+            { opacity: 0, y: 30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.episode-list',
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    }
+
+    // --- Text Block Stagger Reveal (Subpages) ---
+    const textBlocks = document.querySelectorAll('.text-block');
+    if (textBlocks.length > 0) {
+        textBlocks.forEach(block => {
+            gsap.fromTo(block,
+                { opacity: 0, y: 40 },
+                {
+                    opacity: 1, y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: block,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+    }
+
+    // --- Full-Bleed Break Parallax ---
+    const fullBleedImg = document.querySelector('.full-bleed-break img');
+    if (fullBleedImg) {
+        gsap.to(fullBleedImg, {
+            yPercent: 15,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.full-bleed-break',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+    }
+
+    // --- Podcast Closing CTA Reveal ---
+    const podcastClosing = document.querySelector('.podcast-closing');
+    if (podcastClosing) {
+        gsap.fromTo(podcastClosing,
+            { opacity: 0, scale: 0.95, y: 40 },
+            {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power4.out',
+                scrollTrigger: {
+                    trigger: podcastClosing,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    }
+
+    // --- Monument Text Horizontal Parallax ---
+    const monumentTexts = document.querySelectorAll('.monument-text');
+    monumentTexts.forEach(text => {
+        gsap.to(text, {
+            xPercent: -10,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: text.closest('.typo-monument') || text.closest('.podcast-closing-monument'),
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+    });
 });
