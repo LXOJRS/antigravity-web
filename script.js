@@ -415,27 +415,57 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    // --- Podcast Episode Expand/Collapse ---
+    // --- Podcast Episode Expand/Collapse (GSAP-driven) ---
     const episodeRows = document.querySelectorAll('.episode-row');
     episodeRows.forEach(row => {
         const header = row.querySelector('.episode-header');
+        const expandEl = row.querySelector('.episode-expand');
         const toggle = row.querySelector('.episode-toggle');
 
-        if (header) {
+        if (header && expandEl) {
+            // Set initial state
+            gsap.set(expandEl, { height: 0, overflow: 'hidden' });
+
             header.addEventListener('click', () => {
                 const isExpanded = row.classList.contains('expanded');
 
                 // Close all other rows first (accordion behavior)
                 episodeRows.forEach(otherRow => {
-                    if (otherRow !== row) {
+                    if (otherRow !== row && otherRow.classList.contains('expanded')) {
                         otherRow.classList.remove('expanded');
+                        const otherExpand = otherRow.querySelector('.episode-expand');
                         const otherToggle = otherRow.querySelector('.episode-toggle');
+                        if (otherExpand) {
+                            gsap.to(otherExpand, {
+                                height: 0,
+                                duration: 0.4,
+                                ease: 'power2.inOut'
+                            });
+                        }
                         if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
                     }
                 });
 
                 // Toggle this row
-                row.classList.toggle('expanded');
+                if (isExpanded) {
+                    // Collapse
+                    row.classList.remove('expanded');
+                    gsap.to(expandEl, {
+                        height: 0,
+                        duration: 0.4,
+                        ease: 'power2.inOut'
+                    });
+                } else {
+                    // Expand
+                    row.classList.add('expanded');
+                    gsap.set(expandEl, { height: 'auto' });
+                    const fullHeight = expandEl.offsetHeight;
+                    gsap.fromTo(expandEl,
+                        { height: 0 },
+                        { height: fullHeight, duration: 0.5, ease: 'power2.out' }
+                    );
+                }
+
                 if (toggle) {
                     toggle.setAttribute('aria-expanded', !isExpanded);
                 }

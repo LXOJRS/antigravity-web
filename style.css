@@ -1824,22 +1824,6 @@ footer {
     padding-left: max(24px, calc((100vw - 1200px) / 2));
 }
 
-/* --- Podcast Banner (Originele, Goede Layout) --- */
-.podcast-act2-break {
-    width: 100%;
-    margin-bottom: 96px;
-    border-radius: 24px;
-    overflow: hidden;
-}
-
-.podcast-act2-break img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 21/9;
-    object-fit: cover;
-    filter: grayscale(100%) brightness(0.6) contrast(1.1);
-}
-
 /* --- Full Bleed Cinematic Breaks (V81) --- */
 .full-bleed-break {
     width: 100vw;
@@ -1861,6 +1845,7 @@ footer {
     object-fit: cover;
     filter: grayscale(80%) brightness(0.6) contrast(1.15);
     transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: scale(1.15);
 }
 
 .full-bleed-break:hover img,
@@ -1936,27 +1921,6 @@ footer {
     }
 }
 
-/* Act 3 */
-.podcast-grid-act3 {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 48px;
-    margin-bottom: 64px;
-}
-
-.podcast-grid-act3 .podcast-text-col {
-    grid-column: 3 / span 8;
-    /* Gecentreerd in het midden (8 kolommen breed) */
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    text-align: center;
-}
-
-.podcast-grid-act3 .section-title {
-    text-align: center;
-}
-
 .platform-links-centered {
     display: flex;
     gap: 24px;
@@ -1965,8 +1929,7 @@ footer {
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .podcast-grid-act1,
-    .podcast-grid-act3 {
+    .podcast-grid-act1 {
         display: flex;
         flex-direction: column;
         gap: 48px;
@@ -1977,13 +1940,14 @@ footer {
         margin: 0 auto;
     }
 
-    .podcast-grid-act3 .podcast-text-col,
-    .podcast-grid-act3 .section-title {
-        text-align: left;
-    }
-
     .platform-links-centered {
         flex-direction: column;
+        align-items: stretch;
+    }
+
+    .platform-links-centered .contact-btn {
+        width: 100%;
+        justify-content: center;
     }
 
 }
@@ -2098,11 +2062,25 @@ footer {
     align-items: center;
     padding: 32px 0;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .episode-header:hover {
-    opacity: 0.7;
+    opacity: 1;
+    padding-left: 12px;
+}
+
+.episode-header:hover .episode-title {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.episode-header:hover .episode-number {
+    color: var(--text-color);
+}
+
+.episode-header:hover .episode-toggle {
+    border-color: var(--text-color);
+    transform: scale(1.05);
 }
 
 .episode-number {
@@ -2121,18 +2099,20 @@ footer {
 }
 
 .episode-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 700;
     color: var(--text-color);
     line-height: 1.3;
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
 .episode-tagline {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
     margin: 0;
     line-height: 1.5;
+    font-style: italic;
 }
 
 .episode-toggle {
@@ -2165,15 +2145,9 @@ footer {
     transform: rotate(45deg);
 }
 
-/* Expandable body — collapsed by default */
+/* Expandable body — collapsed by default, GSAP handles height animation */
 .episode-expand {
-    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.6s var(--easing);
-}
-
-.episode-row.expanded .episode-expand {
-    max-height: 600px; /* Large enough for content + embed */
 }
 
 .episode-body {
@@ -2214,6 +2188,7 @@ footer {
 
     .episode-title {
         font-size: 1.1rem;
+        letter-spacing: -0.01em;
     }
 
     .episode-tagline {
@@ -2228,7 +2203,8 @@ footer {
 /* --- Podcast Closing CTA --- */
 .podcast-closing {
     text-align: center;
-    padding: 64px 0 96px;
+    padding: 96px 0 96px;
+    margin-top: 64px;
 }
 
 .podcast-closing .section-label {
@@ -2236,14 +2212,14 @@ footer {
 }
 
 .podcast-closing-monument {
-    margin: 32px 0;
+    margin: 0 0 32px 0;
 }
 
 .podcast-closing-monument .monument-text {
-    /* Inherits from existing .monument-text — just override padding for centered layout */
+    /* Override the default left-padding from .monument-text to center it */
     padding-left: 0;
     text-align: center;
-    display: block;
+    width: 100%;
 }
 
 .podcast-closing-text {
@@ -2262,4 +2238,15 @@ footer {
 
 .podcast-page .service-intro {
     color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 32px; /* Reduced because CTA buttons follow immediately */
+}
+
+/* Reduce gap between monument and full-bleed break on podcast page */
+.podcast-page .typo-monument + .full-bleed-break {
+    margin-top: 0;
+}
+
+/* Subtle glow on blue section titles for better readability */
+.podcast-page .section-title {
+    text-shadow: 0 0 30px rgba(0, 0, 197, 0.25);
 }
