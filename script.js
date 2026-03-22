@@ -514,19 +514,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Full-Bleed Break Parallax ---
-    const fullBleedImg = document.querySelector('.full-bleed-break img');
-    if (fullBleedImg) {
-        gsap.to(fullBleedImg, {
+    const fullBleedImgs = document.querySelectorAll('.full-bleed-break img');
+    fullBleedImgs.forEach(img => {
+        gsap.to(img, {
             yPercent: 15,
             ease: 'none',
             scrollTrigger: {
-                trigger: '.full-bleed-break',
+                trigger: img.closest('.full-bleed-break'),
                 start: 'top bottom',
                 end: 'bottom top',
                 scrub: true
             }
         });
-    }
+    });
 
     // --- Podcast Closing CTA Reveal ---
     const podcastClosing = document.querySelector('.podcast-closing');

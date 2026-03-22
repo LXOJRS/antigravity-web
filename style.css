@@ -1717,23 +1717,31 @@ footer {
     }
 }
 
+/* --- rd-row separators --- */
+.rd-row + .rd-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- About Page: first grid margin override (full-bleed-break provides spacing) --- */
+.about-page .rd-grid:first-of-type {
+    margin-bottom: 0;
+}
+
 /* --- About Page Asymmetric Manifesto Grid (V81) --- */
 @media (min-width: 769px) {
-    /* Rij 1: Reality (4 links, 4 rechts, 4 leeg) */
+    /* Grid 1 — rows 1 and 2 */
     .about-page .rd-row:nth-child(1) .section-title { grid-column: 1 / span 4; }
     .about-page .rd-row:nth-child(1) .text-content { grid-column: 8 / span 4; }
 
-    /* Rij 2: Scope - Reversed (4 rechts uitgelijnd, 4 links, 4 leeg in het midden) */
     .about-page .rd-row.reversed:nth-child(2) .section-title { grid-column: 9 / span 4; text-align: right; }
     .about-page .rd-row.reversed:nth-child(2) .text-content { grid-column: 2 / span 4; }
 
-    /* Rij 3: Origin (Extreem links gewicht) */
-    .about-page .rd-row:nth-child(3) .section-title { grid-column: 1 / span 4; }
-    .about-page .rd-row:nth-child(3) .text-content { grid-column: 6 / span 5; }
+    /* Grid 2 — rows 3 and 4 (now nth-child 1 and 2 in the second grid) */
+    .about-page .rd-grid-part2 .rd-row:nth-child(1) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-grid-part2 .rd-row:nth-child(1) .text-content { grid-column: 6 / span 5; }
 
-    /* Rij 4: Method - Reversed (Extreem rechts gewicht) */
-    .about-page .rd-row.reversed:nth-child(4) .section-title { grid-column: 8 / span 5; text-align: left; }
-    .about-page .rd-row.reversed:nth-child(4) .text-content { grid-column: 2 / span 4; }
+    .about-page .rd-grid-part2 .rd-row.reversed:nth-child(2) .section-title { grid-column: 8 / span 5; text-align: left; }
+    .about-page .rd-grid-part2 .rd-row.reversed:nth-child(2) .text-content { grid-column: 2 / span 4; }
 }
 
 /* De Outro Statement */
@@ -2006,7 +2014,7 @@ footer {
 .about-portrait img {
     width: 100%;
     height: auto;
-    border-radius: 0 0 100px 100px;
+    border-radius: 24px;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 197, 0.15));
 }
 
@@ -2261,4 +2269,56 @@ footer {
 
 .podcast-page .back-btn {
     margin-top: 32px;
+}
+
+/* --- About Page Elevation (V88) --- */
+
+/* Subtle film grain texture — about page */
+.about-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Closing statement — elevated hierarchy */
+.about-page .service-outro {
+    margin-bottom: 64px;
+    padding-top: 96px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.outro-statement {
+    font-size: clamp(2.5rem, 4.5vw, 4rem) !important;
+    line-height: 1.15 !important;
+    font-weight: 600 !important;
+    color: var(--text-color) !important;
+    max-width: 900px;
+    margin: 0 auto 40px !important;
+}
+
+.outro-aside {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .outro-statement {
+        font-size: 2rem !important;
+        text-align: left !important;
+    }
+    .outro-aside {
+        text-align: left;
+        font-size: 1.1rem;
+    }
 }
