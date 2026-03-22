@@ -518,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fullBleedMedia.forEach(media => {
         const isVideo = media.tagName === 'VIDEO';
         gsap.to(media, {
-            yPercent: isVideo ? 5 : 15, // Reduced travel for video to avoid showing edges
+            yPercent: isVideo ? 0 : 15, // Reduced travel for video to avoid showing edges
             ease: 'none',
             scrollTrigger: {
                 trigger: media.closest('.full-bleed-break'),
