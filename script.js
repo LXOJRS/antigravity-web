@@ -514,19 +514,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Full-Bleed Break Parallax ---
-    const fullBleedImgs = document.querySelectorAll('.full-bleed-break img');
-    fullBleedImgs.forEach(img => {
-        gsap.to(img, {
+    const fullBleedMedia = document.querySelectorAll('.full-bleed-break img, .full-bleed-break video');
+    fullBleedMedia.forEach(media => {
+        gsap.to(media, {
             yPercent: 15,
             ease: 'none',
             scrollTrigger: {
-                trigger: img.closest('.full-bleed-break'),
+                trigger: media.closest('.full-bleed-break'),
                 start: 'top bottom',
                 end: 'bottom top',
                 scrub: true
             }
         });
     });
+
+    // --- Cinematic Showcase Parallax ---
+    const cinematicVideo = document.querySelector('.cinematic-showcase video');
+    if (cinematicVideo) {
+        gsap.to(cinematicVideo, {
+            yPercent: 10,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.cinematic-showcase',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+    }
 
     // --- Podcast Closing CTA Reveal ---
     const podcastClosing = document.querySelector('.podcast-closing');

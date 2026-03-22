@@ -1524,58 +1524,12 @@ footer {
 
 /* Act 2: Main Feature (Unobstructed Showcase V76) */
 
-/* Act 3: Editorial Staart */
-.creative-act3-tail {
-    display: flex;
-    flex-direction: column;
-    gap: 96px;
-    margin-bottom: 128px;
-}
-
-.tail-row {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 48px;
-    align-items: center;
-}
-
-.tail-row .tail-text {
-    grid-column: 1 / span 5;
-}
-
-.tail-row .tail-visual {
-    grid-column: 7 / span 6;
-}
-
-.tail-row.reversed .tail-text {
-    grid-column: 8 / span 5;
-}
-
-.tail-row.reversed .tail-visual {
-    grid-column: 1 / span 6;
-}
-
-.tail-visual img,
-.tail-visual video {
-    width: 100%;
-    border-radius: 24px;
-    object-fit: cover;
-    aspect-ratio: 4/3;
-}
-
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .creative-act1,
-    .tail-row,
-    .tail-row.reversed {
+    .creative-act1 {
         display: flex;
         flex-direction: column;
         gap: 32px;
-    }
-
-    .tail-row.reversed {
-        flex-direction: column-reverse;
-        /* Op mobiel altijd visual boven tekst */
     }
 }
 
@@ -2321,4 +2275,75 @@ footer {
         text-align: left;
         font-size: 1.1rem;
     }
+}
+
+/* --- Creative Building Page Elevation (V89) --- */
+
+/* Creative page scoped container padding */
+.creative-page .container {
+    padding-bottom: 128px;
+}
+
+/* Creative page section titles — proper hierarchy */
+.creative-page .section-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(0, 0, 197, 0.25);
+}
+
+/* Text-block spacing in Act 1 (replaces inline style) */
+.creative-act1 .text-block + .text-block {
+    margin-top: 64px;
+}
+
+/* --- Creative Page: Application Section (Visual + Text Paired) --- */
+.creative-act-application {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 48px;
+    margin-bottom: 128px;
+    align-items: center;
+}
+
+.creative-act-application .application-visual-col {
+    grid-column: 1 / span 5;
+}
+
+.creative-act-application .application-text-col {
+    grid-column: 7 / span 6;
+}
+
+/* Override portrait-video aspect ratio for landscape video in application section */
+.creative-act-application .portrait-video {
+    aspect-ratio: 4/3;
+}
+
+@media (max-width: 768px) {
+    .creative-act-application {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+}
+
+/* Creative page outro separator */
+.creative-page .service-outro {
+    padding-top: 96px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 64px;
+}
+
+/* Subtle film grain texture — creative page */
+.creative-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
 }
