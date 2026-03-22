@@ -2304,6 +2304,14 @@ footer {
     margin-top: 64px;
 }
 
+/* Act 1 text — editorial treatment next to portrait video */
+.creative-act1 .text-content p {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 300;
+}
+
 /* Portrait video wrapper — depth via the column, not the video element */
 .creative-act1 .creative-visual-col {
     position: sticky;
@@ -2328,6 +2336,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 48px;
+    margin-top: 96px;
     margin-bottom: 128px;
     align-items: center;
 }
@@ -2355,10 +2364,17 @@ footer {
 
 /* Creative page break video — respects natural 4:3 aspect ratio */
 .creative-break-video {
-    width: 100%;
-    margin: 96px 0;
+    width: 75%;
+    max-width: 800px;
+    margin: 96px auto;
     border-radius: 24px;
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .creative-break-video {
+        width: 100%;
+    }
 }
 
 .creative-break-video video {
