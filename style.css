@@ -1858,6 +1858,7 @@ footer {
     object-fit: cover;
     filter: brightness(0.85);
     transition: filter 0.5s ease;
+    border-radius: 24px 0 0 24px;
 }
 
 .cinematic-showcase:hover video {
@@ -2281,7 +2282,7 @@ footer {
 
 /* Fix cinematic showcase — eliminate gap and ensure full bleed */
 .creative-page .creative-act2-feature {
-    margin-bottom: 64px;
+    margin-bottom: 0;
     overflow: visible;
 }
 
@@ -2309,11 +2310,12 @@ footer {
     top: 100px;
     align-self: start;
     border-radius: 24px;
-    box-shadow:
-        0 32px 80px rgba(0, 0, 0, 0.5),
-        0 12px 32px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.06);
     overflow: hidden;
+    /* Light glow — creates depth on dark backgrounds (opposite of shadow) */
+    box-shadow:
+        0 0 60px rgba(255, 255, 255, 0.06),
+        0 0 120px rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Remove border-radius from the video itself — the wrapper handles it */
@@ -2351,13 +2353,24 @@ footer {
     }
 }
 
-/* Reduce full-bleed height for creative page — video is 4:3, container is too wide/short at 75vh */
-.creative-page .full-bleed-break {
-    height: 56vh;
+/* Creative page break video — respects natural 4:3 aspect ratio */
+.creative-break-video {
+    width: 100%;
+    margin: 96px 0;
+    border-radius: 24px;
+    overflow: hidden;
 }
 
-.creative-page .full-bleed-break video {
-    transform: scale(1.0); /* No zoom — let object-fit: cover handle alignment naturally */
+.creative-break-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.85);
+    transition: filter 0.5s ease;
+}
+
+.creative-break-video:hover video {
+    filter: brightness(1);
 }
 
 /* Creative page outro separator */
@@ -2390,9 +2403,9 @@ footer {
 }
 
 .creative-page .outro-aside {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 300;
-    letter-spacing: 0.01em;
-    max-width: 500px;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 400;
+    letter-spacing: 0;
+    max-width: 600px;
 }
