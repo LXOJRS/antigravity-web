@@ -427,8 +427,16 @@ a {
 .hero-subtitle {
     font-size: 1.2rem;
     color: var(--gray-color);
-    display: flex;
-    justify-content: center;
+    display: block;
+    text-align: center;
+}
+
+/* Hero rotating word (V95). min-width accommodates the longest word ("consulting")
+   so the surrounding sentence does not shift as the word cycles. */
+.hero-rotate {
+    display: inline-block;
+    min-width: 11ch;
+    text-align: center;
 }
 
 .type-text {

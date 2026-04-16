@@ -175,11 +175,42 @@ document.addEventListener("DOMContentLoaded", () => {
             stagger: 0.1,
             delay: 0.5
         })
-        .to('.type-text', {
-            text: "AI Adoption & Training for the Future",
-            duration: 3,
-            ease: "none"
-        }, '-=0.5');
+        .from('.hero-subtitle', {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            ease: 'power2.out'
+        }, '-=0.4');
+
+    // --- Hero subtitle rotating word (V95) ---
+    const heroRotate = document.querySelector('.hero-rotate');
+    if (heroRotate) {
+        const heroWords = ['training', 'consulting', 'visuals'];
+        let heroWordIndex = 0;
+
+        const cycleHeroWord = () => {
+            const nextIndex = (heroWordIndex + 1) % heroWords.length;
+            gsap.to(heroRotate, {
+                yPercent: -40,
+                opacity: 0,
+                duration: 0.35,
+                ease: 'power2.in',
+                onComplete: () => {
+                    heroRotate.textContent = heroWords[nextIndex];
+                    gsap.fromTo(heroRotate,
+                        { yPercent: 40, opacity: 0 },
+                        { yPercent: 0, opacity: 1, duration: 0.45, ease: 'power2.out' }
+                    );
+                    heroWordIndex = nextIndex;
+                }
+            });
+        };
+
+        // Start rotating after the hero title + subtitle animations settle.
+        setTimeout(() => {
+            setInterval(cycleHeroWord, 2800);
+        }, 3200);
+    }
 
     // --- Section Animations ---
     const sections = document.querySelectorAll('section:not(.hero):not(.insights):not(.typography-portal)');
