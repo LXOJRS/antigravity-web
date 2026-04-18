@@ -1,8 +1,8 @@
 ﻿:root {
     --bg-color: #050505;
     --text-color: #ffffff;
-    --accent-color: #3b82f6;
-    --gray-color: #888888;
+    --accent-color: #BFE8F8;
+    --gray-color: #B3B3B3;
     --font-main: 'Inter', sans-serif;
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -396,7 +396,7 @@ a {
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(4.5rem, 14vw, 13rem);
     line-height: 0.9;
     font-weight: 800;
     letter-spacing: -0.04em;
@@ -440,12 +440,12 @@ a {
 }
 
 .type-text {
-    border-bottom: 2px solid #0000C5;
+    border-bottom: 2px solid #BFE8F8;
     padding-bottom: 2px;
 }
 
 .cursor {
-    color: #0000C5;
+    color: #BFE8F8;
     font-weight: bold;
     animation: blink 1s infinite;
 }
@@ -661,7 +661,7 @@ h2 {
     /* Fallback will handle if not available */
     font-weight: 800;
     font-size: clamp(60px, 8vw, 120px);
-    color: rgba(0, 0, 197, 0.3);
+    color: rgba(191, 232, 248, 0.3);
     line-height: 1;
     text-align: left;
     letter-spacing: -0.04em;
@@ -736,11 +736,11 @@ h2 {
     height: 200%;
     background:
         radial-gradient(ellipse 120% 120% at 75% 25%, #050505 0%, transparent 70%),
-        radial-gradient(ellipse 40% 15% at 25% 65%, rgba(0, 0, 197, 1) 0%, transparent 100%),
+        radial-gradient(ellipse 40% 15% at 25% 65%, rgba(191, 232, 248, 1) 0%, transparent 100%),
         radial-gradient(ellipse 35% 10% at 30% 75%, rgba(219, 186, 149, 0.95) 0%, transparent 100%),
-        radial-gradient(ellipse 25% 12% at 18% 55%, rgba(0, 0, 197, 0.85) 0%, transparent 100%),
+        radial-gradient(ellipse 25% 12% at 18% 55%, rgba(191, 232, 248, 0.85) 0%, transparent 100%),
         radial-gradient(ellipse 20% 8% at 35% 60%, rgba(219, 186, 149, 0.7) 0%, transparent 100%),
-        radial-gradient(ellipse 30% 10% at 40% 50%, rgba(0, 0, 197, 0.3) 0%, transparent 100%);
+        radial-gradient(ellipse 30% 10% at 40% 50%, rgba(191, 232, 248, 0.3) 0%, transparent 100%);
     background-color: #050505;
     animation: fluidMovement 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
     z-index: 0;
@@ -880,7 +880,7 @@ footer {
 /* Tablet & Smaller Laptops (max-width: 1024px) */
 @media (max-width: 1024px) {
     .hero-title {
-        font-size: 10vw;
+        font-size: 13vw;
     }
 
     section {
@@ -1144,7 +1144,7 @@ footer {
 
 .insight-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 30px 60px rgba(0, 0, 197, 0.1);
+    box-shadow: 0 30px 60px rgba(191, 232, 248, 0.1);
 }
 
 .card-link {
@@ -1202,7 +1202,7 @@ footer {
 }
 
 .insight-card:hover h3 {
-    color: #0000C5;
+    color: #BFE8F8;
 }
 
 .read-more {
@@ -1351,7 +1351,7 @@ footer {
 
 /* De Blauwe Accent Stippen */
 .marquee-content .dot {
-    color: #0000C5;
+    color: #BFE8F8;
     /* De blauwe brand kleur */
     -webkit-text-stroke: 0;
     /* Geen omlijning, maar een solide stip */
@@ -1571,7 +1571,7 @@ footer {
 .section-title {
     font-size: 1.5rem;
     text-transform: uppercase;
-    color: #0000C5;
+    color: #BFE8F8;
     margin-top: 0;
     margin-bottom: 24px;
 }
@@ -1632,7 +1632,7 @@ footer {
     font-size: clamp(3rem, 5vw, 4.5rem) !important;
     line-height: 0.95;
     letter-spacing: -0.03em;
-    color: #0000C5;
+    color: #BFE8F8;
     margin-top: -6px;
     white-space: nowrap;
 }
@@ -2004,7 +2004,7 @@ footer {
     width: 100%;
     height: auto;
     border-radius: 24px;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 197, 0.15));
+    filter: drop-shadow(0 20px 40px rgba(191, 232, 248, 0.15));
 }
 
 /* Mobile Responsiveness */
@@ -2106,7 +2106,7 @@ footer {
 
 .episode-tagline {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
     margin: 0;
     line-height: 1.5;
     font-style: italic;
@@ -2249,7 +2249,7 @@ footer {
     font-size: clamp(2rem, 3.5vw, 3rem);
     letter-spacing: -0.02em;
     line-height: 1;
-    text-shadow: 0 0 30px rgba(0, 0, 197, 0.25);
+    text-shadow: 0 0 30px rgba(191, 232, 248, 0.25);
 }
 
 .podcast-episodes .section-title {
@@ -2294,7 +2294,7 @@ footer {
 
 .outro-aside {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     font-weight: 400;
     max-width: 600px;
     margin: 0 auto;
@@ -2330,7 +2330,7 @@ footer {
     font-size: clamp(2rem, 3.5vw, 3rem);
     letter-spacing: -0.02em;
     line-height: 1;
-    text-shadow: 0 0 30px rgba(0, 0, 197, 0.25);
+    text-shadow: 0 0 30px rgba(191, 232, 248, 0.25);
 }
 
 /* Text-block spacing in Act 1 (replaces inline style) */
@@ -2454,7 +2454,7 @@ footer {
 
 .creative-page .outro-aside {
     font-size: 1.15rem;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 400;
     letter-spacing: 0;
     max-width: 600px;
@@ -2538,7 +2538,7 @@ footer {
 
 .pull-quote .pull-quote-aside {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     font-weight: 400;
     max-width: 600px;
     margin: 24px auto 0;
@@ -2574,7 +2574,7 @@ footer {
 /* Highlighted phrase inside a pull-quote. Accent color at full weight.
    Use sparingly: one short phrase per quote, or the emphasis collapses. */
 .pull-quote .highlight {
-    color: #0000C5;
+    color: #BFE8F8;
     font-weight: 700;
 }
 

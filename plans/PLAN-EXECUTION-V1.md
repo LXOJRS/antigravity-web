@@ -336,6 +336,22 @@ If no, the paragraph is doing real work and should stay.
 
 ---
 
+## Foundation tune-ups (V96, between Phase 3 and Phase 4)
+
+Before Phase 4 begins, user requested four foundational changes that affect every subsequent page. These shipped as a single tune-up pass:
+
+1. **Brand accent color changed from `#0000C5` to `#BFE8F8`.** Global find-and-replace in style.css: 15 hex hits plus the rgba(0, 0, 197, ...) variants used in shadows and glows swapped to rgba(191, 232, 248, ...). `--accent-color` variable updated from the unused `#3b82f6` to `#BFE8F8` for future consistency. DESIGN-RULES.md updated. The old deep blue had roughly 1.8:1 contrast on `#050505` and was unreadable; the new light cyan is AAA-level visible while still reading as an accent.
+2. **`--gray-color` lightened from `#888888` to `#B3B3B3`.** Lifts every `var(--gray-color)` reference across the site: hero subtitle, section labels, nav, contact btns, etc.
+3. **Two muted text aside colors bumped:** `rgba(255, 255, 255, 0.45)` raised to `0.65` globally (hit the `.outro-aside` on about and the `.pull-quote .pull-quote-aside` Phase 3 primitive). `.episode-tagline` raised from `0.4` to `0.6` targeted. `.creative-page .outro-aside` raised from `0.55` to `0.7` targeted.
+4. **Hero title size bumped.** `.hero-title` desktop clamp from `clamp(3rem, 8vw, 6rem)` (max 96px) to `clamp(4.5rem, 14vw, 13rem)` (max 208px). Tablet override at max-1024px bumped from `10vw` to `13vw` to prevent a jarring drop at the breakpoint. Mobile overrides at max-768 and below unchanged for now.
+5. **Hero rotating word cadence halved.** `setInterval` 2800ms to 1400ms, initial `setTimeout` 3200ms to 1600ms. Rotation feels twice as fast per user request.
+
+**Cache bumped to `style.css?v=96` and `script.js?v=90` across all five HTML files.**
+
+Open follow-ups if user reports visibility or layout issues after review: (a) at viewport between 1025 and 1440 the hero title sits around 143 to 200px, confirm this feels dominant not oversized, (b) mobile hero overrides at 12vw and 14vw might feel small relative to the new desktop scale but were left alone to avoid scope creep, (c) if the `#BFE8F8` feels too saturated or too pastel in practice, it is a single variable / find-replace to adjust.
+
+---
+
 ## Execution log (update after each phase ships)
 
 - **Phase 1 — Text and proof quick wins:** SHIPPED. Variant C ("AI [training / consulting / visuals] for teams that actually ship.") active on the homepage hero with rotating word animation replacing the typing effect. Homepage about section rewritten with "why should I care" framing plus a content placeholder for the current client line. Homepage contact CTA changed to "Let's talk about what you actually need." MANIFESTO monument deleted from about.html. R&D service-intro gained a Promptgorillas content placeholder inline. R&D outro markup upgraded from bare `<p>` to `.outro-statement` + `.outro-aside` pair with content placeholders. Podcast subtitle changed to "We are the fun AI podcast." style.css bumped to v=94 on index.html; script.js bumped to v=88 across all five pages. Legacy `.type-text` and `.cursor` CSS rules kept in place as dead code (no HTML references them). Outstanding: Alex to fill in the placeholders across index.html (about paragraph 2), service-rd.html (service-intro proof line + outro statement + outro aside), and optionally revisit homepage H2 in a later copy pass.

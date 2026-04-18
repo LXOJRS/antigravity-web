@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Start rotating after the hero title + subtitle animations settle.
         setTimeout(() => {
-            setInterval(cycleHeroWord, 2800);
-        }, 3200);
+            setInterval(cycleHeroWord, 1400);
+        }, 1600);
     }
 
     // --- Section Animations ---

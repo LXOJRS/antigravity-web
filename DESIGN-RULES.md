@@ -2,7 +2,7 @@ Alex.ai - Living Design Rules
 
 
 
-Kleur: #050505 (Background), #ffffff of rgba(255,255,255,0.85) (Tekst), #0000C5 (Accent/Decoratie, NOOIT body tekst).
+Kleur: #050505 (Background), #ffffff of rgba(255,255,255,0.85) (Tekst), #BFE8F8 (Accent/Decoratie, bright cyan. Replaces the old deep blue #0000C5 which failed contrast against the #050505 background. Still intended as an accent, not for long-form body text.).
 
 
 
