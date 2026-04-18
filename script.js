@@ -273,10 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll('.service-card');
 
     cards.forEach((card, index) => {
-        // Add floating animation with random delays
-        card.style.animationDelay = `${index * 0.5}s`;
-        card.classList.add('floating');
-
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -329,11 +325,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    // --- Typography Portal ---
-    const portal = document.querySelector('.typography-portal');
-    const marquee = document.querySelector('.marquee-content');
+    // --- Typography Portal (V95: multi-instance, supports subpage marquees) ---
+    const portals = document.querySelectorAll('.typography-portal');
 
-    if (portal && marquee) {
+    portals.forEach(portal => {
+        const marquee = portal.querySelector('.marquee-content');
+        if (!marquee) return;
+
         // Horizontale Parallax beweging
         gsap.to(marquee, {
             xPercent: -20,
@@ -356,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
             onEnterBack: () => portal.classList.add('pulse'),
             onLeaveBack: () => portal.classList.remove('pulse')
         });
-    }
+    });
 
     // Update de Insights animatie naar een 'staggered reveal'
     const insightCards = document.querySelectorAll('.insight-card');
