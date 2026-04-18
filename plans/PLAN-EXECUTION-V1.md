@@ -415,6 +415,29 @@ All structural work is done. The site is in its new narrative-and-rhythm shape e
 
 ---
 
+## Refinement pass V101 (post-framework cleanup)
+
+After V100 shipped, user scrolled the site end-to-end and flagged six targeted refinements. All shipped in one combined pass.
+
+1. **All 13 chapter labels removed.** 10 subpage `.section-label` instances plus 3 homepage `.label` instances deleted across index, about, podcast, service-rd, creative-building. CSS rules for `.section-label` and `.label` kept in style.css as dead code (no HTML references remain). The site now reads less chapter-bookish, more typographically confident.
+2. **Creative Building Act 1 collapsed to one clean beat.** Old structure had a 12-col grid with two stacked text-blocks (Medium + Perspective) plus a sticky portrait video on the right. Restructured to a single `.text-block` inside `.creative-act1` occupying col 2/span 10, with one `[CONTENT: ...]` placeholder merging the old Medium and Perspective copy. Portrait video deleted entirely. `.creative-act1` CSS collapsed from 2-col grid to block-level grid item. Dead `.creative-text-col` and `.creative-visual-col` CSS rules left in place (harmless).
+3. **Creative Building Application section is text-only.** Old 2-col grid with a portrait-video on the left at `aspect-ratio: 4/3` (the "small 1:1 box") and text on the right. Visual-col and video deleted. `.creative-act-application` collapsed to a single grid item at col 2/span 10. Application CSS cleaned: removed `.application-visual-col`, `.application-text-col`, `.portrait-video aspect-ratio` overrides, and the mobile flex override. Text beat is now clean and matches the site's rhythm where text carries meaning and full-bleed moments carry visuals.
+4. **In Production section moved up and Promptgorillas now shows real shipping video.** Section repositioned from near the bottom of creative-building (after cinematic-showcase, Application, break video) to immediately after the merged Act 1 text block, before the `CREATE` monument. New page flow: philosophy intro → commercial shipping work → CREATE monument → medium exploration → outro. Commercial-first narrative. Promptgorillas card's placeholder `<img>` swapped for a `<video autoplay loop muted playsinline>` element pointing at the real Cloudinary URL (`https://res.cloudinary.com/dnkcu6lne/video/upload/v1776539032/Schermopname_2026-04-18_om_20.52.47_ykurwi.mp4`). Chris le More card still uses placeholder SVG. `.service-card` CSS extended with a combined `.service-card img, .service-card video` selector so the video inherits the same absolute-positioned background treatment with hover filter/scale transitions.
+5. **Selected centered content left-aligned.** `.service-outro` flipped from `text-align: center; grid-column: 2 / span 10; padding: 0 1rem` to `text-align: left; grid-column: 1 / span 9; padding: 0`. `.service-outro p`, `.outro-statement`, and `.outro-aside` margins changed from `0 auto` / `0 auto 40px` to `0` / `0 0 40px` so the text anchors to the left edge. `.in-production-cta` flipped from `text-align: center; margin: 80px auto 0; padding: 0 24px` to `text-align: left; margin: 80px 0 0; padding: 0`. Affects outros on about, R&D, creative-building and the booking CTA block on creative-building. Longer quotes now read as editorial statements instead of centered poems. Hero, contact, and podcast closing stay centered (intentional arrival/exit/climax moments).
+6. **Service cards noticeably bigger.** Desktop staggered heights 560 / 480+80 / 520+40 bumped to 720 / 620+80 / 680+40. Base `.service-card` padding 4rem 3rem → 5rem 4rem and min-height 500 → 600. `.service-card h3` 1.5rem → `clamp(1.75rem, 2.2vw, 2.25rem)` with margin-bottom 1rem → 1.5rem. `.service-card p` gained explicit `font-size: 1.15rem; line-height: 1.6`. `.card-index` size `clamp(60px, 8vw, 120px)` → `clamp(80px, 10vw, 160px)`. Homepage service cards now dominate the visual hierarchy.
+
+Creative-building outro content was also converted to `[CONTENT: ...]` placeholders with the existing em-dash line flagged for rewrite during content fill-in.
+
+Cache bumped to `style.css?v=101` across all five HTML files. `script.js?v=90` unchanged since no JS work.
+
+**Outstanding after V101:**
+- Chris le More card still shows placeholder SVG; swap `<img src>` with a Cloudinary URL of real AI shots when available.
+- All `[CONTENT: ...]` placeholders across all pages still need fill-in from user.
+- Em dash cleanup pass still deferred (podcast episode taglines/bodies, creative-building outro copy during rewrite).
+- Creative-building.html still has dead CSS for removed classes (`.creative-text-col`, `.creative-visual-col`, `.application-visual-col`, `.application-text-col`, `.portrait-video`). Safe to leave; clean up in a future refactor.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.

@@ -579,7 +579,7 @@ h2 {
 }
 
 .service-card {
-    padding: 4rem 3rem;
+    padding: 5rem 4rem;
     transition: background-color 0.3s, transform 0.3s;
 
     /* New Portrait Styling */
@@ -588,7 +588,7 @@ h2 {
     justify-content: flex-end;
     position: relative;
     overflow: hidden;
-    min-height: 500px;
+    min-height: 600px;
     isolation: isolate;
     /* Create new stacking context */
 }
@@ -621,21 +621,22 @@ h2 {
    cards collapse to a single column and the staircase offsets would look odd). */
 @media (min-width: 769px) {
     .service-card:nth-child(1) {
-        min-height: 560px;
+        min-height: 720px;
     }
 
     .service-card:nth-child(2) {
-        min-height: 480px;
+        min-height: 620px;
         margin-top: 80px;
     }
 
     .service-card:nth-child(3) {
-        min-height: 520px;
+        min-height: 680px;
         margin-top: 40px;
     }
 }
 
-.service-card img {
+.service-card img,
+.service-card video {
     position: absolute;
     top: 0;
     left: 0;
@@ -649,7 +650,8 @@ h2 {
     transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.service-card:hover img {
+.service-card:hover img,
+.service-card:hover video {
     filter: grayscale(0%) brightness(0.95) contrast(1.1) sepia(0%);
     transform: scale(1.03);
 }
@@ -662,7 +664,7 @@ h2 {
     font-family: 'Helvetica Now Extended', sans-serif;
     /* Fallback will handle if not available */
     font-weight: 800;
-    font-size: clamp(60px, 8vw, 120px);
+    font-size: clamp(80px, 10vw, 160px);
     color: rgba(191, 232, 248, 0.3);
     line-height: 1;
     text-align: left;
@@ -703,15 +705,16 @@ h2 {
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: clamp(1.75rem, 2.2vw, 2.25rem);
+    margin-bottom: 1.5rem;
     position: relative;
     z-index: 2;
 }
 
 .service-card p {
     color: rgba(255, 255, 255, 0.9);
-    line-height: 1.5;
+    font-size: 1.15rem;
+    line-height: 1.6;
     position: relative;
     z-index: 2;
 }
@@ -1528,11 +1531,11 @@ footer {
 
 /* --- Creative Building Cinematic Gallery (V76) --- */
 
-/* Act 1 */
+/* Act 1 (V101: collapsed from 2-col grid into single text block at left-biased column
+   after the portrait video and perspective text-block were removed. The .creative-text-col
+   and .creative-visual-col rules are dead (no HTML references) but left for safety. */
 .creative-act1 {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 48px;
+    grid-column: 2 / span 10;
     margin-bottom: 128px;
 }
 
@@ -1745,12 +1748,12 @@ footer {
     .about-page .rd-grid-part2 .rd-row.inverted .text-content { grid-column: 5 / span 8; }
 }
 
-/* De Outro Statement */
+/* De Outro Statement (V101: left-aligned so longer outros read cleanly) */
 .service-outro {
-    grid-column: 2 / span 10;
-    text-align: center;
+    grid-column: 1 / span 9;
+    text-align: left;
     margin-bottom: 96px;
-    padding: 0 1rem;
+    padding: 0;
 }
 
 .service-outro p {
@@ -1759,7 +1762,7 @@ footer {
     color: var(--text-color);
     font-weight: 500;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 0;
 }
 
 @media (max-width: 768px) {
@@ -2306,7 +2309,7 @@ footer {
     font-weight: 600 !important;
     color: var(--text-color) !important;
     max-width: 900px;
-    margin: 0 auto 40px !important;
+    margin: 0 0 40px !important;
 }
 
 .outro-aside {
@@ -2314,7 +2317,7 @@ footer {
     color: rgba(255, 255, 255, 0.65);
     font-weight: 400;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0;
     line-height: 1.6;
 }
 
@@ -2382,35 +2385,11 @@ footer {
     border-radius: 0;
 }
 
-/* --- Creative Page: Application Section (Visual + Text Paired) --- */
+/* --- Creative Page: Application Section (V101: text-only, visual-col removed) --- */
 .creative-act-application {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 48px;
+    grid-column: 2 / span 10;
     margin-top: 96px;
     margin-bottom: 128px;
-    align-items: center;
-}
-
-.creative-act-application .application-visual-col {
-    grid-column: 1 / span 5;
-}
-
-.creative-act-application .application-text-col {
-    grid-column: 7 / span 6;
-}
-
-/* Override portrait-video aspect ratio for landscape video in application section */
-.creative-act-application .portrait-video {
-    aspect-ratio: 4/3;
-}
-
-@media (max-width: 768px) {
-    .creative-act-application {
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-    }
 }
 
 /* Creative page break video — respects natural 4:3 aspect ratio */
@@ -2745,9 +2724,9 @@ footer {
 
 .in-production-cta {
     max-width: 540px;
-    margin: 80px auto 0;
-    text-align: center;
-    padding: 0 24px;
+    margin: 80px 0 0;
+    text-align: left;
+    padding: 0;
 }
 
 .in-production-cta p {
