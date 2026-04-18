@@ -2699,6 +2699,83 @@ footer {
     object-fit: cover;
 }
 
+/* ------------------------------------------------------------
+   Creative Building — In Production section (V100).
+   Real client work showcase. Reuses the homepage .services-grid
+   and .service-card patterns so no new card styling is needed.
+   The staggered heights defined on .service-card:nth-child(n)
+   apply naturally to this grid as well, giving the same jagged
+   top edge and shared-baseline effect.
+
+   Placeholder images are self-contained data-URI SVGs. Swap with
+   real Cloudinary URLs when the client assets are ready. Each
+   card's <img> can also be promoted to <video autoplay loop muted
+   playsinline> for a hero loop without touching this CSS.
+   ------------------------------------------------------------ */
+.in-production {
+    grid-column: 1 / -1;
+    margin-top: 96px;
+    margin-bottom: 128px;
+    position: relative;
+    z-index: 2;
+}
+
+.in-production-header {
+    max-width: 700px;
+    margin-bottom: 64px;
+    padding: 0 24px;
+}
+
+.in-production-header .section-label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.in-production-header .section-title {
+    margin-bottom: 24px;
+}
+
+.in-production-intro {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0;
+}
+
+.in-production-cta {
+    max-width: 540px;
+    margin: 80px auto 0;
+    text-align: center;
+    padding: 0 24px;
+}
+
+.in-production-cta p {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+    .in-production {
+        margin-top: 64px;
+        margin-bottom: 96px;
+    }
+
+    .in-production-header {
+        margin-bottom: 48px;
+    }
+
+    .in-production-intro {
+        font-size: 1.1rem;
+    }
+
+    .in-production-cta {
+        margin-top: 56px;
+    }
+}
+
 @media (max-width: 1024px) {
     .rd-row.inverted .section-title {
         font-size: 1.1rem !important;

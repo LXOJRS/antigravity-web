@@ -383,7 +383,35 @@ Open follow-ups if user reports visibility or layout issues after review: (a) at
   Cache bumped to `style.css?v=99` across all five HTML files; `script.js?v=90` unchanged since no JS work. Outstanding: Alex to fill the one `[CONTENT: ...]` placeholder on podcast.html (Act 1 intro copy, ~50 words).
 
   **Known deferred cleanup:** multiple em dashes remain in existing episode taglines and episode bodies on podcast.html (e.g. `ChatGPT Toxic Masculinity?` tagline uses `—`, the ep. 04 body `"the most romantic — and awkward — scenarios"`, etc.). These were left untouched since they are out of Phase 6 scope (not new content). Flag for a future text cleanup pass alongside the `creative-building.html:144` em dash that was similarly deferred from Phase 1.
-- **Phase 7 — Creative Building In Production:** Not started. Blocked on Alex supplying client media assets. While this phase runs, also clean the em dash currently at `creative-building.html:144` per the voice constraint.
+- **Phase 7 — Creative Building In Production:** SHIPPED WITH PLACEHOLDERS. New `<section class="in-production">` inserted on creative-building.html after the `.creative-break-video` and before the existing outro. Structure: header (`04 / IN PRODUCTION` label + `In production` title + single-line content-placeholder intro) -> reused `.services-grid` with 2 client cards (Promptgorillas + Chris le More, each with a placeholder content-description, a placeholder href, and a self-contained data-URI SVG as placeholder image) -> booking CTA block with a placeholder booking-line and a "Book a project" button linking to `mailto:alexander@promptgorillas.com`.
+
+  The cards use the existing `.service-card` pattern from homepage so no new card CSS was needed. The homepage's staggered-height rules on `.service-card:nth-child(1/2/3)` apply to this grid as well and give it the same jagged-top editorial effect.
+
+  Outro `section-label` renumbered from `04 / CONCLUSION` to `05 / CONCLUSION` to preserve the numbering sequence now that In Production sits ahead of it.
+
+  CSS additions: `.in-production` section wrapper (grid-column 1/-1 within the container), `.in-production-header` (max-width 700px, 64px bottom margin), `.in-production-intro` (1.25rem muted body, 600px max-width), `.in-production-cta` (centered block, 540px max-width, 80px top margin). All appended to the end of style.css after the Phase 6 podcast primitives. Mobile overrides included.
+
+  Cache bumped to `style.css?v=100` across all five HTML files; `script.js?v=90` unchanged since no JS work.
+
+  **Known placeholder state:** cards currently render as dark tiles with card-index numbers, client names, and role-description placeholders. Alex needs to (a) swap each `<img src>` with a Cloudinary URL of real client work, or replace the `<img>` with a `<video autoplay loop muted playsinline>` element for a hero loop, (b) swap each card's `href="#"` with the real destination link, (c) fill the four `[CONTENT: ...]` placeholders (section intro, two card role descriptions, booking-line). The cards will look like real case studies the moment real media lands. Zero structural work required to swap.
+
+---
+
+## Status summary (all seven phases complete)
+
+| Phase | What shipped |
+|---|---|
+| Phase 1 | Text and proof quick wins |
+| Phase 2 | Design polish (ten CSS refinements including service-card Option A) |
+| Phase 3 | Narrative primitives (`.pull-quote` + variants, `.rd-row.inverted`, marquee JS refactor) |
+| Foundation tune-up V96 | Brand color `#BFE8F8`, lighter gray `#B3B3B3`, hero title bumped to `clamp(4.5rem, 14vw, 13rem)`, rotation speed halved |
+| Foundation tune-up V97 | Hero-subtitle scaled to `clamp(1.5rem, 4vw, 3.5rem)` |
+| Phase 4 | About page restructure (rd-grid split around pull-quote, inverted Origin row, page marquee, class-based grid rules) |
+| Phase 5 | R&D page restructure (5 rows → 3 rows + pull-quote, UNCERTAINTY monument, page marquee, generic inverted column override) |
+| Phase 6 | Podcast Act 1 cleanup (top CTAs removed, logo-video relocated to Act 3 mark, display-scale subtitle, Episodes heading → pull-quote) |
+| Phase 7 | Creative Building In Production client-work section with placeholders |
+
+All structural work is done. The site is in its new narrative-and-rhythm shape end-to-end. What remains is content fill-in (placeholders across all pages) and a text cleanup pass for remaining em dashes in podcast episode taglines/bodies and the creative-building outro statement.
 
 ---
 
