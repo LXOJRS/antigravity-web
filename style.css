@@ -2630,6 +2630,7 @@ footer {
    Inherits the base rd-row scroll-reveal automatically.
    ------------------------------------------------------------ */
 .rd-row.inverted .section-title {
+    grid-column: 1 / span 3;
     font-size: 1.25rem !important;
     font-weight: 500;
     color: var(--gray-color);
@@ -2638,6 +2639,13 @@ footer {
     line-height: 1.3;
     white-space: normal;
     margin-top: 0;
+}
+
+/* Wider text-content column on inverted rows so display-weight body breathes.
+   Page-specific rules (e.g. .about-page .rd-grid-part2) can override at higher
+   specificity if a different column placement is needed for that page. */
+.rd-row.inverted .text-content {
+    grid-column: 5 / span 8;
 }
 
 .rd-row.inverted .text-content p {
