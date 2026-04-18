@@ -425,10 +425,12 @@ a {
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
     color: var(--gray-color);
     display: block;
     text-align: center;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
 }
 
 /* Hero rotating word (V95). min-width accommodates the longest word ("consulting")
@@ -1046,7 +1048,7 @@ footer {
         }
 
         .hero-subtitle {
-            font-size: 1rem;
+            font-size: 1.25rem;
             padding: 0 1rem;
         }
 
@@ -1715,21 +1717,32 @@ footer {
     margin-bottom: 0;
 }
 
-/* --- About Page Asymmetric Manifesto Grid (V81) --- */
+/* --- About Page Asymmetric Manifesto Grid (V97: class-based, split for pull-quote) ---
+   Replaces the previous nth-child pattern. The first grid was split in two
+   (rd-grid-part1a and rd-grid-part1b) around the pull-quote in Phase 4, which
+   broke the old nth-child math silently. Class-based targeting is position-
+   independent so future splits or row additions do not regress the layout. */
 @media (min-width: 769px) {
-    /* Grid 1 — rows 1 and 2 */
-    .about-page .rd-row:nth-child(1) .section-title { grid-column: 1 / span 4; }
-    .about-page .rd-row:nth-child(1) .text-content { grid-column: 8 / span 4; }
+    /* Grid 1a: Reality (standard) */
+    .about-page .rd-grid-part1a .rd-row .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-grid-part1a .rd-row .text-content { grid-column: 8 / span 4; }
 
-    .about-page .rd-row.reversed:nth-child(2) .section-title { grid-column: 9 / span 4; text-align: right; }
-    .about-page .rd-row.reversed:nth-child(2) .text-content { grid-column: 2 / span 4; }
+    /* Grid 1b: Scope (reversed) */
+    .about-page .rd-grid-part1b .rd-row.reversed .section-title { grid-column: 9 / span 4; text-align: right; }
+    .about-page .rd-grid-part1b .rd-row.reversed .text-content { grid-column: 2 / span 4; }
 
-    /* Grid 2 — rows 3 and 4 (now nth-child 1 and 2 in the second grid) */
-    .about-page .rd-grid-part2 .rd-row:nth-child(1) .section-title { grid-column: 1 / span 4; }
-    .about-page .rd-grid-part2 .rd-row:nth-child(1) .text-content { grid-column: 6 / span 5; }
+    /* Grid 2: Origin (standard or inverted) + Method (reversed) */
+    .about-page .rd-grid-part2 .rd-row:not(.reversed) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-grid-part2 .rd-row:not(.reversed) .text-content { grid-column: 6 / span 5; }
 
-    .about-page .rd-grid-part2 .rd-row.reversed:nth-child(2) .section-title { grid-column: 8 / span 5; text-align: left; }
-    .about-page .rd-grid-part2 .rd-row.reversed:nth-child(2) .text-content { grid-column: 2 / span 4; }
+    .about-page .rd-grid-part2 .rd-row.reversed .section-title { grid-column: 8 / span 5; text-align: left; }
+    .about-page .rd-grid-part2 .rd-row.reversed .text-content { grid-column: 2 / span 4; }
+
+    /* Inverted rows on About: small title + wider body column for display-weight text.
+       Declared after the :not(.reversed) rule above so source order wins the
+       specificity tie and the inverted row gets the wider text-content slot. */
+    .about-page .rd-grid-part2 .rd-row.inverted .section-title { grid-column: 1 / span 3; }
+    .about-page .rd-grid-part2 .rd-row.inverted .text-content { grid-column: 5 / span 8; }
 }
 
 /* De Outro Statement */
