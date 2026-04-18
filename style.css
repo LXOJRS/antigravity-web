@@ -2248,8 +2248,12 @@ footer {
 }
 
 .podcast-page .service-intro {
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 32px; /* Reduced because CTA buttons follow immediately */
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--text-color);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 96px;
 }
 
 /* Reduce gap between monument and full-bleed break on podcast page */
@@ -2654,6 +2658,45 @@ footer {
     font-weight: 400;
     color: var(--text-color);
     letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------
+   Podcast Phase 6 primitives (V99).
+   ------------------------------------------------------------ */
+
+/* Act 1 intro block: full-width prose replacing the old 2-column grid.
+   Sits in the 12-col container at col 2 / span 10, mirroring the service-intro
+   width so the text feels like a continuation of the subtitle rather than a
+   narrower body block. */
+.podcast-intro-block {
+    grid-column: 2 / span 10;
+    margin-bottom: 96px;
+}
+
+@media (max-width: 768px) {
+    .podcast-intro-block {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Act 3 logo mark: small square video between the PRESS PLAY monument and the
+   "New episodes monthly" line. Mix-blend-mode screen matches the original
+   Act 1 .podcast-logo-wrapper treatment so the video's dark background merges
+   with the page and only the colored parts read. */
+.podcast-closing-mark {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    mix-blend-mode: screen;
+}
+
+.podcast-closing-mark video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @media (max-width: 1024px) {

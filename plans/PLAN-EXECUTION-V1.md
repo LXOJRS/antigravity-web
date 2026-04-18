@@ -369,7 +369,20 @@ Open follow-ups if user reports visibility or layout issues after review: (a) at
   CSS change: generic `.rd-row.inverted .section-title { grid-column: 1 / span 3 }` and `.rd-row.inverted .text-content { grid-column: 5 / span 8 }` added inside the Phase 3 primitives block. This makes the inverted treatment (narrow title, wide body for display-weight text) work consistently across R&D, about, and any future page. The about-page scoped override at `.about-page .rd-grid-part2 .rd-row.inverted ...` still wins via higher specificity on about-page but is now effectively redundant and could be cleaned up in a future pass.
 
   Cache bumped to `style.css?v=98` across all five HTML files; `script.js?v=90` unchanged since no JS work. Outstanding: Alex to fill the three `[CONTENT: ...]` placeholders on service-rd.html (Context merged body, Focus display-weight body, Format body).
-- **Phase 6 — Podcast Act 1 cleanup:** Not started. Blocked on Phase 3.
+- **Phase 6 — Podcast Act 1 cleanup:** SHIPPED. Three structural changes on podcast.html plus the logo-video relocation promised in the V1 plan.
+
+  1. **Top CTA buttons deleted.** The `.platform-links-centered` Spotify + YouTube block that sat immediately below the service-intro has been removed entirely. The CTAs already reappear in the Act 3 closing where they belong.
+  2. **`.podcast-grid-act1` deleted.** The old 2-column text-plus-logo-video grid is gone. Act 1 is now a full-width `.text-block.podcast-intro-block` containing the `01 / ABOUT` section-label, the "The Podcast" title, and a content placeholder with a 50-word starting draft in the podcast's actual voice. No more logo video crowding the prose sideways.
+  3. **Episodes heading replaced with a pull-quote.** The old `02 / EPISODES` section-label plus `<h2>Episodes</h2>` pair inside `.podcast-episodes` is now a standalone `.pull-quote.left` ("Five episodes. No pretense.") with a `.highlight` span on "No pretense." Same structural job (label the section), much more voice. Sits outside the episode list wrapper so the rhythm reads: full-bleed hosts photo -> pull-quote moment -> accordion list.
+  4. **Logo video relocated to Act 3.** New `.podcast-closing-mark` 120x120 square video sits between the `PRESS PLAY` monument and the "New episodes monthly" text. Uses `mix-blend-mode: screen` matching the original `.podcast-logo-wrapper` treatment so the dark-background logo merges into the page. Becomes an ambient signature on the closing block rather than a crowded Act 1 element.
+
+  Styling: `.podcast-page .service-intro` override upgraded from muted-body treatment (color 0.75, margin-bottom 32px) to display-statement treatment: font-size `clamp(2rem, 3.5vw, 3rem)`, color `var(--text-color)` (full white), font-weight 500, letter-spacing -0.02em, line-height 1.2, margin-bottom 96px. The "We are the fun AI podcast." line now renders at display scale across all viewports, giving the podcast its proper tagline-as-statement treatment per the Phase 6 plan requirement. The base `.service-intro` on other subpages (R&D, Creative Building) is unaffected.
+
+  Two new primitives in style.css: `.podcast-intro-block` (`grid-column: 2 / span 10`, mobile falls to full-width) and `.podcast-closing-mark` (120x120 centered with screen blend).
+
+  Cache bumped to `style.css?v=99` across all five HTML files; `script.js?v=90` unchanged since no JS work. Outstanding: Alex to fill the one `[CONTENT: ...]` placeholder on podcast.html (Act 1 intro copy, ~50 words).
+
+  **Known deferred cleanup:** multiple em dashes remain in existing episode taglines and episode bodies on podcast.html (e.g. `ChatGPT Toxic Masculinity?` tagline uses `—`, the ep. 04 body `"the most romantic — and awkward — scenarios"`, etc.). These were left untouched since they are out of Phase 6 scope (not new content). Flag for a future text cleanup pass alongside the `creative-building.html:144` em dash that was similarly deferred from Phase 1.
 - **Phase 7 — Creative Building In Production:** Not started. Blocked on Alex supplying client media assets. While this phase runs, also clean the em dash currently at `creative-building.html:144` per the voice constraint.
 
 ---
