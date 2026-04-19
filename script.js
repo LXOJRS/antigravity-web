@@ -356,15 +356,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- Theme-light scroll-driven live transition (V103) ---
+    // --- Theme-light scroll-driven live transition (V104) ---
     // Each themed section fades dark -> cyan and expands padding on enter,
     // then reverses on exit. Uses CSS variables scoped to .theme-light so a
     // single tween per state cascades to all child text colors.
+    //
+    // V104 tuning: peak padding uses 50vh (scales with viewport so even
+    // short single-row sections like Scope/Method fill the screen at peak).
+    // Scroll range extended from 50% to 70% of viewport for a more gradual
+    // transition. Scrub lag doubled to 1.0 for smoother rapid-scroll.
     const themeLightSections = document.querySelectorAll('.theme-light');
 
     themeLightSections.forEach(section => {
-        // ENTER: dark -> cyan + padding 64 -> 160 as section rises from
-        // bottom of viewport to center.
+        // ENTER: dark -> cyan + padding 64px -> 50vh as section rises from
+        // viewport bottom to upper third.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#050505',
@@ -372,8 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
                 '--theme-border': 'rgba(255, 255, 255, 0.08)',
-                paddingTop: 64,
-                paddingBottom: 64
+                paddingTop: '64px',
+                paddingBottom: '64px'
             },
             {
                 '--theme-bg': '#BFE8F8',
@@ -381,20 +386,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(5, 5, 5, 0.75)',
                 '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
                 '--theme-border': 'rgba(5, 5, 5, 0.08)',
-                paddingTop: 160,
-                paddingBottom: 160,
+                paddingTop: '50vh',
+                paddingBottom: '50vh',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
-                    end: 'top center',
-                    scrub: 0.5
+                    end: 'top 30%',
+                    scrub: 1
                 }
             }
         );
 
-        // EXIT: cyan -> dark + padding 160 -> 64 as section rises from
-        // center to top of viewport.
+        // EXIT: cyan -> dark + padding 50vh -> 64px as section rises from
+        // lower third to above viewport.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#BFE8F8',
@@ -402,8 +407,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(5, 5, 5, 0.75)',
                 '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
                 '--theme-border': 'rgba(5, 5, 5, 0.08)',
-                paddingTop: 160,
-                paddingBottom: 160
+                paddingTop: '50vh',
+                paddingBottom: '50vh'
             },
             {
                 '--theme-bg': '#050505',
@@ -411,14 +416,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
                 '--theme-border': 'rgba(255, 255, 255, 0.08)',
-                paddingTop: 64,
-                paddingBottom: 64,
+                paddingTop: '64px',
+                paddingBottom: '64px',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
-                    start: 'bottom center',
+                    start: 'bottom 70%',
                     end: 'bottom top',
-                    scrub: 0.5
+                    scrub: 1
                 }
             }
         );
