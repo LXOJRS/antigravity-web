@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=105">
+    <link rel="stylesheet" href="style.css?v=104">
 
     <!-- Open Graph -->
     <meta property="og:title" content="About Alex | AI Adoption Trainer">
@@ -134,107 +134,6 @@
                     <div class="text-content">
                         <p>The Value Fit model is a framework I built during my cum laude thesis to answer one question: how does AI affect your strategy within your context and values? Specifically researched for the visual production sector, the model reveals a cyclical motion. AI strategy is rarely something that is built once, it is often a continuous reassessment.</p>
                     </div>
-                    <!-- V107: Value Fit Model diagram (designed via Claude Design, export-mode palette:
-                         wedge fills match the section background color, everything else uses currentColor
-                         so the whole diagram rides the theme-light cyan transition automatically). -->
-                    <figure class="value-fit-model" aria-label="Value Fit Model diagram">
-                        <svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="vfm-title">
-                            <title id="vfm-title">Value Fit Model: a cyclical framework mapping AI strategy across practitioner context, catalyst, interpretive lens, strategic enactment, and evolving outcomes</title>
-                            <defs>
-                                <marker id="vfm-arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
-                                </marker>
-                            </defs>
-
-                            <!-- Wedge fills: always match the section background (theme-bg) so they blend
-                                 into the page at peak cyan, exactly like export mode in the design tool. -->
-                            <g class="vfm-wedges">
-                                <path d="M 540 540 L 245.17 444.21 A 310 310 0 0 1 540 230 Z"/>
-                                <path d="M 540 540 L 540 230 A 310 310 0 0 1 834.83 444.21 Z"/>
-                                <path d="M 540 540 L 834.83 444.21 A 310 310 0 0 1 722.22 790.80 Z"/>
-                                <path d="M 540 540 L 722.22 790.80 A 310 310 0 0 1 357.78 790.80 Z"/>
-                                <path d="M 540 540 L 357.78 790.80 A 310 310 0 0 1 245.17 444.21 Z"/>
-                            </g>
-
-                            <!-- Wedge dividers -->
-                            <g class="vfm-lines">
-                                <line x1="540" y1="540" x2="540" y2="230"/>
-                                <line x1="540" y1="540" x2="834.83" y2="444.21"/>
-                                <line x1="540" y1="540" x2="722.22" y2="790.80"/>
-                                <line x1="540" y1="540" x2="357.78" y2="790.80"/>
-                                <line x1="540" y1="540" x2="245.17" y2="444.21"/>
-                            </g>
-
-                            <!-- Circle border -->
-                            <circle class="vfm-border" cx="540" cy="540" r="310" fill="none"/>
-
-                            <!-- Feedback arc (thick, clockwise from upper-left around to upper-right) -->
-                            <path class="vfm-arc" d="M 364 235.15 A 352 352 0 1 1 716 235.15" fill="none" marker-end="url(#vfm-arrow-head)"/>
-
-                            <!-- Center dot -->
-                            <circle class="vfm-center" cx="540" cy="540" r="9"/>
-
-                            <!-- Leader lines from outer titles to wedge edges -->
-                            <g class="vfm-leaders">
-                                <line x1="357.8" y1="289.2" x2="260" y2="215"/>
-                                <line x1="722.2" y1="289.2" x2="820" y2="215"/>
-                                <line x1="834.8" y1="635.8" x2="900" y2="635"/>
-                                <line x1="540" y1="850" x2="540" y2="895"/>
-                                <line x1="245.2" y1="635.8" x2="180" y2="635"/>
-                            </g>
-
-                            <!-- Section titles OUTSIDE the circle -->
-                            <g class="vfm-titles">
-                                <text class="vfm-number" x="60" y="135">01</text>
-                                <text class="vfm-label" x="60" y="182">Practitioner's</text>
-                                <text class="vfm-label" x="60" y="216">Embedded Context</text>
-
-                                <text class="vfm-number" x="1020" y="135" text-anchor="end">02</text>
-                                <text class="vfm-label" x="1020" y="182" text-anchor="end">AI as a GPT Catalyst</text>
-                                <text class="vfm-label" x="1020" y="216" text-anchor="end">&amp; Disruption</text>
-
-                                <text class="vfm-number" x="1024" y="620" text-anchor="end">03</text>
-                                <text class="vfm-label" x="1024" y="660" text-anchor="end">Interpretive Lens</text>
-
-                                <text class="vfm-number" x="540" y="935" text-anchor="middle">04</text>
-                                <text class="vfm-label" x="540" y="975" text-anchor="middle">Strategic Enactment</text>
-
-                                <text class="vfm-number" x="56" y="620">05</text>
-                                <text class="vfm-label" x="56" y="660">Evolving Outcomes</text>
-                                <text class="vfm-label" x="56" y="694">&amp; Perceptions</text>
-                            </g>
-
-                            <!-- Items INSIDE each wedge, stacked along the radial bisector -->
-                            <g class="vfm-items">
-                                <!-- 01 Practitioner's (NNW bisector at 324°) -->
-                                <text x="440" y="403" text-anchor="middle">Scale of Operation</text>
-                                <text x="425" y="383" text-anchor="middle">Business Model</text>
-                                <text x="411" y="362" text-anchor="middle">Dominant Values</text>
-                                <text x="396" y="342" text-anchor="middle">Market Position</text>
-
-                                <!-- 02 AI (NNE bisector at 36°) -->
-                                <text x="655" y="383" text-anchor="middle">Multifaceted Capabilities</text>
-                                <text x="681" y="346" text-anchor="middle">Industry-wide Disruptions</text>
-
-                                <!-- 03 Interpretive (ESE bisector at 108°) -->
-                                <text x="725" y="600" text-anchor="middle">Perceived Opportunities</text>
-                                <text x="768" y="614" text-anchor="middle">Perceived Threats &amp; Stressors</text>
-
-                                <!-- 04 Strategic (S bisector at 180°) -->
-                                <text x="540" y="710" text-anchor="middle">Vision-led Building</text>
-                                <text x="540" y="735" text-anchor="middle">Twofold Approach</text>
-                                <text x="540" y="760" text-anchor="middle">Value-Anchored Dwelling</text>
-                                <text x="540" y="785" text-anchor="middle">Resourceful Dwelling</text>
-
-                                <!-- 05 Evolving (WSW bisector at 252°) -->
-                                <text x="378" y="593" text-anchor="middle">Competitive Positioning Shift</text>
-                                <text x="355" y="600" text-anchor="middle">Redefined Value/Skills</text>
-                                <text x="331" y="608" text-anchor="middle">Operational Changes</text>
-                                <text x="307" y="616" text-anchor="middle">New Ethical Challenges</text>
-                            </g>
-                        </svg>
-                        <figcaption class="vfm-caption">The Value Fit Model. A five-part cyclical framework for AI strategy.</figcaption>
-                    </figure>
                 </div>
             </div>
 

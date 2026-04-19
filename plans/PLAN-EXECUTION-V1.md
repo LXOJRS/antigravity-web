@@ -577,41 +577,6 @@ Cache bumped to `style.css?v=104`, `script.js?v=94`. This is the current live st
 
 ---
 
-## V107: Value Fit Model diagram added to About Method row
-
-Alex designed the Value Fit Model via Claude Design (circular five-part framework diagram) specifically for this site. The design's "export mode" palette (wedge fills matching the page background, everything else black on cyan) maps cleanly onto the existing `.theme-light` CSS variable system, so the diagram rides the cyan transition automatically.
-
-**Implementation:**
-- New `<figure class="value-fit-model">` added as a direct child of the Method `.rd-row.reversed.theme-light` on about.html, after the `.text-content`. It auto-places on grid row 2 of the row via `grid-column: 2 / span 10; grid-row: 2;`. The Method title (col 8/span 5) and text (col 2/span 4) stay exactly where they were, per user constraint.
-- Inline SVG on a 1080×1080 viewBox containing: 5 wedge paths, 5 dividers, circle border, thick clockwise feedback arc with arrowhead marker, center dot, 5 outer titles with leader lines, and 17 items stacked along each wedge's radial bisector.
-- Wedge fills use `var(--theme-bg)` so they vanish into the section background at peak cyan (exactly like export mode). All strokes, dots, and text use `currentColor`, which inherits the `.theme-light` color variable chain: the whole diagram transitions from white-on-dark (off-screen) to black-on-cyan (in view) alongside the section.
-- No JS changes required. The diagram's entry animation IS the theme-light color transition. Color interpolates on scroll scrub via the existing `.theme-light` GSAP tweens in script.js. No new ScrollTriggers, no risk of cached-position drift.
-- Responsive: max-width 880px, drops to full-width (`grid-column: 1 / -1`) and smaller type below 900px breakpoint; smaller items still below 600px.
-
-**Content preserved verbatim from the Claude Design source:**
-- 01 Practitioner's Embedded Context: Scale of Operation, Business Model, Dominant Values, Market Position
-- 02 AI as a GPT Catalyst & Disruption: Multifaceted Capabilities, Industry-wide Disruptions
-- 03 Interpretive Lens: Perceived Opportunities, Perceived Threats & Stressors
-- 04 Strategic Enactment: Vision-led Building, Twofold Approach, Value-Anchored Dwelling, Resourceful Dwelling (bracketed-only names per Alex's design iteration)
-- 05 Evolving Outcomes & Perceptions: Competitive Positioning Shift, Redefined Value/Skills, Operational Changes, New Ethical Challenges
-
-**Files modified:**
-- `about.html`: added `<figure class="value-fit-model">` with full inline SVG inside the Method row, after `.text-content`.
-- `style.css`: added `.value-fit-model` block with variable-driven colors, grid placement, and responsive breakpoints. Placed immediately after the last `.theme-light` rule.
-- All five HTML files (`index`, `about`, `podcast`, `service-rd`, `creative-building`): cache bumped `style.css?v=104 → v=105`.
-
-Cache state after V107: `style.css?v=105`, `script.js?v=94` (script unchanged).
-
-**Known follow-ups:**
-- Item positions were reconstructed from the Claude Design chat transcript's detailed geometry specs (canvas 1080×1080, circle r=310, five wedges at 72° each). The scene.jsx file was not in the handoff bundle (tar was truncated during export), so exact pixel positions may drift slightly from the design tool's final composition. If visual regression shows misalignment, tune the text `x`/`y` values in the `<g class="vfm-items">` and `<g class="vfm-titles">` groups of about.html.
-- Long item labels (such as "Perceived Threats & Stressors" and "Competitive Positioning Shift") approach or cross wedge boundaries at their displayed font size. The design tool accepted this; if strict containment is wanted, items can be broken into two lines or the font can drop from 19px to 17px.
-- The diagram adds ~900px of vertical height to the Method section. Since `.theme-light` padding is fixed at 50vh top/bottom (V106 architecture), the section is significantly taller now. The cyan moment lasts longer, which fits the editorial feel. No action needed unless Alex wants it shorter.
-
-**Rollback path:**
-- Remove the `<figure class="value-fit-model">...</figure>` block from about.html. No JS or other CSS depends on it; the `.value-fit-model` CSS block in style.css becomes dead but harmless.
-
----
-
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
