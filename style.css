@@ -2815,6 +2815,124 @@ footer {
 }
 
 /* ============================================================
+   V107: Value Fit Model diagram
+   Ported from the Claude Design scene.jsx with its "export mode"
+   palette, which maps 1:1 onto the theme-light variable system:
+     - wedge fills use --theme-bg, so they dissolve into the page
+       at peak cyan and are invisible off-screen
+     - every stroke/dot/text uses currentColor, which inherits
+       from --theme-fg through the existing .theme-light rule
+       and therefore rides the same scroll transition (white
+       off-screen, black at peak cyan).
+   Sits on grid row 2 of the Method row, full-width, below the
+   title + text. Title and text positions are unchanged.
+   ============================================================ */
+.value-fit-model {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 96px auto 0;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 0;
+}
+
+.value-fit-model svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+    color: var(--theme-fg, #ffffff);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.value-fit-model .vfm-wedges path {
+    fill: var(--theme-bg);
+    stroke: none;
+}
+
+.value-fit-model .vfm-dividers line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.value-fit-model .vfm-border {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.value-fit-model .vfm-center {
+    fill: currentColor;
+}
+
+.value-fit-model .vfm-arc,
+.value-fit-model .vfm-arc-head {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.9;
+}
+
+.value-fit-model .vfm-leaders line {
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linecap: round;
+    opacity: 0.55;
+    fill: none;
+}
+.value-fit-model .vfm-leaders circle {
+    fill: currentColor;
+    opacity: 0.8;
+}
+
+.value-fit-model .vfm-num {
+    fill: currentColor;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+}
+
+.value-fit-model .vfm-title {
+    fill: currentColor;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+.value-fit-model .vfm-items text {
+    fill: currentColor;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+.value-fit-model figcaption {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--theme-muted);
+    text-align: center;
+    margin: 0;
+    max-width: 60ch;
+}
+
+@media (max-width: 768px) {
+    .value-fit-model { margin-top: 64px; }
+}
+
+/* ============================================================
    V102: Creative Building break video full-bleed blurred backdrop
    The break video sits as a floating tile centered in a full-width
    slab that uses a muted blurred copy of the same video as its

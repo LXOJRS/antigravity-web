@@ -577,6 +577,33 @@ Cache bumped to `style.css?v=104`, `script.js?v=94`. This is the current live st
 
 ---
 
+## V107: Value Fit Model diagram added to About Method row
+
+Alex designed the Value Fit Model (five-part cyclical framework from his cum laude thesis) via Claude Design, specifically for this site. Second attempt at the handoff. The first attempt was reverted because the design bundle had been truncated at download, so the actual geometry file (`scene.jsx`) was missing and item positions were reconstructed from chat descriptions, which drifted. This pass uses the full bundle, ported from `scene.jsx` directly.
+
+**Approach:**
+- Inline SVG in the Method row, viewBox `0 0 1080 1080`. All coordinates copied from scene.jsx constants: `CANVAS=1080`, `CENTER=540`, `CIRCLE_R=310`, wedge centers at angles `-126 / -54 / 18 / 90 / 162`°, wedge boundaries at `-90 / -18 / 54 / 126 / 198`°, item cluster radii `180 / 190 / 190 / 180 / 180`, feedback arc at `r=350` sweeping `300°` CW from `-105°` to `195°`.
+- Sits on `grid-row: 2` of the `.rd-row.reversed.theme-light` via `grid-column: 1 / -1; grid-row: 2;`. The Method title (col 8/span 5) and text (col 2/span 4) stay exactly where they were, per user constraint.
+- The design's "export mode" palette (wedge fills match page bg, everything else black) maps 1:1 onto `.theme-light`'s variable system: wedge fills use `var(--theme-bg)`, all strokes/dots/text use `currentColor` (which inherits from `--theme-fg` through the existing `.theme-light { color: var(--theme-fg) }` rule). So the whole diagram rides the scroll transition: white-on-dark off-screen, black-on-cyan at peak.
+- No JS additions, no new ScrollTriggers, no cached-position risk.
+
+**Files modified:**
+- `about.html`: added `<figure class="value-fit-model">` with full inline SVG inside the Method row, after `.text-content`.
+- `style.css`: added `.value-fit-model` block. Placed immediately after the last `.theme-light` rule (around line 2815).
+- All five HTML files: `style.css?v=104 → v=105`.
+
+Cache state after V107: `style.css?v=105`, `script.js?v=94` (script unchanged).
+
+**Known trade-offs:**
+- Diagram renders at 1080 viewBox inside a `max-width: 900px` container. At 900px display that means items render at ~13.3px (designed for 16px at 1080px viewbox). Readable but on the small side. If this is too small, either raise `max-width` to `980px` (uses full column 2/span 10 width) or bump the `font-size` on `.vfm-items text`, `.vfm-title`, and `.vfm-num` by ~1.25x.
+- "Perceived Threats & Stressors" renders as a single long line in SVG rather than wrapping like the React source. The React source wraps it inside a 220px container; SVG text doesn't auto-wrap. If it collides visually with wedge W3 (Strategic), either manually split into two tspans or drop its font-size.
+- Long items in W4 ("Competitive Positioning Shift", "New Ethical Challenges") may visually overlap wedge dividers at the current font size. Matches the design tool's accepted state.
+
+**Rollback path:**
+- Remove the `<figure class="value-fit-model">...</figure>` block from about.html. The `.value-fit-model` CSS block in style.css becomes dead but harmless.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
