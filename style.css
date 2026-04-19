@@ -2736,6 +2736,139 @@ footer {
     margin-bottom: 32px;
 }
 
+/* ============================================================
+   V102: theme-light (inverted brand cyan background + dark text)
+   Full-bleed slab that breaks out of container to fill viewport.
+   Padding formula keeps inner content aligned to container's
+   content area (roughly 1152px centered).
+   Applied to specific sections on About and R&D: Scope row,
+   Method row, and the Focus+Format grid on R&D.
+   ============================================================ */
+.theme-light {
+    background-color: #BFE8F8;
+    color: #050505;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding-left: max(24px, calc(50vw - 576px));
+    padding-right: max(24px, calc(50vw - 576px));
+    box-sizing: border-box;
+}
+
+/* Section-title on light theme: inverse to near-black (was cyan on dark). */
+.theme-light .section-title,
+.theme-light .rd-row .section-title {
+    color: #050505 !important;
+    text-shadow: none;
+}
+
+/* rd-number watermark on light theme: dark at same low opacity. */
+.theme-light .rd-number {
+    color: rgba(5, 5, 5, 0.12);
+}
+
+/* Standard rd-row body text on light theme. */
+.theme-light .rd-row .text-content p {
+    color: rgba(5, 5, 5, 0.85) !important;
+}
+
+/* About page specifically uses a muted body override that must flip too. */
+.about-page .theme-light .rd-row .text-content p {
+    color: rgba(5, 5, 5, 0.75) !important;
+}
+
+/* Inverted row on light theme: small gray title becomes muted dark,
+   display-weight body becomes full black. */
+.theme-light .rd-row.inverted .section-title {
+    color: rgba(5, 5, 5, 0.6) !important;
+}
+
+.theme-light .rd-row.inverted .text-content p {
+    color: #050505 !important;
+}
+
+/* Row separator border on light theme swaps to dark alpha. */
+.theme-light .rd-row + .rd-row {
+    border-top-color: rgba(5, 5, 5, 0.08);
+}
+
+/* Highlight phrase in pull-quote on light theme (covers any future pull-quote
+   placed in a light-themed section). */
+.theme-light .pull-quote .highlight,
+.theme-light .highlight {
+    color: #050505;
+}
+
+/* ============================================================
+   V102: Creative Building break video full-bleed blurred backdrop
+   The break video sits as a floating tile centered in a full-width
+   slab that uses a muted blurred copy of the same video as its
+   background. Turns the sticker feeling into an ambient moment.
+   ============================================================ */
+.creative-break-full {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px;
+    box-sizing: border-box;
+}
+
+.creative-break-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(40px) brightness(0.45) saturate(1.15);
+    z-index: 0;
+    pointer-events: none;
+    transform: scale(1.1);
+}
+
+.creative-break-full .creative-break-video {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    width: 75%;
+    max-width: 800px;
+}
+
+@media (max-width: 768px) {
+    .creative-break-full {
+        padding: 64px 16px;
+    }
+
+    .creative-break-full .creative-break-video {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   V102: In Production card video filter reduction.
+   Real client work (Promptgorillas hero video) needs minimal
+   filtering so the actual visuals read clearly. Homepage service
+   cards still use the stronger desaturated filter.
+   ============================================================ */
+.in-production .service-card video {
+    filter: brightness(0.92);
+}
+
+.in-production .service-card:hover video {
+    filter: brightness(1);
+    transform: scale(1.02);
+}
+
 @media (max-width: 768px) {
     .in-production {
         margin-top: 64px;

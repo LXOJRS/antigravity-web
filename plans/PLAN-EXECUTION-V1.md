@@ -438,6 +438,46 @@ Cache bumped to `style.css?v=101` across all five HTML files. `script.js?v=90` u
 
 ---
 
+## Refinement pass V102 (content fill + theme-light + break-video backdrop)
+
+User delivered rewritten copy for every page and added four visual directives. All shipped in one combined pass.
+
+**1. All content placeholders filled.** Twenty-one `[CONTENT: ...]` placeholders across index, about, service-rd, podcast, and creative-building replaced with the user's final copy. Highlights:
+- Homepage H2 simplified from "think, decide, and create" to "think and create." Homepage about paragraph 2 now reads "Currently at PromptGorillas, I both train and build." as the dual-positioning proof.
+- About page rows: Reality, Scope, Origin, Method bodies all swapped with user's final copy. Scope now names the Promptgorillas cycle-time outcome. Origin is the Bachelor-plus-Master's narrative through film, literature, rhetoric, and media-business. Method explains Value Fit as a cyclical reassessment framework.
+- R&D page: service-intro gained "And each path can be different. My work is to figure yours out, with you." Row 01 is the Context+Background merge with Alex's voice. Focus is now a tight two-sentence display-weight beat. Format is the quick-wins-to-long-term-thinking statement. Outro locked to "I step in when things are still forming. When teams are asking where to go next." plus "If that sounds familiar, let's talk."
+- Podcast Act 1 copy: "My girlfriend Morgan and I talk about AI the way it actually lands. Messy, funny, sometimes embarrassing. No explainers. No hype. Some episodes circle around online weirdness. Most just try to be honest about what is changing. The podcast is in Dutch."
+- Creative Building merged Act 1: "I hate 'AI-Slop'. My mission is to create AI visuals that always feel intentional and impressive." In Production intro, Promptgorillas and Chris le More card roles, booking CTA line, Application paragraph 1 (added film-studies framing and changed "workflows" to "pipelines"), outro statement and aside all filled.
+- Zero em dashes in any of the swapped content (grep verified).
+
+**2. Three monuments deleted per user notes.** `LISTEN` removed from podcast.html (was between Act 1 and full-bleed hosts photo). `UNCERTAINTY` removed from service-rd.html (was between Context row and Focus+Format grid). `CREATE` removed from creative-building.html (was between In Production section and cinematic-showcase). Indentation artifacts from the deletions were cleaned up in the same pass. About page's `MANIFESTO` was already deleted in Phase 1. The `PRESS PLAY` monument in Act 3 of podcast stays intact (not in user's removal list, still anchors the closing block with the logo video mark).
+
+**3. Theme-light inverted background system added.** New `.theme-light` CSS primitive applies a full-bleed `#BFE8F8` cyan background with `#050505` text. Uses the standard full-bleed breakout pattern (width 100vw with negative margins and content-aligned internal padding formula `max(24px, calc(50vw - 576px))`) so the cyan slab fills viewport-width regardless of container constraints while keeping inner content aligned to the 1152px content area. Scoped overrides handle color inversions for: `.section-title`, `.rd-number`, `.rd-row .text-content p`, `.about-page .rd-row .text-content p` override, `.rd-row.inverted .section-title`, `.rd-row.inverted .text-content p`, `.rd-row + .rd-row` separator, and `.highlight`. Applied in HTML to three spots:
+- `about.html`: `.rd-grid.rd-grid-part1b` (Scope row, 03) gets `theme-light` class
+- `about.html`: `.rd-row.reversed` for Method (05) gets `theme-light` class individually since it sits inside `rd-grid-part2` which also contains Origin (stays dark)
+- `service-rd.html`: the rd-grid wrapping Focus + Format together gets `theme-light`, inverting both rows as a unified block
+
+Not applied: homepage, podcast, creative-building (per user scope). The result is two cyan slabs on about and one cyan slab on R&D that break page rhythm via color contrast. Scrolling feels like hitting distinct editorial beats.
+
+**4. Creative Building break video gained a full-bleed blurred backdrop.** The floating-tile feeling is gone. New structure: `.creative-break-full` section wraps the existing `.creative-break-video` with a `.creative-break-bg` video element positioned absolutely behind it. Background video uses the same source URL, filtered with `blur(40px) brightness(0.45) saturate(1.15)` and scaled 1.1x to cover blur edge leak. The foreground break video sits centered at its original 75% width / max 800px. Net effect: the 4:3 tile is now embedded in an ambient widescreen moment of its own muted self. Mobile override reduces padding and lets foreground video go full width.
+
+**5. Promptgorillas video filter reduced.** New scoped rule `.in-production .service-card video { filter: brightness(0.92) }` and hover `filter: brightness(1)` replaces the stronger `grayscale(60%) brightness(0.7) contrast(1.05) sepia(10%) hue-rotate(190deg)` treatment that `.service-card video` inherits by default. Now the real Promptgorillas AI hero video shows in near-native color at rest, with only a subtle brightness dim so the overlaid card-index and title remain readable. Homepage service cards still use the stronger muted filter (they are decorative placeholders, not shipping work).
+
+Cache bumped to `style.css?v=102` across all five HTML files. `script.js?v=90` unchanged.
+
+**Outstanding after V102:**
+- Chris le More card still shows SVG placeholder; swap when asset is available.
+- Promptgorillas card `href="#"` still points at anchor instead of a real destination link.
+- Podcast episode taglines and episode bodies still contain em dashes in existing content (deferred cleanup).
+- Dead CSS from V101 still present (`.creative-text-col`, `.creative-visual-col`, etc.). Safe to leave.
+- Value Fit diagram deferred by user for later iteration.
+
+**Known decisions logged for next pass:**
+- User is considering imagery to replace remaining text-only rhythm breaks (e.g., an animated Value Fit diagram on R&D or About).
+- Chris le More card will get real AI shot media when available, potentially promoted to `<video>` like Promptgorillas.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
