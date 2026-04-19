@@ -356,42 +356,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- Theme-light scroll-driven live transition (V105) ---
-    // Each themed section fades dark -> cyan and expands padding on enter,
-    // then reverses on exit. Uses CSS variables scoped to .theme-light so a
+    // --- Theme-light scroll-driven color transition (V106) ---
+    // Each themed section fades dark -> cyan as user scrolls in, cyan -> dark
+    // as they scroll past. Uses CSS variables scoped to .theme-light so a
     // single tween per state cascades to all child text colors.
     //
-    // V105 fixes for V104 layout-shift issues:
-    //   - Peak padding (50vh) causes ~950px layout shift at 1080vp viewport,
-    //     which invalidates cached ScrollTrigger positions for every element
-    //     BELOW the themed section. That's why Origin appeared faded (its
-    //     reveal trigger pointed at its pre-shift position) and Method's
-    //     transition felt delayed.
-    //   - Fix: add `invalidateOnRefresh: true` and call `ScrollTrigger.refresh()`
-    //     on trigger boundaries (onLeave, onEnterBack) so cached positions
-    //     recalculate after each layout change.
-    //   - EXIT start moved earlier ('bottom 85%' vs old 'bottom 70%') so the
-    //     bottom padding starts shrinking sooner, reducing dead cyan space
-    //     after the section's content.
-    //   - ENTER end tightened ('top 15%' vs old 'top 30%') so the cyan peak
-    //     arrives closer to when the section is genuinely centered, making
-    //     the fade feel more gradual relative to user perception.
+    // V106 architecture change from V105:
+    //   - Padding is no longer animated. Theme-light sections now have FIXED
+    //     50vh top/bottom padding (in style.css) so they are always full-bleed
+    //     sized regardless of scroll state.
+    //   - This eliminates the layout shift that was invalidating cached
+    //     ScrollTrigger positions for Origin and Method. No refresh() calls
+    //     needed, which also removes the scroll "scatter" caused by mid-scroll
+    //     trigger re-measurement.
+    //   - EXIT color start moved to 'bottom 40%': at this scroll position the
+    //     section's content has already scrolled off the top of the viewport,
+    //     so the cyan fade begins only AFTER the user is past the content.
+    //     This prevents the "fading while visible" bug where color started
+    //     disappearing before the user could read the content.
     const themeLightSections = document.querySelectorAll('.theme-light');
 
-    const refreshTriggers = () => ScrollTrigger.refresh();
-
     themeLightSections.forEach(section => {
-        // ENTER: dark -> cyan + padding 64px -> 50vh as section rises from
-        // viewport bottom to near top.
+        // ENTER: dark -> cyan as section rises from viewport bottom to upper
+        // viewport. Content is in lower viewport by the time color completes,
+        // so the first look at content is on full cyan background.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#050505',
                 '--theme-fg': '#ffffff',
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
-                '--theme-border': 'rgba(255, 255, 255, 0.08)',
-                paddingTop: '64px',
-                paddingBottom: '64px'
+                '--theme-border': 'rgba(255, 255, 255, 0.08)'
             },
             {
                 '--theme-bg': '#BFE8F8',
@@ -399,33 +394,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(5, 5, 5, 0.75)',
                 '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
                 '--theme-border': 'rgba(5, 5, 5, 0.08)',
-                paddingTop: '50vh',
-                paddingBottom: '50vh',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
-                    end: 'top 15%',
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                    onLeave: refreshTriggers,
-                    onEnterBack: refreshTriggers
+                    end: 'top 30%',
+                    scrub: 1
                 }
             }
         );
 
-        // EXIT: cyan -> dark + padding 50vh -> 64px. Starts earlier than V104
-        // so the bottom padding shrinks before the user scrolls into dead
-        // cyan space below the section's content.
+        // EXIT: cyan -> dark. Starts at 'bottom 40%' which corresponds to
+        // roughly when the section's content has already exited the top of
+        // viewport, so content stays cyan for its full visibility range.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#BFE8F8',
                 '--theme-fg': '#050505',
                 '--theme-muted': 'rgba(5, 5, 5, 0.75)',
                 '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
-                '--theme-border': 'rgba(5, 5, 5, 0.08)',
-                paddingTop: '50vh',
-                paddingBottom: '50vh'
+                '--theme-border': 'rgba(5, 5, 5, 0.08)'
             },
             {
                 '--theme-bg': '#050505',
@@ -433,17 +421,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
                 '--theme-border': 'rgba(255, 255, 255, 0.08)',
-                paddingTop: '64px',
-                paddingBottom: '64px',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
-                    start: 'bottom 85%',
+                    start: 'bottom 40%',
                     end: 'bottom top',
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                    onLeave: refreshTriggers,
-                    onEnterBack: refreshTriggers
+                    scrub: 1
                 }
             }
         );
@@ -492,9 +475,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- R&D Cinematic Scroll Animations ---
 
     // 1. De verspringende rijen (Slide up + Fade in)
-    // V105: invalidateOnRefresh ensures cached trigger positions recalculate
-    // after theme-light layout shifts upstream (e.g., Scope's padding animation
-    // pushes Origin down by ~950px).
+    // V106: reverted to plain trigger. Since theme-light sections now have
+    // fixed padding (no more layout shift on scroll), cached positions stay
+    // valid and the V105 invalidateOnRefresh workaround is no longer needed.
     const rdRows = document.querySelectorAll('.rd-row');
     rdRows.forEach(row => {
         gsap.fromTo(row,
@@ -510,8 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scrollTrigger: {
                     trigger: row,
                     start: 'top 85%', // Begint als de bovenkant van de rij 85% in beeld is
-                    toggleActions: 'play none none reverse',
-                    invalidateOnRefresh: true
+                    toggleActions: 'play none none reverse'
                 }
             }
         );
