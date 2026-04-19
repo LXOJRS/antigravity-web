@@ -2744,9 +2744,23 @@ footer {
    Applied to specific sections on About and R&D: Scope row,
    Method row, and the Focus+Format grid on R&D.
    ============================================================ */
+/* V103: theme variables default to the DARK state so the section blends
+   into the surrounding dark page when off-screen. GSAP scrubs these to
+   cyan values as the section enters the viewport, along with padding
+   expansion, producing a live fade-and-expand effect per section. */
 .theme-light {
-    background-color: #BFE8F8;
-    color: #050505;
+    --theme-bg: #050505;
+    --theme-fg: #ffffff;
+    --theme-muted: rgba(255, 255, 255, 0.75);
+    --theme-subtle: rgba(255, 255, 255, 0.12);
+    --theme-border: rgba(255, 255, 255, 0.08);
+
+    background-color: var(--theme-bg);
+    color: var(--theme-fg);
+
+    /* Full-bleed horizontal breakout: element fills viewport width and
+       internal horizontal padding restores content alignment to the
+       container's content area. */
     width: 100vw;
     position: relative;
     left: 50%;
@@ -2755,51 +2769,49 @@ footer {
     margin-right: -50vw;
     padding-left: max(24px, calc(50vw - 576px));
     padding-right: max(24px, calc(50vw - 576px));
+    padding-top: 64px;
+    padding-bottom: 64px;
     box-sizing: border-box;
 }
 
-/* Section-title on light theme: inverse to near-black (was cyan on dark). */
-.theme-light .section-title,
-.theme-light .rd-row .section-title {
-    color: #050505 !important;
+/* Child color overrides inside a theme-light section. Each rule references
+   the theme variables so GSAP animating the variables on scroll cascades
+   through every element inside. Selectors drop any intermediate .rd-row
+   so the same rules work whether .theme-light sits on the grid wrapper
+   OR on the row itself (fixes the Method row bug from V102). */
+
+.theme-light .section-title {
+    color: var(--theme-fg) !important;
     text-shadow: none;
 }
 
-/* rd-number watermark on light theme: dark at same low opacity. */
 .theme-light .rd-number {
-    color: rgba(5, 5, 5, 0.12);
+    color: var(--theme-subtle);
 }
 
-/* Standard rd-row body text on light theme. */
-.theme-light .rd-row .text-content p {
-    color: rgba(5, 5, 5, 0.85) !important;
+.theme-light .text-content p {
+    color: var(--theme-muted) !important;
 }
 
-/* About page specifically uses a muted body override that must flip too. */
-.about-page .theme-light .rd-row .text-content p {
-    color: rgba(5, 5, 5, 0.75) !important;
+.about-page .theme-light .text-content p {
+    color: var(--theme-muted) !important;
 }
 
-/* Inverted row on light theme: small gray title becomes muted dark,
-   display-weight body becomes full black. */
 .theme-light .rd-row.inverted .section-title {
-    color: rgba(5, 5, 5, 0.6) !important;
+    color: var(--theme-muted) !important;
 }
 
 .theme-light .rd-row.inverted .text-content p {
-    color: #050505 !important;
+    color: var(--theme-fg) !important;
 }
 
-/* Row separator border on light theme swaps to dark alpha. */
 .theme-light .rd-row + .rd-row {
-    border-top-color: rgba(5, 5, 5, 0.08);
+    border-top-color: var(--theme-border);
 }
 
-/* Highlight phrase in pull-quote on light theme (covers any future pull-quote
-   placed in a light-themed section). */
 .theme-light .pull-quote .highlight,
 .theme-light .highlight {
-    color: #050505;
+    color: var(--theme-fg);
 }
 
 /* ============================================================

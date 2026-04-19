@@ -478,6 +478,39 @@ Cache bumped to `style.css?v=102` across all five HTML files. `script.js?v=90` u
 
 ---
 
+## Refinement pass V103 (live theme transition + Method text fix)
+
+Two issues from V102 review: Method row body text was still rendering white on cyan (CSS selector bug), and the theme-light sections felt like static banners instead of the live page transition the user wanted. Both fixed in one pass.
+
+**1. Method text color bug fixed via CSS refactor.** Root cause: the V102 selector `.theme-light .rd-row .text-content p` required `.rd-row` as a descendant of `.theme-light`, but on the Method row the class is applied to the `.rd-row` itself (not an ancestor). Simplified selectors to `.theme-light .text-content p` (and `.about-page .theme-light .text-content p`) which match both the grid-wrapper case and the same-element case.
+
+**2. Live section-level theme transition.** Replaced the static `.theme-light` styling with a variable-driven system. Five CSS custom properties scoped to `.theme-light`: `--theme-bg`, `--theme-fg`, `--theme-muted`, `--theme-subtle`, `--theme-border`. Variables default to DARK theme values so the section blends into the surrounding dark page when off-screen (invisible slab). All child color overrides inside `.theme-light` now reference the variables instead of hardcoded colors, so animating the variables propagates through every element inside.
+
+GSAP ScrollTrigger drives the transition via two `fromTo` tweens per themed section:
+- ENTER tween: as the section rises from viewport bottom to center (`start: 'top bottom'`, `end: 'top center'`, `scrub: 0.5`), the variables interpolate from dark to cyan values AND padding-top/bottom expand from 64px to 160px.
+- EXIT tween: as the section continues rising from center to top (`start: 'bottom center'`, `end: 'bottom top'`, `scrub: 0.5`), the reverse plays — variables back to dark, padding back to 64px.
+
+Between the two triggers (when the section is fully in viewport), the values hold at peak: cyan bg, dark text, expanded padding. The `scrub: 0.5` easing adds a 0.5s lag that smooths the scroll-linked animation organically.
+
+Net effect: each themed section (Scope on about, Method on about, Focus+Format grid on R&D) now fades from dark to cyan AND expands vertically as the user scrolls into it, then fades back and contracts as they scroll past. The section roughly doubles its vertical footprint at peak (64+64 baseline padding → 160+160 peak = 320px added to content height). The cyan no longer reads as a banner; it reads as a live full-bleed color shift tied to scroll position.
+
+GSAP v3.x supports animating CSS custom properties directly. No new plugins added.
+
+CSS and JS changes in this pass:
+- `style.css`: lines 2747-2815 theme-light block fully rewritten
+- `script.js`: 68-line GSAP block appended at line ~360 after the typography-portal handler
+
+Cache bumped to `style.css?v=103` and `script.js?v=91` across all five HTML files.
+
+**Rollback paths if issues arise:**
+- If padding expansion feels too busy: remove the `paddingTop` and `paddingBottom` properties from both `fromTo` calls in script.js, keep only the color variable animation.
+- If the fade flickers on fast scroll: increase `scrub` from 0.5 to 1.0.
+- If variable animation misbehaves cross-browser: fall back to a class-toggle pattern with CSS transitions.
+
+All of the above are JS-side only; CSS stays stable.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.

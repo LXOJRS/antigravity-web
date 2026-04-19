@@ -356,6 +356,74 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // --- Theme-light scroll-driven live transition (V103) ---
+    // Each themed section fades dark -> cyan and expands padding on enter,
+    // then reverses on exit. Uses CSS variables scoped to .theme-light so a
+    // single tween per state cascades to all child text colors.
+    const themeLightSections = document.querySelectorAll('.theme-light');
+
+    themeLightSections.forEach(section => {
+        // ENTER: dark -> cyan + padding 64 -> 160 as section rises from
+        // bottom of viewport to center.
+        gsap.fromTo(section,
+            {
+                '--theme-bg': '#050505',
+                '--theme-fg': '#ffffff',
+                '--theme-muted': 'rgba(255, 255, 255, 0.75)',
+                '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
+                '--theme-border': 'rgba(255, 255, 255, 0.08)',
+                paddingTop: 64,
+                paddingBottom: 64
+            },
+            {
+                '--theme-bg': '#BFE8F8',
+                '--theme-fg': '#050505',
+                '--theme-muted': 'rgba(5, 5, 5, 0.75)',
+                '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
+                '--theme-border': 'rgba(5, 5, 5, 0.08)',
+                paddingTop: 160,
+                paddingBottom: 160,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'top center',
+                    scrub: 0.5
+                }
+            }
+        );
+
+        // EXIT: cyan -> dark + padding 160 -> 64 as section rises from
+        // center to top of viewport.
+        gsap.fromTo(section,
+            {
+                '--theme-bg': '#BFE8F8',
+                '--theme-fg': '#050505',
+                '--theme-muted': 'rgba(5, 5, 5, 0.75)',
+                '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
+                '--theme-border': 'rgba(5, 5, 5, 0.08)',
+                paddingTop: 160,
+                paddingBottom: 160
+            },
+            {
+                '--theme-bg': '#050505',
+                '--theme-fg': '#ffffff',
+                '--theme-muted': 'rgba(255, 255, 255, 0.75)',
+                '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
+                '--theme-border': 'rgba(255, 255, 255, 0.08)',
+                paddingTop: 64,
+                paddingBottom: 64,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'bottom center',
+                    end: 'bottom top',
+                    scrub: 0.5
+                }
+            }
+        );
+    });
+
     // Update de Insights animatie naar een 'staggered reveal'
     const insightCards = document.querySelectorAll('.insight-card');
     if (insightCards.length > 0) {
