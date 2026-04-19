@@ -2815,7 +2815,7 @@ footer {
 }
 
 /* ============================================================
-   V107: Value Fit Model diagram
+   V107-V109: Value Fit Model diagram
    Ported from the Claude Design scene.jsx with its "export mode"
    palette, which maps 1:1 onto the theme-light variable system:
      - wedge fills use --theme-bg, so they dissolve into the page
@@ -2824,19 +2824,20 @@ footer {
        from --theme-fg through the existing .theme-light rule
        and therefore rides the same scroll transition (white
        off-screen, black at peak cyan).
-   Sits on grid row 2 of the Method row, full-width, below the
-   title + text. Title and text positions are unchanged.
+   V108: internal item labels removed.
+   V109: moved side-by-side with the Method text (cols 6-12, row 2,
+   with text spanning rows 1-2 on the left). Max-width shrunk from
+   900 to 600; stroke widths and label font sizes bumped ~1.6x
+   to preserve readable rendered size at the smaller display size.
    ============================================================ */
 .value-fit-model {
-    grid-column: 1 / -1;
+    grid-column: 6 / -1;
     grid-row: 2;
-    margin: 96px auto 0;
+    margin: 32px 0 0;
     width: 100%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
+    max-width: 600px;
+    justify-self: center;
+    display: block;
     padding: 0;
 }
 
@@ -2856,7 +2857,7 @@ footer {
 
 .value-fit-model .vfm-dividers line {
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 3;
     stroke-linecap: round;
     fill: none;
 }
@@ -2864,7 +2865,7 @@ footer {
 .value-fit-model .vfm-border {
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 2.5;
 }
 
 .value-fit-model .vfm-center {
@@ -2875,7 +2876,7 @@ footer {
 .value-fit-model .vfm-arc-head {
     fill: none;
     stroke: currentColor;
-    stroke-width: 3.5;
+    stroke-width: 5.5;
     stroke-linecap: round;
     stroke-linejoin: round;
     opacity: 0.9;
@@ -2883,7 +2884,7 @@ footer {
 
 .value-fit-model .vfm-leaders line {
     stroke: currentColor;
-    stroke-width: 1;
+    stroke-width: 1.5;
     stroke-linecap: round;
     opacity: 0.55;
     fill: none;
@@ -2895,7 +2896,7 @@ footer {
 
 .value-fit-model .vfm-num {
     fill: currentColor;
-    font-size: 11px;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -2905,24 +2906,29 @@ footer {
 
 .value-fit-model .vfm-title {
     fill: currentColor;
-    font-size: 22px;
+    font-size: 34px;
     font-weight: 600;
     letter-spacing: -0.015em;
 }
 
-.value-fit-model figcaption {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--theme-muted);
-    text-align: center;
-    margin: 0;
-    max-width: 60ch;
+/* Side-by-side layout: make the text column span both grid rows
+   so that the paragraph reads alongside the diagram on the right
+   rather than above it. Only applied to the Method row. */
+.about-page .rd-grid-part2 .rd-row.reversed.theme-light .text-content {
+    grid-row: 1 / span 2;
+    align-self: start;
 }
 
-@media (max-width: 768px) {
-    .value-fit-model { margin-top: 64px; }
+@media (max-width: 900px) {
+    .value-fit-model {
+        grid-column: 1 / -1;
+        margin-top: 64px;
+        max-width: 680px;
+        justify-self: center;
+    }
+    .about-page .rd-grid-part2 .rd-row.reversed.theme-light .text-content {
+        grid-row: auto;
+    }
 }
 
 /* ============================================================

@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=106">
+    <link rel="stylesheet" href="style.css?v=107">
 
     <!-- Open Graph -->
     <meta property="og:title" content="About Alex | AI Adoption Trainer">
@@ -166,7 +166,7 @@
                             <circle class="vfm-border" cx="540" cy="540" r="310"/>
 
                             <!-- Center dot. -->
-                            <circle class="vfm-center" cx="540" cy="540" r="4"/>
+                            <circle class="vfm-center" cx="540" cy="540" r="6"/>
 
                             <!-- Feedback arc. Clockwise 300° from -105° (upper-left) to 195°. -->
                             <path class="vfm-arc" d="M 449.41 201.92 A 350 350 0 1 1 201.92 449.41"/>
@@ -189,27 +189,30 @@
                             </g>
 
                             <!-- Section labels (outside the circle). Each is a number plus a
-                                 two-line title, positioned per scene.jsx's cfg array. -->
+                                 two-line title. Label font sizes were bumped proportionally when
+                                 the diagram moved from 900px to ~600px wide (V109), so the block
+                                 heights grew and y-positions were re-anchored to keep clear of
+                                 the circle border at y=230 (top) and y=850 (bottom). -->
                             <g class="vfm-labels">
                                 <!-- 01 Practitioner's — top-left, left-anchored -->
-                                <text class="vfm-num" x="72" y="182">01</text>
-                                <text class="vfm-title" x="72" y="215">Practitioner's<tspan x="72" dy="26">Embedded Context</tspan></text>
+                                <text class="vfm-num" x="72" y="130">01</text>
+                                <text class="vfm-title" x="72" y="172">Practitioner's<tspan x="72" dy="40">Embedded Context</tspan></text>
 
                                 <!-- 02 AI — top-right, right-anchored -->
-                                <text class="vfm-num" x="1008" y="182" text-anchor="end">02</text>
-                                <text class="vfm-title" x="1008" y="215" text-anchor="end">AI as a GPT<tspan x="1008" dy="26">Catalyst &amp; Disruption</tspan></text>
+                                <text class="vfm-num" x="1008" y="130" text-anchor="end">02</text>
+                                <text class="vfm-title" x="1008" y="172" text-anchor="end">AI as a GPT<tspan x="1008" dy="40">Catalyst &amp; Disruption</tspan></text>
 
                                 <!-- 03 Interpretive — right-middle, right-anchored -->
-                                <text class="vfm-num" x="1024" y="543" text-anchor="end">03</text>
-                                <text class="vfm-title" x="1024" y="576" text-anchor="end">Interpretive<tspan x="1024" dy="26">Lens</tspan></text>
+                                <text class="vfm-num" x="1024" y="505" text-anchor="end">03</text>
+                                <text class="vfm-title" x="1024" y="547" text-anchor="end">Interpretive<tspan x="1024" dy="40">Lens</tspan></text>
 
                                 <!-- 04 Strategic — bottom, center-anchored -->
-                                <text class="vfm-num" x="540" y="924" text-anchor="middle">04</text>
-                                <text class="vfm-title" x="540" y="957" text-anchor="middle">Strategic<tspan x="540" dy="26">Enactment</tspan></text>
+                                <text class="vfm-num" x="540" y="940" text-anchor="middle">04</text>
+                                <text class="vfm-title" x="540" y="982" text-anchor="middle">Strategic<tspan x="540" dy="40">Enactment</tspan></text>
 
                                 <!-- 05 Evolving — left-middle, left-anchored -->
-                                <text class="vfm-num" x="56" y="543">05</text>
-                                <text class="vfm-title" x="56" y="576">Evolving Outcomes<tspan x="56" dy="26">&amp; Perceptions</tspan></text>
+                                <text class="vfm-num" x="56" y="505">05</text>
+                                <text class="vfm-title" x="56" y="547">Evolving Outcomes<tspan x="56" dy="40">&amp; Perceptions</tspan></text>
                             </g>
 
                             <!-- V108: internal items removed. The diagram now reads as pure
@@ -218,7 +221,6 @@
                                  document, not on the page. -->
 
                         </svg>
-                        <figcaption>The Value Fit Model. Built during my cum laude thesis.</figcaption>
                     </figure>
                 </div>
             </div>

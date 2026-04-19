@@ -627,6 +627,39 @@ Both deferred until Alex sees V108 in the browser.
 
 ---
 
+## V109: Value Fit Model shrunk and moved side-by-side with Method text
+
+After V108 the diagram was clean but still full-width below the text, making the Method section vertically long. Alex asked to shrink it and position it next to the text on the right so the section feels more condensed.
+
+**Changes:**
+- Diagram moved from `grid-column: 1 / -1` (full row) to `grid-column: 6 / -1` (right half only).
+- Diagram `max-width` reduced from 900px to 600px.
+- Text-content on the Method row specifically now spans `grid-row: 1 / span 2` with `align-self: start`, so the paragraph on the left flows alongside the diagram on the right.
+- Internal font sizes and stroke widths in the SVG bumped ~1.6x to preserve readability at the smaller rendered width: num label 11 → 20, title label 22 → 34, dividers 2 → 3, border 1.5 → 2.5, feedback arc 3.5 → 5.5, leader 1 → 1.5, center dot r 4 → 6.
+- Label y-coordinates re-anchored to fit the taller label blocks without overlapping the circle border (top labels moved up, bottom label down, side labels recentered on y≈540).
+- Figcaption removed (the Method copy already names the framework).
+- Mobile breakpoint at 900px: diagram falls back to full-width below the text, as before V109.
+
+**Files modified:**
+- `about.html`: label y-coordinates and tspan dy values updated; center dot r bumped to 6; figcaption removed.
+- `style.css`: `.value-fit-model` grid placement and stroke/font CSS updated; added `.about-page .rd-grid-part2 .rd-row.reversed.theme-light .text-content` override to span rows.
+- All five HTML files: `style.css?v=106 → v=107`.
+
+Cache state: `style.css?v=107`, `script.js?v=94`.
+
+**Net effect:**
+- Method section is roughly 40% shorter vertically. Text paragraph and diagram now read together as one editorial composition.
+- At the 900px breakpoint the layout falls back to stacked (diagram below text), so mobile users still get a readable full-width version.
+
+**Follow-up options if needed:**
+- If the side-by-side feels cramped, raise `max-width` to 640-680px.
+- If the title "Method" at top-right feels visually separated from its diagram, reduce `margin-top` on `.value-fit-model` from 32px to 16px or 8px.
+- If the paragraph on the left sits too far from the diagram vertically, revisit `align-self` on the text or add explicit `margin-top` to match.
+
+**Rollback path:** revert `about.html` label coords, remove the grid overrides and restore `.value-fit-model` to `grid-column: 1 / -1; max-width: 900px` with original stroke widths and font sizes.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
