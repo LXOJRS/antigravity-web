@@ -1,5 +1,11 @@
 # Design Recommendations — alexojers.com
 
+> **Status (V106):** Historical input document. Written pre-V101 as an audit + recommendation brief. Most recommendations have shipped through Phases 1-7 and subsequent tune-ups. The accent color reference in the original header (`#0000C5`) is outdated: the brand color is now `#BFE8F8` (icy blue), replaced in V96 for contrast reasons. See `DESIGN-RULES.md` for the current living design system and `plans/PLAN-EXECUTION-V1.md` for the full execution log.
+>
+> This file is kept for historical reference. Do not use it as the source of truth for current rules.
+
+---
+
 Based on a full audit of your current codebase and inspiration drawn from Lama Lama, Extract Studio, and MetaLab's Midjourney case study. All recommendations respect DESIGN-RULES.md (#050505 bg, white/rgba text, #0000C5 accent for decoration only, Inter, 12-col grid with asymmetry, large titles + compact body).
 
 ---

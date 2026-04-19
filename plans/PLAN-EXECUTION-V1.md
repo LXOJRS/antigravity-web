@@ -511,6 +511,72 @@ All of the above are JS-side only; CSS stays stable.
 
 ---
 
+## Refinement pass V104 (full-bleed padding + scrub tuning)
+
+After V103, Scope and Method sections still felt banner-sized. User asked for them to fill the viewport fully. Quick tune-up:
+- Peak padding changed from `160px` to `50vh`. Scales with viewport so short single-row sections like Scope/Method fill the screen at peak.
+- ENTER scroll range extended from `top bottom → top center` to `top bottom → top 30%` (70% of viewport scroll instead of 50%).
+- EXIT scroll range extended from `bottom center → bottom top` to `bottom 70% → bottom top`.
+- Scrub doubled from `0.5` to `1.0` for smoother rapid-scroll.
+
+Cache bumped to `script.js?v=92` (CSS unchanged).
+
+## Refinement pass V105 (attempted fix for layout-shift bugs, PARTIALLY REVERTED in V106)
+
+After V104, three bugs surfaced:
+1. Transitions not gradual enough (color turning cyan almost immediately on entry).
+2. Origin section on about was faded/invisible until user scrolled past it.
+3. Method's transition was delayed — appeared mid-cyan only after user had already scrolled past the content.
+
+Root cause diagnosed: padding animation from `64px` to `50vh` caused a ~950px layout shift at 1080vp viewport. All elements below the themed section (Origin, Method, outro) shifted downward. GSAP ScrollTrigger positions are cached at page load and don't auto-recalculate when layout changes. So:
+- Origin's fade-in trigger fired at its *original* page position, not where Origin actually was.
+- Method's own theme-light trigger fired at the pre-shift position, so the color transition played before Method was visible on screen.
+
+V105 attempted fix:
+- Added `invalidateOnRefresh: true` to all relevant ScrollTriggers so they recalculate on refresh.
+- Added `ScrollTrigger.refresh()` callbacks on theme-light triggers' `onLeave` and `onEnterBack` to recalculate cached positions after each layout change.
+- Moved EXIT start from `bottom 70%` to `bottom 85%` (earlier) to reduce dead cyan space below content.
+- Tightened ENTER end from `top 30%` to `top 15%` for more gradual feel.
+
+Cache bumped to `script.js?v=93`.
+
+## Refinement pass V106 (architectural simplification — current state)
+
+V105 introduced two new bugs:
+1. **Scroll scatter**: `ScrollTrigger.refresh()` calls during scrub animations caused visible jumps as all trigger positions re-measured mid-scroll.
+2. **Content fading while visible**: moving EXIT to `bottom 85%` meant color fade started while the user was still looking at content in the upper viewport.
+
+V106 took the architectural step: **stop animating padding entirely**. The padding animation was the ultimate cause of the layout shift; patching the consequences (V105) was treating the symptom.
+
+Changes:
+- `.theme-light` padding moved to fixed `50vh` top/bottom permanently in style.css. Section is always full-bleed sized regardless of scroll state.
+- JS tweens now only animate the five CSS color variables. No padding animation.
+- Removed all `ScrollTrigger.refresh()` callbacks and `invalidateOnRefresh` flags. No more mid-scroll re-measurement, no more scatter.
+- EXIT color start changed from `bottom 85%` to `bottom 40%`. At `bottom 40%` the section's content has just exited the top of viewport, so color fade begins only after the user is past the content.
+- ENTER scroll range kept at `top bottom → top 30%`.
+
+Net behavior:
+- Sections are ALWAYS tall (50vh + content + 50vh). When not themed, blend with dark page. When themed, full-bleed cyan.
+- No layout shift ever. Origin's reveal trigger stays accurate. Method's trigger fires at correct scroll position. No scatter.
+- Content stays cyan for its entire visibility range. Fade begins only after user scrolls past.
+
+Trade-off: page is longer on about and R&D because themed sections are always viewport-size. This is a feature (editorial spaciousness) rather than a bug.
+
+Cache bumped to `style.css?v=104`, `script.js?v=94`. This is the current live state.
+
+**Rollback paths:**
+- If the ever-tall themed sections feel too empty when dark: reduce `padding-top` and `padding-bottom` in `.theme-light` from `50vh` to `35vh` or `40vh` (may lose full-bleed at wide viewports).
+- If users want the "expanding" effect back: re-add the padding animation to the GSAP tweens, but keep `ScrollTrigger.refresh()` calls minimal. The V106 approach is the recommended architecture.
+
+---
+
+## Content + media fixes post-V106
+
+- About page profile picture swapped from the old abstract portrait to `pg_alexander-2_lpp3aj.jpg` on Cloudinary (real photo).
+- Chris le More card on creative-building.html swapped from placeholder SVG to a real Cloudinary image (`Untitled_design_1_zpetbg.png`). The card now shows actual AI-generated model visuals.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
