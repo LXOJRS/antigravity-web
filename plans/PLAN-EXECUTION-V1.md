@@ -604,6 +604,29 @@ Cache state after V107: `style.css?v=105`, `script.js?v=94` (script unchanged).
 
 ---
 
+## V108: Value Fit Model internal items removed
+
+After V107 landed on the page, the diagram felt information-dense when the surrounding Method copy already frames the framework abstractly. Alex asked to strip the wedge-internal items (Scale of Operation, Multifaceted Capabilities, Vision-led Building, etc.) and keep only the five outer section labels (01 Practitioner's Embedded Context, 02 AI as a GPT Catalyst & Disruption, 03 Interpretive Lens, 04 Strategic Enactment, 05 Evolving Outcomes & Perceptions).
+
+Net effect: the diagram now reads as pure structure — five wedges, dividers, border, feedback arc, five outer labels. Like an architectural diagram rather than a content dump. The detailed item breakdown lives in the thesis, not on the page.
+
+**Files modified:**
+- `about.html`: `<g class="vfm-items">` block deleted (17 item `<text>` elements, roughly 25 lines).
+- `style.css`: `.value-fit-model .vfm-items text` rule deleted.
+- All five HTML files: `style.css?v=105 → v=106`.
+
+Cache state: `style.css?v=106`, `script.js?v=94`.
+
+**If the diagram now feels sparse or empty:**
+- Option 1: tighten the diagram size. Because the readability-on-items constraint is gone, `max-width` can drop from 900px to ~600-700px without losing anything.
+- Option 2: move to side-by-side with the text (diagram in cols 7-12 or 6-12, text narrower in cols 2-4). Method section becomes substantially shorter.
+
+Both deferred until Alex sees V108 in the browser.
+
+**Rollback path:** restore the `<g class="vfm-items">` block from git history and revert the CSS rule.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.

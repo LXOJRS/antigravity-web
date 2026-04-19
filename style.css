@@ -2910,13 +2910,6 @@ footer {
     letter-spacing: -0.015em;
 }
 
-.value-fit-model .vfm-items text {
-    fill: currentColor;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-}
-
 .value-fit-model figcaption {
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 0.75rem;
