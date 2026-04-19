@@ -356,20 +356,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- Theme-light scroll-driven live transition (V104) ---
+    // --- Theme-light scroll-driven live transition (V105) ---
     // Each themed section fades dark -> cyan and expands padding on enter,
     // then reverses on exit. Uses CSS variables scoped to .theme-light so a
     // single tween per state cascades to all child text colors.
     //
-    // V104 tuning: peak padding uses 50vh (scales with viewport so even
-    // short single-row sections like Scope/Method fill the screen at peak).
-    // Scroll range extended from 50% to 70% of viewport for a more gradual
-    // transition. Scrub lag doubled to 1.0 for smoother rapid-scroll.
+    // V105 fixes for V104 layout-shift issues:
+    //   - Peak padding (50vh) causes ~950px layout shift at 1080vp viewport,
+    //     which invalidates cached ScrollTrigger positions for every element
+    //     BELOW the themed section. That's why Origin appeared faded (its
+    //     reveal trigger pointed at its pre-shift position) and Method's
+    //     transition felt delayed.
+    //   - Fix: add `invalidateOnRefresh: true` and call `ScrollTrigger.refresh()`
+    //     on trigger boundaries (onLeave, onEnterBack) so cached positions
+    //     recalculate after each layout change.
+    //   - EXIT start moved earlier ('bottom 85%' vs old 'bottom 70%') so the
+    //     bottom padding starts shrinking sooner, reducing dead cyan space
+    //     after the section's content.
+    //   - ENTER end tightened ('top 15%' vs old 'top 30%') so the cyan peak
+    //     arrives closer to when the section is genuinely centered, making
+    //     the fade feel more gradual relative to user perception.
     const themeLightSections = document.querySelectorAll('.theme-light');
+
+    const refreshTriggers = () => ScrollTrigger.refresh();
 
     themeLightSections.forEach(section => {
         // ENTER: dark -> cyan + padding 64px -> 50vh as section rises from
-        // viewport bottom to upper third.
+        // viewport bottom to near top.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#050505',
@@ -392,14 +405,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
-                    end: 'top 30%',
-                    scrub: 1
+                    end: 'top 15%',
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                    onLeave: refreshTriggers,
+                    onEnterBack: refreshTriggers
                 }
             }
         );
 
-        // EXIT: cyan -> dark + padding 50vh -> 64px as section rises from
-        // lower third to above viewport.
+        // EXIT: cyan -> dark + padding 50vh -> 64px. Starts earlier than V104
+        // so the bottom padding shrinks before the user scrolls into dead
+        // cyan space below the section's content.
         gsap.fromTo(section,
             {
                 '--theme-bg': '#BFE8F8',
@@ -421,9 +438,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
-                    start: 'bottom 70%',
+                    start: 'bottom 85%',
                     end: 'bottom top',
-                    scrub: 1
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                    onLeave: refreshTriggers,
+                    onEnterBack: refreshTriggers
                 }
             }
         );
@@ -472,6 +492,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- R&D Cinematic Scroll Animations ---
 
     // 1. De verspringende rijen (Slide up + Fade in)
+    // V105: invalidateOnRefresh ensures cached trigger positions recalculate
+    // after theme-light layout shifts upstream (e.g., Scope's padding animation
+    // pushes Origin down by ~950px).
     const rdRows = document.querySelectorAll('.rd-row');
     rdRows.forEach(row => {
         gsap.fromTo(row,
@@ -487,7 +510,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 scrollTrigger: {
                     trigger: row,
                     start: 'top 85%', // Begint als de bovenkant van de rij 85% in beeld is
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none reverse',
+                    invalidateOnRefresh: true
                 }
             }
         );
