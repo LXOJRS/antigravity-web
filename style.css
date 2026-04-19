@@ -2815,6 +2815,133 @@ footer {
 }
 
 /* ============================================================
+   V107: Value Fit Model diagram
+   Designed via Claude Design, lives inside the About Method row
+   (which is .theme-light). The diagram's "export mode" palette
+   maps exactly onto the theme-light variable system: wedge fills
+   match the section background, while every stroke and text
+   element uses currentColor. Result: the whole diagram rides
+   the cyan transition automatically with no extra JS.
+   Sits on grid row 2 of the .rd-row (below title + text), so it
+   does not change the positioning of either.
+   ============================================================ */
+.value-fit-model {
+    grid-column: 2 / span 10;
+    grid-row: 2;
+    margin: 96px auto 0;
+    padding: 0;
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.value-fit-model svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    color: var(--theme-fg, #ffffff);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: visible;
+}
+
+/* Wedge fills match the section background so the circle reads as
+   a blue disc on a blue page, carved into five sectors by the
+   dividers and border — the same effect as export mode in the
+   design tool. */
+.value-fit-model .vfm-wedges path {
+    fill: var(--theme-bg);
+}
+
+/* All strokes and text inherit currentColor and therefore the
+   theme-light transition (white off-screen, black at peak cyan). */
+.value-fit-model .vfm-lines line,
+.value-fit-model .vfm-leaders line {
+    stroke: currentColor;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.value-fit-model .vfm-lines line {
+    stroke-width: 2.5;
+}
+
+.value-fit-model .vfm-leaders line {
+    stroke-width: 1.5;
+}
+
+.value-fit-model .vfm-border {
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+}
+
+.value-fit-model .vfm-arc {
+    stroke: currentColor;
+    stroke-width: 4;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.value-fit-model .vfm-center {
+    fill: currentColor;
+}
+
+.value-fit-model text {
+    fill: currentColor;
+    font-family: 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.005em;
+}
+
+/* Section numbers (01-05) — large, quiet weight */
+.value-fit-model .vfm-number {
+    font-size: 58px;
+    font-weight: 300;
+    letter-spacing: 0;
+}
+
+/* Section titles outside the circle */
+.value-fit-model .vfm-label {
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+/* Items inside the wedges — bolder, tight */
+.value-fit-model .vfm-items text {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.value-fit-model .vfm-caption {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--theme-muted, rgba(255, 255, 255, 0.6));
+    text-align: center;
+    margin: 0;
+    max-width: 60ch;
+}
+
+@media (max-width: 900px) {
+    .value-fit-model {
+        grid-column: 1 / -1;
+        margin-top: 64px;
+    }
+    .value-fit-model .vfm-number { font-size: 54px; }
+    .value-fit-model .vfm-label { font-size: 28px; }
+    .value-fit-model .vfm-items text { font-size: 18px; }
+}
+
+@media (max-width: 600px) {
+    .value-fit-model .vfm-items text { font-size: 17px; }
+}
+
+/* ============================================================
    V102: Creative Building break video full-bleed blurred backdrop
    The break video sits as a floating tile centered in a full-width
    slab that uses a muted blurred copy of the same video as its
