@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=110">
+    <link rel="stylesheet" href="style.css?v=111">
 
     <!-- Open Graph -->
     <meta property="og:title" content="AI-Generated Visuals | Alex AI">
@@ -75,9 +75,15 @@
                 I hate ‘AI-Slop’. My mission is to create AI visuals that always feel intentional and impressive.
             </p>
 
-            <!-- IN PRODUCTION (V101): moved up from the bottom of the page so commercial shipping work reads before the exploration content. Promptgorillas card uses the actual shipping hero video. Chris le More card still placeholder image; swap src with a Cloudinary URL when ready. Card href="#" should also be replaced with the real destination when you have it.
-                 V110: the previous .creative-act1 wrapper held a duplicate "I hate AI-slop" line; merged into .service-intro above and removed. -->
-
+            <!-- IN PRODUCTION: V101 moved this up from the bottom of the page so commercial
+                 shipping work reads before the exploration content.
+                 V110: merged "I hate AI-slop" into .service-intro above, removed creative-act1.
+                 V113: bumped to page-hero scale (header at display, intro at subhead, cards
+                 taller). The closing CTA was lifted out of this section entirely and
+                 turned into a full-bleed cyan theme-light slab below — the page's primary
+                 commercial close.
+                 Promptgorillas card uses the actual shipping hero video; href="#" awaits real
+                 link. Chris le More card image awaits real Cloudinary URL too. -->
             <section class="in-production">
                 <div class="in-production-header">
                     <h2 class="section-title">In production</h2>
@@ -92,6 +98,7 @@
                         <span class="card-index">01</span>
                         <h3>Promptgorillas</h3>
                         <p>AI hero videos and brand visuals currently running on their website and marketing.</p>
+                        <span class="visual-date">Promptgorillas &middot; 2026</span>
                     </a>
 
                     <a href="#" class="service-card" data-magnetic>
@@ -99,15 +106,24 @@
                         <span class="card-index">02</span>
                         <h3>Chris le More</h3>
                         <p>AI-generated model visuals for fast and efficient production.</p>
+                        <span class="visual-date">Chris le More &middot; 2026</span>
                     </a>
-                </div>
-
-                <div class="in-production-cta">
-                    <p>Available one day a week for independent visual work. If you want a brand world instead of another stock image, let’s talk.</p>
-                    <a href="mailto:alexander@promptgorillas.com" class="contact-btn" data-magnetic>Book a project <span class="btn-arrow">&rarr;</span></a>
                 </div>
             </section>
 
+        </div>
+
+        <!-- V113: Production CTA promoted to full-bleed cyan theme-light slab.
+             Used to be a small paragraph + button at the bottom of .in-production.
+             Now it's the page's primary commercial close, with display-scale copy
+             and a prominent button. Rides the existing theme-light scroll
+             transition (script.js V106) automatically. -->
+        <div class="production-cta theme-light">
+            <div class="production-cta-content">
+                <p class="production-cta-statement">Available one day a week for independent visual work.</p>
+                <p class="production-cta-aside">If you want a brand world instead of another stock image, let&rsquo;s talk.</p>
+                <a href="mailto:alexander@promptgorillas.com" class="contact-btn cta-btn-large" data-magnetic>Book a project <span class="btn-arrow">&rarr;</span></a>
+            </div>
         </div>
 
         <div class="container" style="padding-bottom: 128px;">
@@ -117,10 +133,23 @@
                         <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1771765670/202602221402_ovtz0c.mp4" type="video/mp4">
                     </video>
                 </div>
+                <p class="visual-date">Self-initiated &middot; 2026</p>
             </div>
 
+            <!-- V113: Application restructured into a bold 2-column layout.
+                 Weavy workflow placeholder on the LEFT (asymmetric ~58% width),
+                 process text on the RIGHT (~38%). Section title at display scale.
+                 The placeholder is a striped/dashed box; swap with a real
+                 Cloudinary URL when the Weavy screenshot asset is ready. -->
             <div class="creative-act-application">
-                <div class="text-block">
+                <figure class="application-visual">
+                    <div class="weavy-placeholder" aria-label="Placeholder for Weavy workflow screenshot">
+                        <span class="weavy-placeholder-label">Weavy workflow</span>
+                        <span class="weavy-placeholder-sub">screenshot placeholder</span>
+                    </div>
+                    <figcaption class="visual-date">Weavy pipeline &middot; 2026</figcaption>
+                </figure>
+                <div class="application-text">
                     <h2 class="section-title">Application</h2>
                     <div class="text-content">
                         <p>The work often begins exploratively, guided by a clear idea or question. I use my background in film studies to test ideas and how far they can stretch within this medium. From there, I design pipelines where variables are controlled: one character, multiple outputs, repeatable lighting.</p>
@@ -139,6 +168,8 @@
                     </video>
                 </div>
             </section>
+
+            <p class="visual-date visual-date-centered">Self-initiated &middot; 2026</p>
 
             <!-- V110: closing statement removed. Page now concludes on .creative-break-full
                  then transitions directly to the Get-in-Touch CTA. -->

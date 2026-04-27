@@ -2470,11 +2470,200 @@ footer {
     border-radius: 0;
 }
 
-/* --- Creative Page: Application Section (V101: text-only, visual-col removed) --- */
+/* --- Creative Page: Application Section ---
+   V101: text-only, visual-col removed.
+   V113: restructured into a bold asymmetric 2-column layout. Weavy workflow
+   placeholder on the LEFT (~58% width), process text on the RIGHT (~38%).
+   The columns sit at the edges of the 12-col container with a wide gap
+   between, leaning into magazine-spread proportions rather than balanced
+   halves. */
 .creative-act-application {
-    grid-column: 2 / span 10;
-    margin-top: 96px;
-    margin-bottom: 128px;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 160px;
+    margin-bottom: 160px;
+}
+
+.application-visual {
+    margin: 0;
+    padding: 0;
+}
+
+.application-text {
+    /* Tighten the right column so the text feels like editorial sidebar
+       commentary on the visual rather than a co-equal block. */
+    padding-top: 48px;
+}
+
+.creative-page .creative-act-application .section-title {
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 40px;
+    text-shadow: none;
+}
+
+@media (max-width: 900px) {
+    .creative-act-application {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-top: 96px;
+        margin-bottom: 96px;
+    }
+    .application-text {
+        padding-top: 0;
+    }
+}
+
+/* Weavy workflow placeholder: striped/dashed box that holds space until the
+   real Cloudinary screenshot URL is available. Same diagonal stripe pattern
+   as ImageSprite placeholders in the Claude Design starter — telegraphs
+   "asset incoming" rather than "missing image". */
+.weavy-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: repeating-linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.04) 0,
+        rgba(255, 255, 255, 0.04) 12px,
+        rgba(255, 255, 255, 0.08) 12px,
+        rgba(255, 255, 255, 0.08) 24px
+    );
+    border: 1px dashed rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.weavy-placeholder-label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.weavy-placeholder-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   V113: Production CTA — full-bleed cyan theme-light slab
+   Promoted from a small paragraph + button at the bottom of
+   .in-production into the page's primary commercial close.
+   The .theme-light class on the wrapper triggers the existing
+   GSAP scroll-driven cyan transition (V106), so the slab fades
+   in dark→cyan as the user scrolls into it.
+   ============================================================ */
+.production-cta {
+    /* theme-light supplies the full-bleed and 50vh padding. */
+    text-align: left;
+}
+
+.production-cta-content {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.production-cta-statement {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    color: var(--theme-fg);
+    margin: 0;
+    max-width: 18ch;
+}
+
+.production-cta-aside {
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    line-height: 1.45;
+    color: var(--theme-muted);
+    margin: 0;
+    max-width: 48ch;
+    font-weight: 400;
+}
+
+.production-cta .contact-btn {
+    margin-top: 32px;
+    align-self: flex-start;
+}
+
+/* Larger CTA button variant for the cyan slab. Pulls from the existing
+   .contact-btn pattern; the larger size + theme-aware colors make it the
+   page's primary call to action rather than an inline link. */
+.cta-btn-large {
+    padding: 20px 40px !important;
+    font-size: 1.125rem !important;
+    border-color: var(--theme-fg) !important;
+    color: var(--theme-fg) !important;
+    background-color: transparent !important;
+}
+
+.cta-btn-large:hover {
+    background-color: var(--theme-fg) !important;
+    color: var(--theme-bg) !important;
+}
+
+@media (max-width: 768px) {
+    .production-cta-content {
+        padding: 0 16px;
+    }
+    .cta-btn-large {
+        padding: 16px 32px !important;
+        font-size: 1rem !important;
+    }
+}
+
+/* ============================================================
+   V113: Visual-date metadata
+   Small uppercase tracked caption that sits below every visual on
+   creative-building, podcast, and about. Acts as a typographic
+   accessory — reads as a press credit, telegraphs that the work
+   is current. Single rule covers all use cases.
+   ============================================================ */
+.visual-date {
+    display: block;
+    margin: 12px 0 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+    font-weight: 500;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.4;
+}
+
+.visual-date-centered {
+    text-align: center;
+    margin-top: 24px;
+}
+
+/* On the in-production cards, the date sits inside the .service-card flex
+   container. Pull it tight to the description above. */
+.service-card .visual-date {
+    margin-top: 10px;
+}
+
+/* Inside theme-light sections, the visual-date inherits theme-aware muted
+   color so it stays legible on cyan. Currently no theme-light visuals carry
+   a visual-date, but the rule future-proofs the component. */
+.theme-light .visual-date {
+    color: rgba(5, 5, 5, 0.55);
 }
 
 /* Creative page break video — respects natural 4:3 aspect ratio */
@@ -2778,15 +2967,18 @@ footer {
    ------------------------------------------------------------ */
 .in-production {
     grid-column: 1 / -1;
-    margin-top: 96px;
+    /* V113: bigger top margin to give the section a clear chapter break above. */
+    margin-top: 160px;
     margin-bottom: 128px;
     position: relative;
     z-index: 2;
 }
 
 .in-production-header {
-    max-width: 700px;
-    margin-bottom: 64px;
+    /* V113: wider header so the bumped intro line breathes; bottom margin grew
+       to set the section apart from the cards visually. */
+    max-width: 880px;
+    margin-bottom: 96px;
     padding: 0 24px;
 }
 
@@ -2795,30 +2987,36 @@ footer {
     margin-bottom: 16px;
 }
 
-.in-production-header .section-title {
-    margin-bottom: 24px;
+/* V113: "In production" header bumped to display scale so it reads as the
+   page's chapter title, not an inline label. */
+.creative-page .in-production-header .section-title {
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 32px;
+    text-shadow: none;
 }
 
+/* V113: intro line bumped from body (1.25rem) to subhead so it carries the
+   commercial weight of the section. */
 .in-production-intro {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 600px;
+    font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 700px;
     margin: 0;
+    font-weight: 400;
+    letter-spacing: -0.01em;
 }
 
+/* V113: legacy .in-production-cta is no longer used. The closing CTA was
+   promoted to a full-bleed cyan theme-light slab below (.production-cta).
+   Rule kept as a no-op safety in case stale HTML references the class. */
 .in-production-cta {
     max-width: 540px;
     margin: 80px 0 0;
     text-align: left;
     padding: 0;
-}
-
-.in-production-cta p {
-    font-size: 1.15rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    margin-bottom: 32px;
 }
 
 /* ============================================================

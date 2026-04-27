@@ -778,6 +778,59 @@ Cache state: `style.css?v=110`, `script.js?v=94`.
 
 ---
 
+## V113: Creative Building uplift, plus date metadata across pages
+
+Fourth phase of the V110-V115 plan, scoped after a vision pass with Alex. The original V113 was "make Production bigger and add a Weavy screenshot" — that would have been a font bump and an asset insertion. After designer-eye audit, V113 became a real layout pass: the page's hierarchy was wrong, the proof section wasn't doing its job, and the process section had no visual support.
+
+The decorative videos (cinematic showcase + creative-break-full) stay in place per Alex's call ("first apply the other changes before we remove beautiful assets").
+
+**Item 1 — In Production becomes the page's hero:**
+- `.in-production-header .section-title` ("In production") bumped from `clamp(2rem, 3.5vw, 3rem)` to `clamp(3rem, 5.5vw, 5rem)` — display scale, the page's chapter title.
+- `.in-production-intro` bumped from `1.25rem` body to `clamp(1.5rem, 2.2vw, 1.875rem)` subhead with tighter letter-spacing, so the commercial framing line carries the section's weight.
+- Section margins increased (`160px` top, `96px` between header and cards) for breathing room that signals importance.
+- Cards keep their existing min-height + padding (already tuned in V101). Visual-date caption added inside each card as a typographic press-credit ("Promptgorillas · 2026", "Chris le More · 2026").
+
+**Item 1 — CTA promoted to full-bleed cyan slab:**
+- The closing CTA (was `<div class="in-production-cta">` inside `.in-production`, paragraph + small button) was lifted out of the section entirely. Now it's a sibling of the inner `.container`, structured as `<div class="production-cta theme-light">`.
+- The `.theme-light` class triggers the existing GSAP scroll-driven cyan transition (V106), so the slab fades dark → cyan as the user scrolls into it. No JS additions needed.
+- Inside the slab: `.production-cta-statement` ("Available one day a week for independent visual work.") at pull-quote scale (`clamp(2.5rem, 5vw, 4.5rem)`); `.production-cta-aside` ("If you want a brand world…") at body scale; `.cta-btn-large` button variant, larger padding, theme-aware colors that invert on hover. The CTA now reads as the page's primary close, not a footnote.
+
+**Item 4 — Application becomes a 2-column magazine spread:**
+- Restructured the HTML: `<figure class="application-visual">` on the LEFT (Weavy placeholder), `<div class="application-text">` on the RIGHT.
+- Grid `7fr 5fr` (~58% / 38%) — asymmetric on purpose, leaning into editorial spread proportions per Alex's reference to jamyvodegel.com.
+- "Application" H2 bumped to display scale (`clamp(3rem, 5.5vw, 5rem)`) to match the In Production header — two equal-weight chapter titles on the page.
+- Weavy placeholder is a striped/dashed box at 4:3 aspect, labeled "Weavy workflow / screenshot placeholder". Pattern follows the `[MEDIA: ...]` placeholder convention: swap `<div class="weavy-placeholder">` for an `<img src="cloudinary-url">` when the asset is ready.
+- Mobile (≤900px): grid collapses to single column, gap tightens to 48px.
+
+**Item 7 — Visual-date metadata across pages:**
+- New `.visual-date` component: small uppercase tracked caption (0.7rem, letter-spacing 0.22em, muted white). One CSS rule, used on:
+  - `creative-building.html`: inside both In Production cards, below cinematic-showcase, below creative-break-full, below Weavy placeholder
+  - `about.html`: below the full-bleed-break "Alex at work" image
+  - `podcast.html`: below the full-bleed-break hosts image
+- `.visual-date-centered` modifier for stand-alone visuals (cinematic showcase, full-bleed breaks).
+- Theme-aware override: `.theme-light .visual-date` flips to muted dark — future-proofs the component for any theme-light section that adopts a dated visual.
+
+**Files modified:**
+- `creative-building.html`: lifted `.in-production-cta` out of `.in-production` and replaced with `.production-cta.theme-light` slab; added visual-date spans to both production cards; restructured `.creative-act-application` into `.application-visual` + `.application-text` with Weavy placeholder; added visual-date below cinematic showcase and creative-break-full.
+- `about.html`: added visual-date below full-bleed-break image.
+- `podcast.html`: added visual-date below full-bleed-break image.
+- `style.css`: bumped `.in-production-header .section-title` and `.in-production-intro`, added `.creative-act-application` 2-col grid + `.application-visual` / `.application-text` rules + `.creative-page .creative-act-application .section-title` display override, added `.weavy-placeholder` component, added `.production-cta` + `.production-cta-content` + `.production-cta-statement` + `.production-cta-aside` + `.cta-btn-large` block, added `.visual-date` + `.visual-date-centered` + `.service-card .visual-date` + `.theme-light .visual-date` rules.
+- All five HTML files: `style.css?v=110 → v=111`.
+
+Cache state: `style.css?v=111`, `script.js?v=94`.
+
+**Voice rule check:** no em dashes introduced in shipped content.
+
+**Known follow-ups / things to look at in browser:**
+- The Weavy placeholder at 4:3 might feel taller than ideal next to the right-column text. If so, switch to 16:10 or 16:9 — single CSS line.
+- The `.production-cta` slab inherits `.theme-light`'s `padding-top/bottom: 50vh`, which makes it ~100vh tall. That's the intended "full stop" effect, but if it feels excessive, reduce to `40vh` by overriding on `.production-cta` only.
+- Visual-date inside `.service-card` shows "Promptgorillas · 2026" / "Chris le More · 2026". If those feel redundant with the H3, switch to just the year ("2026").
+- The cinematic showcase video has the visual-date below it at center. Whether that lands depends on spacing. If it crowds, add more margin-top on `.visual-date-centered`.
+
+**Rollback path:** restore the original `.in-production-cta` block inside `.in-production` from git history; revert the Application section HTML to the single-column `<div class="creative-act-application"><div class="text-block">...</div></div>` form; remove the visual-date spans from each visual; revert the new style.css blocks (production-cta, weavy-placeholder, application 2-col grid, visual-date) and restore the original `.in-production` typography rules.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
