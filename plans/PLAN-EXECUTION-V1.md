@@ -728,6 +728,56 @@ Cache state: `style.css?v=109`, `script.js?v=94`.
 
 ---
 
+## V112: Value Fit Model titles moved inside the wedges
+
+Third phase of the V110-V115 plan. The model previously read as: outer titles + leader stubs + outer numbers + an empty circle (since V108 removed internal items). With every label sitting outside, the diagram occupied a wide footprint and the wedges themselves carried no information. Alex's call: move the titles inside, drop the numbers, let the feedback arrow imply sequence.
+
+**Changes:**
+
+- Removed the `<g class="vfm-leaders">` group (5 leader lines + 5 anchor dots).
+- Removed the `<g class="vfm-labels">` group (5 outer numbers + 5 outer titles).
+- Added a new `<g class="vfm-titles" text-anchor="middle">` group with one to three `<text>` elements per wedge, centered on each wedge's radial bisector at `r=200` (uniform across all wedges).
+- Title layouts:
+  - W0 Practitioner's: 2 lines, "Practitioner's" / "Embedded Context"
+  - W1 AI: 3 lines, "AI as a GPT" / "Catalyst &" / "Disruption" (broken into 3 because "Catalyst & Disruption" is wider than the wedge interior)
+  - W2 Interpretive: 2 lines, "Interpretive" / "Lens"
+  - W3 Strategic: 2 lines, "Strategic" / "Enactment"
+  - W4 Evolving: 2 lines, "Evolving Outcomes" / "& Perceptions"
+- Cluster anchor points (computed from `polar(540, 540, 200, angle)`):
+  - W0 (-126°): (422.4, 378.2)
+  - W1 (-54°): (657.6, 378.2)
+  - W2 (18°): (730.2, 601.8)
+  - W3 (90°): (540, 740)
+  - W4 (162°): (349.8, 601.8)
+- Line spacing: 28 SVG units (≈1.17× the 24 font-size, just under standard 1.2 line-height).
+
+**CSS:**
+- Removed `.vfm-leaders line`, `.vfm-leaders circle`, `.vfm-num`, and `.vfm-title` rules.
+- Added new `.value-fit-model .vfm-titles text` rule: `font-size: 24px; font-weight: 600; letter-spacing: -0.005em; dominant-baseline: middle;`.
+- The 24-unit font at the V109 max-width of 600px renders at 24 × 600/1080 = ~13.3 actual pixels. Readable for chart annotation; slightly small but consistent with the editorial scale.
+
+**Why it works:**
+
+The wedges still fill with `var(--theme-bg)` so they dissolve into the cyan page at peak; titles ride `currentColor` and inherit the same theme transition (white off-screen, black at peak cyan), so the diagram fades in cohesively. The center dot, border, dividers, and feedback arc all keep their treatment from V107-V109. Net result: a self-contained labeled wheel with no outer real estate.
+
+**Files modified:**
+- `about.html`: replaced `<g class="vfm-leaders">` and `<g class="vfm-labels">` with the new `<g class="vfm-titles">` block.
+- `style.css`: deleted four CSS rules, added one.
+- All five HTML files: `style.css?v=109 → v=110`.
+
+Cache state: `style.css?v=110`, `script.js?v=94`.
+
+**Voice rule check:** no em dashes introduced.
+
+**Known follow-ups:**
+- The diagram's `max-width: 600px` was kept from V109 (Alex's call: model is "acceptable" right now). Now that outer label real estate is gone, max-width could shrink to 500-540px to make the Method section even more condensed. Single CSS line if Alex wants it tighter.
+- W1's 3-line layout looks slightly busier than the 2-line wedges. Alternative: keep at 2 lines and shrink font for that wedge specifically, or rephrase the title (e.g. "AI Catalyst" / "& Disruption" if Alex is open to dropping "as a GPT").
+- If a long title visually crowds its wedge boundary at the new font-size, individual y-coordinates can be nudged to recenter.
+
+**Rollback path:** restore the `<g class="vfm-leaders">` and `<g class="vfm-labels">` blocks from git history; restore the four deleted CSS rules; remove `<g class="vfm-titles">` and its CSS rule.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.

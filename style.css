@@ -2967,33 +2967,15 @@ footer {
     opacity: 0.9;
 }
 
-.value-fit-model .vfm-leaders line {
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    opacity: 0.55;
-    fill: none;
-}
-.value-fit-model .vfm-leaders circle {
+/* V112: leader-line, outer-number, and outer-title rules removed alongside
+   the corresponding HTML groups. Titles are now rendered inside the wedges
+   via .vfm-titles below. */
+.value-fit-model .vfm-titles text {
     fill: currentColor;
-    opacity: 0.8;
-}
-
-.value-fit-model .vfm-num {
-    fill: currentColor;
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-variant-numeric: tabular-nums;
-    opacity: 0.6;
-}
-
-.value-fit-model .vfm-title {
-    fill: currentColor;
-    font-size: 34px;
+    font-size: 24px;
     font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.005em;
+    dominant-baseline: middle;
 }
 
 /* Side-by-side layout: make the text column span both grid rows
