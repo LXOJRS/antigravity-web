@@ -1148,8 +1148,10 @@ footer {
 }
 
 .insight-card:hover {
+    /* V110: removed cyan box-shadow. Lift + image saturation + title color
+       transition still carry the hover state; the glow read as out of place
+       against the editorial aesthetic. */
     transform: translateY(-5px);
-    box-shadow: 0 30px 60px rgba(191, 232, 248, 0.1);
 }
 
 .card-link {
@@ -2313,7 +2315,9 @@ footer {
 }
 
 .outro-aside {
-    font-size: 1.25rem;
+    /* V110: reduced from 1.25rem to 1rem so the aside reads as a quiet
+       supporting line rather than competing with the outro-statement above. */
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.65);
     font-weight: 400;
     max-width: 600px;
@@ -2328,7 +2332,7 @@ footer {
     }
     .outro-aside {
         text-align: left;
-        font-size: 1.1rem;
+        font-size: 0.95rem;
     }
 }
 
@@ -2994,6 +2998,22 @@ footer {
 }
 
 .in-production .service-card:hover video {
+    filter: brightness(1);
+    transform: scale(1.02);
+}
+
+/* V110: Chris le More image (and any future in-production card image) gets the
+   same minimal filter as the Promptgorillas video so the actual visuals read
+   in real color rather than the strong desaturated treatment used on the
+   homepage service cards. Also pin object-position so the card crops out the
+   bottom edge of the source asset, not the top (Alex preferred the head/face
+   visible on the Chris le More portrait). */
+.in-production .service-card img {
+    filter: brightness(0.92);
+    object-position: top;
+}
+
+.in-production .service-card:hover img {
     filter: brightness(1);
     transform: scale(1.02);
 }

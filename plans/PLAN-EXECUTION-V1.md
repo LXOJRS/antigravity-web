@@ -660,6 +660,36 @@ Cache state: `style.css?v=107`, `script.js?v=94`.
 
 ---
 
+## V110: Mechanical batch (8 items, no design risk)
+
+First phase from the V110-V115 refinement plan (`plans/squishy-popping-pillow.md`). Pure copy edits and CSS-property tweaks, batched into one commit. No structural changes.
+
+**Items shipped:**
+
+| # | What | File / line |
+|---|---|---|
+| 5 | Deleted creative-building closing "Visual storytelling, even when abstract." outro block. Page now concludes on `.creative-break-full` and goes directly to the Get-in-Touch CTA. | creative-building.html (was lines 149-153) |
+| 6 | Replaced `.service-intro` ("I treat AI-generated visuals as a medium in their own right.") with the stronger "I hate 'AI-Slop'. My mission is to create AI visuals that always feel intentional and impressive." Deleted the now-redundant `.creative-act1` wrapper that previously held that line. | creative-building.html lines 74-84 |
+| 14 / 17 | Reduced `.outro-aside` font-size from `1.25rem` to `1rem` (mobile from `1.1rem` to `0.95rem`). One CSS rule covers both about and R&D outros. | style.css `.outro-aside` and the 768px breakpoint |
+| 16 | Deleted "And each path can be different." from R&D `.service-intro`. | service-rd.html line 75 |
+| 18 | Removed `box-shadow: 0 30px 60px rgba(191, 232, 248, 0.1)` from `.insight-card:hover`. Lift, image saturation, and title color transition still carry the hover state. | style.css line 1152 |
+| 2 | Chris le More card image now crops from the bottom (`object-position: top`) so the head/face stay in frame. | new rule on `.in-production .service-card img` in style.css |
+| 3 | Chris le More image filter reduced from the strong homepage `grayscale(60%) brightness(0.7) sepia(10%) hue-rotate(190deg)` treatment to just `brightness(0.92)`, matching the Promptgorillas video. Hover state goes to `brightness(1)` with a 1.02 scale, also matching. | new rules on `.in-production .service-card img` in style.css |
+
+**Files modified:**
+- `creative-building.html`: deleted `.creative-act1` block, merged "I hate AI-slop" into `.service-intro`, deleted closing `.service-outro`.
+- `service-rd.html`: deleted "And each path can be different." sentence.
+- `style.css`: reduced `.outro-aside` font-size + mobile breakpoint, removed insights cards hover shadow, added `.in-production .service-card img` filter and object-position rules.
+- All five HTML files: `style.css?v=107 → v=108`.
+
+Cache state: `style.css?v=108`, `script.js?v=94`.
+
+**Voice rule check:** no em dashes introduced (grep `—` against the four edited files post-edit).
+
+**Rollback path:** every change is local. Restore the deleted blocks from git history; revert the three style.css rules (`.outro-aside` font-size, `.insight-card:hover` shadow, `.in-production .service-card img` filter+object-position).
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
