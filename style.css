@@ -2274,12 +2274,93 @@ footer {
     text-shadow: 0 0 30px rgba(191, 232, 248, 0.25);
 }
 
+/* V111: "The Podcast" intro-block H2 was the same size as the .service-intro
+   above it, so the two stacked texts visually competed and the title felt
+   cluttered. Bumped to display scale (matches rd-row section titles) so
+   "The Podcast" reads as the actual chapter title. */
+.podcast-page .podcast-intro-block .section-title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    margin-bottom: 32px;
+}
+
+.podcast-intro-block {
+    margin-top: 32px;
+}
+
 .podcast-episodes .section-title {
     margin-bottom: 8px; /* episode-list already has margin-top: 48px */
 }
 
 .podcast-page .back-btn {
     margin-top: 32px;
+}
+
+/* ============================================================
+   V111: Dictionary-entry component
+   Used under the podcast pull-quote ("Five episodes. No pretense.")
+   to render a Cambridge-style dictionary definition of the
+   highlighted word. Stacked five lines: word, part of speech with
+   countability, region tag, phonetic, definition with trailing
+   colon. Treated as a typographic accessory, not as content.
+   Right-aligned so it drops under the "pretense" word at the end
+   of the pull-quote line.
+   ============================================================ */
+.dict-entry {
+    display: block;
+    max-width: 340px;
+    margin: 56px 0 0 auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.dict-entry > span {
+    display: block;
+}
+
+.dict-entry .dict-word {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+}
+
+.dict-entry .dict-pos {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 2px;
+}
+
+.dict-entry .dict-region {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 6px;
+}
+
+.dict-entry .dict-phonetic {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #BFE8F8;
+    margin-bottom: 14px;
+}
+
+.dict-entry .dict-def {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+    .dict-entry {
+        margin-left: 0;
+        max-width: 100%;
+    }
 }
 
 /* --- About Page Elevation (V88) --- */

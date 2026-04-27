@@ -690,6 +690,44 @@ Cache state: `style.css?v=108`, `script.js?v=94`.
 
 ---
 
+## V111: Podcast typography + dictionary-entry accessory
+
+Second phase of the V110-V115 plan. Two items: enlarge "The Podcast" H2 so it has visual hierarchy over the service-intro, and add a Cambridge-Dictionary-style definition under "No pretense." in the pull-quote.
+
+**Item 8: H2 enlargement.** The H2 in `.podcast-intro-block` was sized at `clamp(2rem, 3.5vw, 3rem)`, identical to the `.podcast-page .service-intro` ("We are the fun AI podcast.") above it. Two same-size headers stacked produced the cluttered feel. Bumped the H2 specifically (`.podcast-page .podcast-intro-block .section-title`) to `clamp(3rem, 5vw, 4.5rem)`, matching rd-row section title scale, with `margin-bottom: 32px` and added `margin-top: 32px` on `.podcast-intro-block` for a touch more breathing room. The other `.podcast-page .section-title` rules (e.g. on `.podcast-episodes`) are unchanged.
+
+**Item 9: Dictionary entry under "pretense".** Added a new `aside.dict-entry` inside the `.text-block.pull-quote.left` block. Five stacked spans matching the exact format Alex specified in the planning round:
+
+```
+pretense
+noun [ U ]
+us
+/prɪˈtens, ˈpri·tens/
+a way of behaving that is intended to deceive people:
+```
+
+Treatment per line:
+- `.dict-word`: 1.375rem, weight 600, white, slight tight letter-spacing
+- `.dict-pos`: 0.85rem italic, 55% white
+- `.dict-region`: 0.7rem uppercase tracked at 0.22em, 40% white
+- `.dict-phonetic`: 0.95rem italic in brand cyan `#BFE8F8`
+- `.dict-def`: 0.9rem at 78% white, line-height 1.55
+
+The block sits right-aligned (`margin-left: auto`, `max-width: 340px`) below the pull-quote so it visually drops under the "pretense" word at the end of the line. Thin top border (`1px solid rgba(255,255,255,0.14)`) acts as a quiet separator. Mobile (≤768px) collapses to full-width left-aligned.
+
+**Files modified:**
+- `podcast.html`: added `<aside class="dict-entry">` block with five stacked spans inside the existing pull-quote `.text-block`.
+- `style.css`: bumped `.podcast-page .podcast-intro-block .section-title` font-size; added `margin-top` to `.podcast-intro-block`; added new `.dict-entry` component (~50 lines including responsive override).
+- All five HTML files: `style.css?v=108 → v=109`.
+
+Cache state: `style.css?v=109`, `script.js?v=94`.
+
+**Voice rule check:** no em dashes introduced.
+
+**Rollback path:** delete the `<aside class="dict-entry">` block from podcast.html, delete the `.dict-entry` and `.podcast-intro-block .section-title` rules in style.css. Reverts cleanly.
+
+---
+
 ## Iteration notes for future agent runs on this plan
 
 - Between Phase 1 and Phase 2: pause, look at the site in the browser, confirm the new hero subtitle, about copy, R&D proof line, and podcast tagline all land. If any of them feel off, iterate here before Phase 2.
