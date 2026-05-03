@@ -406,6 +406,13 @@ a {
 
 .hero-title .line {
     overflow: hidden;
+    /* V113.5: small horizontal padding so the .highlight word's
+       -webkit-text-stroke 2px outline has breathing room past the
+       glyph bounding box. Without this, the right edge of letters
+       with curved sides (S, C, O) gets a hair clipped against the
+       overflow boundary. The padding doesn't change visual layout
+       because the span text-aligns center inside the inner box. */
+    padding: 0 6px;
 }
 
 .hero-title span {
