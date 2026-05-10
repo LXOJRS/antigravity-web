@@ -3149,7 +3149,9 @@ footer {
     width: min(46vw, 560px);
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    clip-path: inset(0 0 4% 0);
+    /* V114.3: bottom inset bumped from 4% → 10% so the video clears the
+       subtitle row entirely (was previously reaching the subtitle's bottom). */
+    clip-path: inset(0 0 10% 0);
     z-index: 1;
     pointer-events: none;
     /* V114.1: video appears after the hero text via GSAP. Default hidden
