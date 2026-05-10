@@ -3133,18 +3133,23 @@ footer {
    edge sits just above the subtitle line. The previous translucent pill
    behind the subtitle was acting as a backdrop because the frame extended
    past the subtitle. Now the video crops short of the subtitle and the
-   subtitle reads directly on the dark page background. The transform Y
-   offset (-58%) moves the centered frame up by ~16% of its own height,
-   which on the default frame size lands the bottom edge near the start
-   of the subtitle row. Tunable via the offset if it drifts. */
+   subtitle reads directly on the dark page background. Tunable via the
+   transform offset + clip-path bottom inset if positioning drifts.
+
+   V114.2: frame nudged down a hair (translate Y from -58% → -54%, a 4%
+   downward shift of the frame's own height) and the bottom 4% is clipped
+   off via clip-path. Net effect: the visible top edge of the frame is
+   slightly lower, the visible bottom edge stays anchored at the subtitle
+   line, and the visible window is 4% shorter. */
 .hero-frame {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -58%);
+    transform: translate(-50%, -54%);
     width: min(46vw, 560px);
     aspect-ratio: 3 / 4;
     overflow: hidden;
+    clip-path: inset(0 0 4% 0);
     z-index: 1;
     pointer-events: none;
     /* V114.1: video appears after the hero text via GSAP. Default hidden
