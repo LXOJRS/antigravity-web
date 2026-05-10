@@ -182,6 +182,21 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: 'power2.out'
         }, '-=0.4');
 
+    // V114.1: Hero portrait-frame video reveal. The frame is hidden in CSS
+    // (opacity: 0) and faded in here ~2s after the hero text begins, so the
+    // typography reads first and the imagery resolves second. Matches the
+    // intended pacing per Alex's edit: "video should appear about 2 seconds
+    // after the hero text, not before that."
+    const heroFrame = document.querySelector('.hero-frame');
+    if (heroFrame) {
+        gsap.to(heroFrame, {
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power2.out',
+            delay: 2.0
+        });
+    }
+
     // --- Hero subtitle rotating word (V95) ---
     const heroRotate = document.querySelector('.hero-rotate');
     if (heroRotate) {

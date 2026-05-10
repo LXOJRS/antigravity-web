@@ -90,52 +90,47 @@
             </div>
         </section>
 
-        <!-- V114: Lens AI homepage section. Four-beat condensed block with portrait
-             reel on the left and headline + tagline + CTA on the right. The CTA
-             links to lens-ai.html (renamed from creative-building.html in V114).
-             Reel video is currently the same nature loop as the hero — Alex will
-             provide a portrait Lens AI reel asset URL. Voice register here is
-             humainmade.com-adjacent. -->
+        <!-- V114.1: Lens AI homepage section. Two-column split with the portrait
+             reel claiming roughly 2/3 of the row width on the left, copy stack
+             on the right. Reel uses the CLMVID Cloudinary URL (Chris le More
+             showcase reel). Stacks vertically below 768px. -->
         <section class="lens-ai-section" id="lens-ai">
             <div class="container">
                 <div class="lens-ai-grid">
                     <div class="lens-ai-reel">
                         <video class="lens-ai-reel-video" autoplay loop muted playsinline
                                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect fill='%23050505' width='3' height='4'/%3E%3C/svg%3E">
-                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1778417342/magnific_4-second-continuous-natur_2955193038_yvrphi.mp4"
+                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1778417220/CLMVID_fawi62.mp4"
                                     type="video/mp4">
                         </video>
                     </div>
                     <div class="lens-ai-copy">
-                        <h2 class="lens-ai-headline">[CONTENT: Lens AI section headline. Starting draft: "LENS AI"]</h2>
-                        <p class="lens-ai-tagline">[CONTENT: Lens AI section tagline, one line. Starting draft: "AI visuals for brands that want a distinct visual world, not another stock image."]</p>
+                        <h2 class="lens-ai-headline">LENS AI</h2>
+                        <p class="lens-ai-tagline">AI visuals for brands that want a distinct visual world, not another stock image.</p>
                         <a class="lens-ai-cta" href="lens-ai.html" data-magnetic>See the work <span class="btn-arrow">&rarr;</span></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- V114: AI-Rated Podcast homepage section. Centered featured-episode card
-             so the homepage rhythm reads hero → asymmetric two-col (Lens AI) →
-             centered (Podcast), avoiding a patterned two-col-twice feel. -->
+        <!-- V114.1: AI-Rated Podcast homepage section. Asymmetric two-column:
+             left third = display-scale "AI-Rated Podcast" title + half-size
+             "We are the fun AI podcast" subtitle. Right two-thirds = banner
+             video for the featured episode (placeholder until Alex provides
+             the asset URL). -->
         <section class="podcast-section" id="podcast-section">
             <div class="container">
-                <header class="podcast-section-header">
-                    <p class="podcast-eyebrow">AI-RATED</p>
-                    <p class="podcast-tagline">[CONTENT: podcast section tagline. Starting draft: "The fun AI podcast. With Morgan, in Dutch."]</p>
-                </header>
-                <article class="podcast-featured">
-                    <div class="podcast-featured-cover">
-                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1767459178/Podcast_YouTube_Thumbnail_ol7kid.png"
-                             alt="Featured AI-Rated Podcast episode">
+                <div class="podcast-grid">
+                    <div class="podcast-copy">
+                        <h2 class="podcast-headline">AI-Rated Podcast</h2>
+                        <p class="podcast-subhead">We are the fun AI podcast.</p>
+                        <a class="podcast-see-all" href="podcast.html" data-magnetic>See all episodes <span class="btn-arrow">&rarr;</span></a>
                     </div>
-                    <div class="podcast-featured-meta">
-                        <h3 class="podcast-featured-title">[CONTENT: featured episode title. Starting draft: "ChatGPT Toxic Masculinity?"]</h3>
-                        <p class="podcast-featured-blurb">[CONTENT: one-sentence tagline for this episode. Starting draft: "Valentine's Day Special. What happens when two ChatGPTs give each other love advice?"]</p>
-                        <a class="podcast-featured-listen" href="podcast.html" data-magnetic>Listen <span class="btn-arrow">&rarr;</span></a>
+                    <div class="podcast-video-placeholder" aria-label="Featured episode banner video placeholder">
+                        <span class="podcast-video-placeholder-label">Episode banner video</span>
+                        <span class="podcast-video-placeholder-sub">[MEDIA: featured-episode banner video, Cloudinary URL TBD]</span>
                     </div>
-                </article>
-                <a class="podcast-see-all" href="podcast.html" data-magnetic>See all episodes <span class="btn-arrow">&rarr;</span></a>
+                </div>
             </div>
         </section>
 
