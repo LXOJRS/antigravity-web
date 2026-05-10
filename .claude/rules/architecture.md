@@ -2,7 +2,7 @@
 
 ## Files
 
-- `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `creative-building.html` — the five pages
+- `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html` — the five pages (`lens-ai.html` was renamed from `creative-building.html` in V114; firebase.json has a 301 redirect from the old path)
 - `style.css` — single stylesheet (~2815 lines)
 - `script.js` — single script (~615 lines)
 - No build step. No bundler. No npm. What's in the repo is what goes live.
@@ -22,7 +22,7 @@ Every HTML file carries versioned references:
 <script src="script.js?v=XXX"></script>
 ```
 
-**ALWAYS bump these versions on all 5 HTML files when style.css or script.js changes.** Current: `style.css?v=104`, `script.js?v=94`.
+**ALWAYS bump these versions on all 5 HTML files when style.css or script.js changes.** Current: `style.css?v=112`, `script.js?v=94`.
 
 ## theme-light system (V106 architecture)
 
@@ -83,7 +83,7 @@ All via GSAP ScrollTrigger:
 - `.rd-grid-part1a` (Reality), `.rd-grid-part1b` (Scope, theme-light), `.rd-grid-part2` (Origin + Method)
 - Grids are split around the pull-quote to preserve nth-child column math
 
-### Service pages (service-rd, podcast, creative-building)
+### Service pages (service-rd, podcast, lens-ai)
 - `<main class="service-page ...-page">` wrapper
 - Banner → H1 + service-intro → content sections → outro
 

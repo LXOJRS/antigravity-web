@@ -837,3 +837,87 @@ Cache state: `style.css?v=111`, `script.js?v=94`.
 - Between Phase 2 and Phase 3: Phase 2 should make the site feel immediately more polished. If it does not, there is a deeper design issue to investigate before adding more primitives.
 - Before Phase 4: the voice direction at the top of this plan (strategy-first, concrete, no platitudes) must be re-read. Copy placeholders that come back in AI-sincerity tone are the failure mode to watch for.
 - Before Phase 7: Alex must have at least Promptgorillas hero assets uploaded to Cloudinary. Without real client work the section reduces to more personal experiments, which fails the whole point.
+
+---
+
+# V114 — Lens AI restructure (brand decomposition) (2026-05-10)
+
+Implements the restructure planned in `plans/HANDOFF-2026-05-10-RESTRUCTURE.md` and refined through two design-review passes documented in `~/.claude/plans/go-to-the-github-fluffy-waterfall.md` (REV 3). Lands the brand decomposition: **Lens AI = visuals only, R&D = Alex's personal practice, AI-Rated Podcast = personal/cultural.**
+
+**Version-collision resolution:** the prior handoff (`HANDOFF-2026-05-04.md`) reserved V114 + V115 for a deferred mobile pass + cross-page nav. That reservation was speculative and not shipped. V114 is reassigned here to the restructure, which is the larger change. The deferred mobile pass shifts to a future version (V115+).
+
+## What changed
+
+**1. Top nav (all 5 HTML files).**
+- Replaced the four-item `About / Services / Insights / Contact` row with a four-item `ABOUT / LENS AI / AI-RATED PODCAST / CONTACT` row, spread across the top edge via `display: flex; justify-content: space-between` on `.nav-links`.
+- `<div class="nav-logo" data-glitch="ALEX.AI">` removed everywhere (replaced with an HTML comment trace). Glitch CSS keyframes parked at `style.css` 113–303, untouched, available for future use.
+- ABOUT is now a hover-fold parent on desktop (`.nav-about-wrapper`). Hovering reveals two children: `About → about.html`, `R&D → service-rd.html`. The ABOUT label itself is still a direct anchor to `about.html`. A 12px / 8px invisible bridge (padding-bottom on the wrapper, padding-top on the fold) keeps the cursor from breaking `:hover` on a diagonal traverse.
+- Mobile overlay drops the fold pattern entirely: ABOUT and R&D render as inline siblings, each its own tap target. No first-tap-blocks-navigation surprise.
+- CONTACT gets a quiet `#BFE8F8` underline-on-hover treatment via `::after` scaleX.
+
+**2. Hero v2 (`index.html`).**
+- Wrapped the existing `.hero-content` (title + subtitle) in `position: relative; z-index: 2` so the type stack sits above the new frame.
+- Added `.hero-frame`: portrait `aspect-ratio: 3 / 4`, `width: min(46vw, 560px)`, absolutely positioned and centered. Below 768px the frame relaxes to `width: 75vw` so the photo doesn't shrink to ~180px on a 390px viewport.
+- `.hero-frame-video`: autoplay-muted-loop, `object-fit: cover` crops the 9:16 source video to 3:4 with no asset re-encoding. Video URL: `magnific_4-second-continuous-natur_2955193038_yvrphi.mp4`.
+- Subtitle wrapped in a single rounded `.hero-pill` (background `rgba(0,0,0,0.55)` + `backdrop-filter: blur(8px)`, `border-radius: 14px`, padding `8px 18px`). Rotating word stays icy-blue (`#BFE8F8`).
+- **Hero typography, `.highlight` stroke, GSAP entry timeline (`heroTimeline`), and `cycleHeroWord` setInterval are byte-identical to V113.5.** Word list at `script.js:188` already cycles `[training, consulting, visuals]`.
+
+**3. `.visual-hook` removed.** Markup deleted from `index.html`, CSS rules deleted from `style.css`, `ScrollTrigger.matchMedia` block deleted from `script.js`. The hero v2 frame owns the imagery moment that `.visual-hook` previously delivered.
+
+**4. Homepage `.services` Capabilities block removed.** The R&D / Podcast / Creative Building card grid that lived at `index.html#services` is gone. R&D's only homepage entry point is the ABOUT fold-menu and the About-page narrative. The shared `.services-grid` / `.service-card` / `.card-index` CSS rules are kept because they are reused on `lens-ai.html`'s In Production section.
+
+**5. New homepage section: Lens AI (`#lens-ai`).** Four-beat condensed block, two-column split. Portrait reel left (`aspect-ratio: 3 / 4`, currently using the same nature loop as the hero as a placeholder), copy stack right (`[CONTENT: ...]` headline + tagline + `→ See the work` CTA to `lens-ai.html`). Stacks vertically below 768px. The hero already owns the centered-portrait treatment, so this section uses asymmetry for its own visual identity.
+
+**6. New homepage section: AI-Rated Podcast (`#podcast-section`).** Centered featured-episode layout: `AI-RATED` eyebrow + tagline header, large square cover (`aspect-ratio: 1 / 1`), centered title + blurb + `Listen` button stack, quiet `→ See all episodes` link to `podcast.html`. The centered rhythm is deliberately distinct from the Lens AI section's two-column rhythm, so the page reads as `hero (centered) → Lens AI (asymmetric) → Podcast (centered) → about → contact` rather than two-col-twice.
+
+**7. About page rewrite (`about.html`).**
+- Landing text: `<h1 class="about-hero">Shape ideas forward</h1>` + intro replaced with `[CONTENT: ...]` placeholders for "continuous AI exploration" framing. Starting drafts inside the placeholders.
+- First pull-quote: `Most AI training teaches tools. I start with what you actually need.` replaced with `[CONTENT: ...]` placeholder around a continuous-exploration framing.
+- New `.rd-row.recent-build` inserted between Origin (04) and Method (05), labeled `04½ / Recent build`. Body is a `[CONTENT: ...]` placeholder documenting the YouTube-Analytics MCP Alex built for the podcast workflow as concrete proof of "build by exploration."
+- New `[CONTENT: ...]` paragraph appended inside the Method `.text-content`, threading the film + literary studies background as the same skills AI prompting requires.
+- New `.about-hub-cards` block inserted before `.service-outro`. Three cards: R&D → `service-rd.html`, Lens AI → `lens-ai.html`, AI-Rated Podcast → `podcast.html`. Each card has a title, a `[CONTENT: ...]` description, and an icy-blue arrow that translates on hover.
+
+**8. `creative-building.html` → `lens-ai.html`.** Renamed via `git mv` (preserves history). Voice rewrite shipped as `[CONTENT: ...]` placeholders throughout the page. **First-person singular "I" voice committed** (Lens AI is a one-person studio; "we" would feel performative). All visual primitives (`.cinematic-showcase`, `.creative-break-full`, `.theme-light` production CTA, In Production cards, Weavy placeholder, Application 2-column layout) are preserved untouched. Only voice changes.
+
+**9. Internal links repointed.** All `href="creative-building.html"` references repointed to `href="lens-ai.html"` across all five HTML files. All `href="*#services"` and `href="*#insights"` references either repointed or removed (Services and Insights are no longer top-level nav targets). All cross-page back-buttons that used to go to `index.html#services` now go to `index.html`.
+
+**10. Firebase 301 redirect.** `firebase.json` now declares `redirects: [{ source: "/creative-building.html", destination: "/lens-ai.html", type: 301 }]` so any old inbound links resolve.
+
+## Files modified
+
+- `index.html` — nav, hero v2, removed `.visual-hook`, removed `.services` Capabilities, added Lens AI section, added Podcast section, cache bumps.
+- `about.html` — nav, landing text rewrite, first pull-quote rewrite, Recent Build rd-row, cultural-background paragraph in Method, hub-cards block, back-btn target updated, cache bumps.
+- `service-rd.html` — nav, back-btn target updated, cache bumps.
+- `podcast.html` — nav, back-btn target updated, cache bumps.
+- `creative-building.html` → `lens-ai.html` — renamed via git mv. Nav, full voice rewrite with `[CONTENT: ...]` placeholders, back-btn target updated, cache bumps.
+- `style.css` — removed `.visual-hook` rules, modified `.nav-links a` to drop legacy `margin-left: 2rem` and add `font-weight: 600`, appended a large V114 block above `.theme-light` covering the four-item nav layout + ABOUT hover-fold + CONTACT underline + hero portrait frame + mobile breakpoint + hero pill subtitle + Lens AI section (two-column) + Podcast section (centered) + About hub cards.
+- `script.js` — removed `.visual-hook` matchMedia ScrollTrigger block. **No changes to hero entry timeline, `cycleHeroWord` interval, magnetic system, Lenis init, theme-light, or `.rd-row` reveal.** New homepage sections inherit the existing generic section opacity+y reveal (modeled on the same rhythm as `.rd-row`), so no dedicated hook is needed.
+- `firebase.json` — added 301 redirect from `/creative-building.html` to `/lens-ai.html`.
+- `CLAUDE.md` — updated five-pages enumeration, current shipped state line, cache versions, and Outstanding work section.
+- `.claude/rules/architecture.md` — updated five-pages enumeration and service-pages line.
+
+## Cache state
+
+`style.css?v=113`, `script.js?v=95` across all 5 HTML files.
+
+## Voice rule check
+
+No em dashes introduced in shipped content. All `[CONTENT: ...]` placeholders use periods, colons, parentheses. The pre-existing podcast-episode em dashes are unchanged (per `.claude/rules/voice.md` known-deferred clause).
+
+## Known follow-ups / open content for Alex
+
+- about.html landing text + intro paragraph
+- about.html first pull-quote (with `.highlight` phrase)
+- about.html Recent Build (MCP) anecdote paragraph
+- about.html cultural-background paragraph
+- about.html three hub-card descriptions
+- index.html Lens AI section: headline, tagline (CTA copy approved as "See the work →")
+- index.html Lens AI portrait reel asset URL (currently using the hero's nature loop as placeholder)
+- index.html Podcast section: featured episode title + blurb + tagline (currently seeded with "ChatGPT Toxic Masculinity?" Special)
+- lens-ai.html: page-hero, service-intro, in-production-intro, two case-card framings (Promptgorillas + Chris le More), production-CTA statement + aside, Application paragraphs
+
+All flagged inline with `[CONTENT: ...]` placeholders per `.claude/rules/voice.md`.
+
+## Rollback path
+
+`git revert` the V114 commit, or restore from the prior `24b4594 Hero Text fix` commit. The git history preserves the `creative-building.html` rename so a `git mv lens-ai.html creative-building.html` followed by reverting the firebase.json redirect would restore the old path. The glitch CSS, theme-light system, and all GSAP animations were untouched, so no animation regressions are possible from this change.

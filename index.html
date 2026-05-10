@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=112">
+    <link rel="stylesheet" href="style.css?v=113">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Alex | AI Adoption Trainer">
@@ -40,12 +40,18 @@
     <div class="cursor-trail"></div>
 
     <nav class="nav">
-        <div class="nav-logo" data-glitch="ALEX.AI">ALEX.AI</div>
+        <!-- glitch effect (.nav-logo / data-glitch) parked V114 — see plans/HANDOFF-2026-05-10-RESTRUCTURE.md -->
         <div class="nav-links desktop-only">
-            <a href="#about" data-magnetic>About</a>
-            <a href="#services" data-magnetic>Services</a>
-            <a href="#insights" data-magnetic>Insights</a>
-            <a href="#contact" data-magnetic>Contact</a>
+            <div class="nav-item nav-about-wrapper">
+                <a href="about.html" data-magnetic>About</a>
+                <div class="nav-fold" aria-label="About submenu">
+                    <a href="about.html" data-magnetic>About</a>
+                    <a href="service-rd.html" data-magnetic>R&amp;D</a>
+                </div>
+            </div>
+            <a href="#lens-ai" class="nav-item" data-magnetic>Lens AI</a>
+            <a href="#podcast-section" class="nav-item" data-magnetic>AI-Rated Podcast</a>
+            <a href="#contact" class="nav-item nav-contact" data-magnetic>Contact</a>
         </div>
         <div class="hamburger-btn" data-magnetic>
             <span></span>
@@ -54,30 +60,83 @@
     </nav>
 
     <div class="mobile-nav-overlay">
-        <a href="#about" class="mobile-link" data-magnetic>About</a>
-        <a href="#services" class="mobile-link" data-magnetic>Services</a>
-        <a href="#insights" class="mobile-link" data-magnetic>Insights</a>
+        <a href="about.html" class="mobile-link" data-magnetic>About</a>
+        <a href="service-rd.html" class="mobile-link" data-magnetic>R&amp;D</a>
+        <a href="#lens-ai" class="mobile-link" data-magnetic>Lens AI</a>
+        <a href="#podcast-section" class="mobile-link" data-magnetic>AI-Rated Podcast</a>
         <a href="#contact" class="mobile-link" data-magnetic>Contact</a>
     </div>
 
     <main>
+        <!-- V114 hero v2: portrait video frame behind the existing CLEAN AI PRODUCTIONS
+             type stack. Hero typography, .highlight stroke, GSAP entry timeline, and
+             hero-rotate cycle are byte-identical to V113.5 — only the surrounding
+             frame and pill subtitle are new. -->
         <section class="hero">
+            <div class="hero-frame" aria-hidden="true">
+                <video class="hero-frame-video" autoplay loop muted playsinline
+                       poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect fill='%23050505' width='3' height='4'/%3E%3C/svg%3E">
+                    <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1778417342/magnific_4-second-continuous-natur_2955193038_yvrphi.mp4"
+                            type="video/mp4">
+                </video>
+            </div>
             <div class="hero-content">
                 <h1 class="hero-title">
                     <div class="line"><span>CLEAN</span></div>
                     <div class="line"><span>AI</span></div>
                     <div class="line"><span class="highlight" data-magnetic>PRODUCTIONS</span></div>
                 </h1>
-                <p class="hero-subtitle">AI <span class="hero-rotate">training</span> for teams that actually ship.</p>
+                <p class="hero-subtitle"><span class="hero-pill">AI <span class="hero-rotate">training</span> for teams that actually ship.</span></p>
             </div>
         </section>
 
-        <section class="visual-hook">
-            <video autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect fill='%23050505' width='16' height='9'/%3E%3C/svg%3E">
-                <source
-                    src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1770808890/5e02898a8cc868c6f35e1027c7b588e333dab62f0cf3bed487a1c9356b3b7599_1_bhhqf8.mp4"
-                    type="video/mp4">
-            </video>
+        <!-- V114: Lens AI homepage section. Four-beat condensed block with portrait
+             reel on the left and headline + tagline + CTA on the right. The CTA
+             links to lens-ai.html (renamed from creative-building.html in V114).
+             Reel video is currently the same nature loop as the hero — Alex will
+             provide a portrait Lens AI reel asset URL. Voice register here is
+             humainmade.com-adjacent. -->
+        <section class="lens-ai-section" id="lens-ai">
+            <div class="container">
+                <div class="lens-ai-grid">
+                    <div class="lens-ai-reel">
+                        <video class="lens-ai-reel-video" autoplay loop muted playsinline
+                               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect fill='%23050505' width='3' height='4'/%3E%3C/svg%3E">
+                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1778417342/magnific_4-second-continuous-natur_2955193038_yvrphi.mp4"
+                                    type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="lens-ai-copy">
+                        <h2 class="lens-ai-headline">[CONTENT: Lens AI section headline. Starting draft: "LENS AI"]</h2>
+                        <p class="lens-ai-tagline">[CONTENT: Lens AI section tagline, one line. Starting draft: "AI visuals for brands that want a distinct visual world, not another stock image."]</p>
+                        <a class="lens-ai-cta" href="lens-ai.html" data-magnetic>See the work <span class="btn-arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- V114: AI-Rated Podcast homepage section. Centered featured-episode card
+             so the homepage rhythm reads hero → asymmetric two-col (Lens AI) →
+             centered (Podcast), avoiding a patterned two-col-twice feel. -->
+        <section class="podcast-section" id="podcast-section">
+            <div class="container">
+                <header class="podcast-section-header">
+                    <p class="podcast-eyebrow">AI-RATED</p>
+                    <p class="podcast-tagline">[CONTENT: podcast section tagline. Starting draft: "The fun AI podcast. With Morgan, in Dutch."]</p>
+                </header>
+                <article class="podcast-featured">
+                    <div class="podcast-featured-cover">
+                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1767459178/Podcast_YouTube_Thumbnail_ol7kid.png"
+                             alt="Featured AI-Rated Podcast episode">
+                    </div>
+                    <div class="podcast-featured-meta">
+                        <h3 class="podcast-featured-title">[CONTENT: featured episode title. Starting draft: "ChatGPT Toxic Masculinity?"]</h3>
+                        <p class="podcast-featured-blurb">[CONTENT: one-sentence tagline for this episode. Starting draft: "Valentine's Day Special. What happens when two ChatGPTs give each other love advice?"]</p>
+                        <a class="podcast-featured-listen" href="podcast.html" data-magnetic>Listen <span class="btn-arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <a class="podcast-see-all" href="podcast.html" data-magnetic>See all episodes <span class="btn-arrow">&rarr;</span></a>
+            </div>
         </section>
 
         <section class="about" id="about">
@@ -91,37 +150,6 @@
                     <br>
                     <a href="about.html" class="contact-btn" data-magnetic>Read more <span
                             class="btn-arrow">&rarr;</span></a>
-                </div>
-            </div>
-        </section>
-
-        <section class="services" id="services">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Capabilities</h2>
-                </div>
-                <div class="services-grid">
-                    <a href="service-rd.html" class="service-card">
-                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/IMG_0005_3_iy1hjr.jpg"
-                            alt="R&D - Consultancy - Workshops">
-                        <span class="card-index">01</span>
-                        <h3>R&D - Consultancy - Workshops</h3>
-                        <p>From messy thinking to clear visions.</p>
-                    </a>
-                    <a href="podcast.html" class="service-card" data-magnetic>
-                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/AI-Rated_Podcast_txn49s.png"
-                            alt="AI-Rated Podcast">
-                        <span class="card-index">02</span>
-                        <h3>AI-Rated Podcast</h3>
-                        <p>AI, culture, and common sense.</p>
-                    </a>
-                    <a href="creative-building.html" class="service-card" data-magnetic>
-                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/Worn_Shoe_in_Mid-Stride_f5bcwr.png"
-                            alt="Creative Building">
-                        <span class="card-index">03</span>
-                        <h3>Creative Building</h3>
-                        <p>Turning ideas into branded visuals with AI.</p>
-                    </a>
                 </div>
             </div>
         </section>
@@ -213,7 +241,7 @@
     </footer>
 
 
-    <script src="script.js?v=94"></script>
+    <script src="script.js?v=95"></script>
 </body>
 
 </html>

@@ -6,27 +6,37 @@ Entry point for any Claude session working in this repository. Read this first.
 
 Static website for Alex Ojers: AI adoption trainer + AI visuals producer. Dual positioning: he trains teams on AI, and he builds AI visuals commercially (currently shipping work for Promptgorillas, Chris le More). Site is hosted on Firebase.
 
-Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN. Five pages: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `creative-building.html`.
+Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN. Five pages: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html`. (`creative-building.html` was renamed to `lens-ai.html` in V114; a Firebase 301 redirect catches old URLs.)
 
-## Current shipped state
+## Current shipped state (as of 2026-05-10, V114)
 
-- **Version: V106** (style.css?v=104, script.js?v=94 across all 5 HTML files)
-- All seven structural phases complete (Phase 1-7 plus tune-ups V96-V106)
-- theme-light live color transition working on About Scope/Method and R&D Focus+Format
+- **Version: V114** (style.css?v=113, script.js?v=95 across all 5 HTML files)
+- V114 = Lens AI restructure (brand decomposition). Four-item nav with ABOUT hover-fold. Hero v2 with portrait video frame + unified pill subtitle. New homepage Lens AI + Podcast sections. `creative-building.html` renamed to `lens-ai.html` with voice rewrite drafts. About-page rewrite (landing text, first pull-quote, Recent Build rd-row, cultural-background thread, hub cards). Old homepage `.services` Capabilities block removed. `.visual-hook` removed. Glitch effect parked (CSS retained, HTML removed). Many `[CONTENT: ...]` placeholders pending Alex's approval.
+- theme-light live color transition working on About Scope/Method, R&D Focus+Format, AND the Lens AI subpage closing CTA
+- Value Fit Model is on About Method row, side-by-side with the text, titles inside the wedges (V112)
+- Homepage hero says "CLEAN / AI / PRODUCTIONS" with the V114 portrait-frame video behind the type stack
 - Full execution history in `plans/PLAN-EXECUTION-V1.md`
+
+## ⚠ New session picking up this repo: read the handoff first
+
+**Current handoff: `plans/HANDOFF-2026-05-10-RESTRUCTURE.md`** — this is the active document. It captures the Lens AI brand decomposition decision (Lens AI = visuals only; R&D = Alex's personal practice; Podcast = personal/cultural), the new four-item nav with `ABOUT` as a hover-fold menu, the hero v2 spec (no `ALEX.AI`, portrait photo frame, unified subtitle pill, rotating-word widening to `[training / consulting / visuals]`), the planned homepage section structure (Lens AI section + Podcast section get homepage real estate; R&D does not), and the planned About page rewrite items. **Read this before any structural work.**
+
+`plans/HANDOFF-2026-05-04.md` is still relevant for the V114 + V115 deferred items (mobile pass + cross-page nav) which were not addressed in the 2026-05-10 session. The Lens AI brand-integration brainstorm in that earlier handoff is now superseded by the 2026-05-10 decisions.
+
+**Discuss anything in either handoff with Alex before implementing.** Plans there are open for verification, not commitments.
 
 ## Critical rules (read before any change)
 
-1. **No em dashes** (—) in shipped content. Use periods, commas, parentheses, or colons. This applies to all rendered text. HTML comments can contain em dashes.
+1. **No em dashes** (—) in shipped content. Use periods, commas, parentheses, or colons. This applies to all rendered text. HTML comments can contain em dashes; plan and execution-log markdown files can also contain them.
 2. **Voice is strategy-first, not abstract wisdom.** Alex's positioning is concrete problem-solving, not "judgment" or "discernment" or other consulting platitudes. See `.claude/rules/voice.md`.
 3. **Brand color is `#BFE8F8`** (icy blue). The old `#0000C5` deep blue has been globally replaced and should not reappear anywhere in the codebase.
-4. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=104`, `script.js?v=94`.
+4. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=113`, `script.js?v=95`.
 5. **theme-light padding is fixed at 50vh** top/bottom. Do NOT animate padding. Earlier versions (V103-V105) did and caused layout shift bugs that were architecturally fixed in V106 by moving to fixed padding with only color animating.
 
 ## Where things live
 
 ### Source
-- HTML pages at root: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `creative-building.html`
+- HTML pages at root: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html`
 - `style.css` at root (single file, ~2815 lines)
 - `script.js` at root (single file, ~615 lines)
 
@@ -50,14 +60,21 @@ Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN.
 - Images and videos are hosted on Cloudinary (account `dnkcu6lne`). No local asset pipeline.
 - Firebase config in `firebase.json`, project id `website-dea0d`.
 
-## Outstanding work (as of V106)
+## Outstanding work (as of V114)
 
-- **Chris le More card href="#"** awaits real destination link
-- **Promptgorillas card href="#"** awaits real destination link
-- **Podcast episode taglines and episode bodies still contain em dashes** (existing content predating the V102 copy rewrite, intentionally not modified to avoid scope creep)
-- **Hero subtitle rotating word** interval is 1400ms; tunable
-- **OG image metadata** on `index.html` and `about.html` still references the old abstract profile image URL. The on-page about portrait was updated to `pg_alexander-2_lpp3aj.jpg` but OG tags were left untouched.
-- **Dead CSS** from earlier phases is still present (`.floating`, `.creative-text-col`, `.application-visual-col` etc.). Harmless; can be cleaned in a future refactor.
+For detailed open threads, see `plans/HANDOFF-2026-05-04.md` and `plans/HANDOFF-2026-05-10-RESTRUCTURE.md`. Quick summary:
+
+- **V114 content placeholders** await Alex's approval. Many `[CONTENT: ...]` placeholders shipped as part of the V114 restructure: about.html landing text + first pull-quote + Recent Build (MCP) anecdote + cultural-background paragraph + three hub-card descriptions; index.html Lens AI section headline + tagline; index.html Podcast featured-episode title + blurb; lens-ai.html page-hero + service-intro + two case-card framings + production-CTA + application paragraphs.
+- **V114 reel asset URL** for the homepage Lens AI section. Currently using the same nature loop as the hero as a placeholder. Alex will provide a portrait Lens AI reel.
+- **Mobile pass + cross-page nav** (formerly slated for V114/V115 in the 2026-05-04 handoff) — shifted to a future version since V114 is now consumed by the restructure.
+- **Glitch effect** parked. CSS keyframes retained at style.css 113–303. No HTML uses `data-glitch="ALEX.AI"` anymore. Available for future use (e.g. a Lens AI accent or hover treatment).
+- **Chris le More card href="#"** still awaits real destination link
+- **Promptgorillas card href="#"** still awaits real destination link
+- **Weavy workflow screenshot** is a placeholder (striped/dashed box) on lens-ai.html Application section — swap src to a Cloudinary URL when asset is ready
+- **Podcast episode taglines and episode bodies still contain em dashes** (existing content predating the V102 copy rewrite, intentionally not modified)
+- **OG image metadata** on `index.html` and `about.html` still references the old abstract profile image URL
+- **KVK number** for Lens AI is not yet in hand; once received, footer credit can be added
+- **Dead CSS** from earlier phases is still present (`.floating`, `.creative-text-col`, etc.). Harmless; safe to leave
 
 ## How to ship new work
 

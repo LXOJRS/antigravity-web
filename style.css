@@ -302,9 +302,15 @@ a {
     }
 }
 
+/* V114: .nav-links restructured to spread four items across the top edge
+   (justify-content: space-between via .nav-links rule below). The legacy
+   margin-left: 2rem per-anchor rule is removed because the spread layout
+   manages spacing, and the .nav-about-wrapper hover-fold needs predictable
+   spacing on its own anchor. Item-level styling (font, weight, transform)
+   carries over with bolder weight for the new aesthetic. */
 .nav-links a {
-    margin-left: 2rem;
     font-size: 0.9rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     transition: opacity 0.3s;
@@ -495,32 +501,9 @@ h2 {
     letter-spacing: -0.03em;
 }
 
-/* Visual Hook */
-.visual-hook {
-    width: 100%;
-    /* Use 100% instead of 100vw to avoid scrollbar */
-    height: 60vh;
-    padding: 0 64px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    margin-bottom: 0;
-}
-
-.visual-hook video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* NIEUW: Schuift de focus iets naar boven (minder dan de standaard 50%) */
-    object-position: center 40%;
-    border-radius: 24px;
-    border: none;
-    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
-    will-change: transform;
-    transform: scale(1.1);
-    filter: brightness(0.85);
-}
+/* V114: .visual-hook removed (markup deleted from index.html, JS ScrollTrigger
+   deleted from script.js). The new hero-v2 portrait frame owns the imagery
+   moment that .visual-hook previously delivered. */
 
 /* About */
 .about {
@@ -3024,6 +3007,398 @@ footer {
     margin: 80px 0 0;
     text-align: left;
     padding: 0;
+}
+
+/* ============================================================
+   V114: Lens AI restructure (brand decomposition)
+   ----------------------------------------------------------------
+   New rules added in V114, grouped by surface:
+     - Top nav: four-item spread, ABOUT hover-fold (desktop), CONTACT
+       icy-blue underline-on-hover, gap-bridge between ABOUT label
+       and the fold to prevent diagonal cursor drop-out.
+     - Hero v2: portrait video frame behind the existing CLEAN AI
+       PRODUCTIONS type stack. .hero-content z-index lift so the
+       title + pill subtitle sit above the frame. Mobile breakpoint
+       relaxes the frame max-width.
+     - Hero pill subtitle: single rounded backdrop-blur pill wraps
+       the entire subtitle (not segmented per word).
+     - Lens AI homepage section: two-column split (portrait reel +
+       copy stack), stacks vertically below 768px.
+     - AI-Rated Podcast homepage section: centered featured-episode
+       layout (deliberately distinct from Lens AI's two-col rhythm).
+     - About-page hub cards: three equal-width cards routing to R&D,
+       Lens AI, and the Podcast subpages.
+   ============================================================ */
+
+/* Top nav — four-item spread layout */
+.nav-links {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-links .nav-item,
+.nav-links .nav-about-wrapper > a {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: none;
+}
+
+/* ABOUT hover-fold (desktop only). The padding-bottom on the wrapper +
+   padding-top on the fold create an invisible bridge so the cursor can
+   travel from the ABOUT label down into the fold without breaking :hover.
+   Without the bridge, a small dead zone between the two elements would
+   close the menu mid-traverse on diagonal mouse moves. */
+.nav-about-wrapper {
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.nav-fold {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 8rem;
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-fold a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.4rem 0;
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: none;
+    transition: opacity 0.3s;
+}
+
+.nav-fold a:hover {
+    opacity: 0.6;
+}
+
+.nav-about-wrapper:hover .nav-fold,
+.nav-about-wrapper:focus-within .nav-fold {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* CONTACT quiet hover treatment — icy-blue underline accent */
+.nav-contact {
+    position: relative;
+}
+
+.nav-contact::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background-color: #BFE8F8;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.25s ease;
+}
+
+.nav-contact:hover::after {
+    transform: scaleX(1);
+}
+
+/* Hero v2 — portrait video frame behind type */
+.hero {
+    position: relative;
+    overflow: visible;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(46vw, 560px);
+    aspect-ratio: 3 / 4;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.hero-frame-video,
+.hero-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.78);
+}
+
+@media (max-width: 768px) {
+    .hero-frame {
+        width: 75vw;
+    }
+}
+
+/* Hero pill subtitle — single rounded pill wraps the entire subtitle.
+   Inline-block so the pill sizes to its content, not the line. */
+.hero-pill {
+    display: inline-block;
+    padding: 8px 18px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    color: var(--gray-color);
+}
+
+.hero-pill .hero-rotate {
+    color: #BFE8F8;
+}
+
+/* Lens AI homepage section (V114) */
+.lens-ai-section {
+    padding: 8rem 2rem;
+}
+
+.lens-ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+}
+
+.lens-ai-reel {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.lens-ai-reel-video,
+.lens-ai-reel video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lens-ai-copy {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.lens-ai-headline {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.lens-ai-tagline {
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.5;
+    color: var(--gray-color);
+    margin: 0;
+    max-width: 28em;
+}
+
+.lens-ai-cta {
+    align-self: flex-start;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.lens-ai-cta:hover {
+    color: #BFE8F8;
+}
+
+@media (max-width: 768px) {
+    .lens-ai-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+/* AI-Rated Podcast homepage section (V114) */
+.podcast-section {
+    padding: 8rem 2rem;
+}
+
+.podcast-section-header {
+    text-align: center;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.podcast-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #BFE8F8;
+    margin: 0 0 1rem;
+}
+
+.podcast-tagline {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--gray-color);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.podcast-featured {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.podcast-featured-cover {
+    width: min(640px, 100%);
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.podcast-featured-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.podcast-featured-meta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.podcast-featured-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.podcast-featured-blurb {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--gray-color);
+    margin: 0;
+    max-width: 36em;
+}
+
+.podcast-featured-listen,
+.podcast-see-all {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.25s ease;
+    cursor: none;
+}
+
+.podcast-featured-listen:hover,
+.podcast-see-all:hover {
+    color: #BFE8F8;
+}
+
+.podcast-see-all {
+    display: block;
+    text-align: center;
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* About-page hub cards (V114) */
+.about-hub-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    margin: 96px 0 64px;
+}
+
+.hub-card {
+    position: relative;
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.02);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 200px;
+    cursor: none;
+}
+
+.hub-card:hover {
+    transform: translateY(-4px);
+    background-color: rgba(191, 232, 248, 0.04);
+    border-color: rgba(191, 232, 248, 0.3);
+}
+
+.hub-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.hub-card-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--gray-color);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.hub-card-arrow {
+    align-self: flex-end;
+    font-size: 1.25rem;
+    color: #BFE8F8;
+    transition: transform 0.3s ease;
+}
+
+.hub-card:hover .hub-card-arrow {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .about-hub-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ============================================================

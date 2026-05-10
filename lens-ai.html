@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Generated Visuals | Alex AI</title>
+    <title>Lens AI | Commercial AI Visuals</title>
     <meta name="description"
-        content="AI-Generated Visuals. Treating AI as a medium in its own right. Exploratory and applied visual work.">
+        content="Lens AI is the commercial production label for AI-generated visuals that don't look like AI. Distinct visual worlds for brands.">
 
     <!-- Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,11 +19,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=112">
+    <link rel="stylesheet" href="style.css?v=113">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AI-Generated Visuals | Alex AI">
-    <meta property="og:description" content="AI-Generated Visuals. Treating AI as a medium in its own right. Exploratory and applied visual work.">
+    <meta property="og:title" content="Lens AI | Commercial AI Visuals">
+    <meta property="og:description" content="Lens AI is the commercial production label for AI-generated visuals that don't look like AI. Distinct visual worlds for brands.">
     <meta property="og:image" content="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/Worn_Shoe_in_Mid-Stride_f5bcwr.png">
     <meta property="og:type" content="website">
 
@@ -40,12 +40,18 @@
     <div class="cursor-trail"></div>
 
     <nav class="nav">
-        <a href="index.html" class="nav-logo" data-glitch="ALEX.AI">ALEX.AI</a>
+        <!-- glitch effect (.nav-logo / data-glitch) parked V114 — see plans/HANDOFF-2026-05-10-RESTRUCTURE.md -->
         <div class="nav-links desktop-only">
-            <a href="index.html#about" data-magnetic>About</a>
-            <a href="index.html#services" data-magnetic>Services</a>
-            <a href="index.html#insights" data-magnetic>Insights</a>
-            <a href="index.html#contact" data-magnetic>Contact</a>
+            <div class="nav-item nav-about-wrapper">
+                <a href="about.html" data-magnetic>About</a>
+                <div class="nav-fold" aria-label="About submenu">
+                    <a href="about.html" data-magnetic>About</a>
+                    <a href="service-rd.html" data-magnetic>R&amp;D</a>
+                </div>
+            </div>
+            <a href="index.html#lens-ai" class="nav-item" data-magnetic>Lens AI</a>
+            <a href="index.html#podcast-section" class="nav-item" data-magnetic>AI-Rated Podcast</a>
+            <a href="index.html#contact" class="nav-item nav-contact" data-magnetic>Contact</a>
         </div>
         <div class="hamburger-btn" data-magnetic>
             <span></span>
@@ -54,40 +60,40 @@
     </nav>
 
     <div class="mobile-nav-overlay">
-        <a href="index.html#about" class="mobile-link" data-magnetic>About</a>
-        <a href="index.html#services" class="mobile-link" data-magnetic>Services</a>
-        <a href="index.html#insights" class="mobile-link" data-magnetic>Insights</a>
+        <a href="about.html" class="mobile-link" data-magnetic>About</a>
+        <a href="service-rd.html" class="mobile-link" data-magnetic>R&amp;D</a>
+        <a href="index.html#lens-ai" class="mobile-link" data-magnetic>Lens AI</a>
+        <a href="index.html#podcast-section" class="mobile-link" data-magnetic>AI-Rated Podcast</a>
         <a href="index.html#contact" class="mobile-link" data-magnetic>Contact</a>
     </div>
 
-    <main class="service-page creative-page">
+    <main class="service-page creative-page lens-ai-page">
         <!-- Banner -->
         <div class="article-banner lighter-filter">
             <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/Worn_Shoe_in_Mid-Stride_f5bcwr.png"
-                alt="AI-Generated Visuals - Shoe">
+                alt="Lens AI commercial visual work">
         </div>
 
         <div class="container">
-            <h1 style="grid-column: span 10; margin-bottom: 48px; min-height: auto;" class="about-hero">AI-Generated
-                Visuals</h1>
+            <!-- V114: page renamed creative-building.html → lens-ai.html. Voice register
+                 shifts toward humainmade.com-adjacent (hipper, more direct). First-person
+                 singular "I" voice committed (Lens AI is a one-person studio; "we" would
+                 read performative). Copy below carries [CONTENT: ...] placeholders for
+                 Alex's review per .claude/rules/voice.md. Visual primitives, GSAP
+                 scroll animations, and theme-light transitions are preserved. -->
+            <h1 style="grid-column: span 10; margin-bottom: 48px; min-height: auto;" class="about-hero">[CONTENT: Lens AI page hero. Starting draft: "AI visuals that don't look like AI."]</h1>
 
             <p class="service-intro">
-                I hate ‘AI-Slop’. My mission is to create AI visuals that always feel intentional and impressive.
+                [CONTENT: Lens AI positioning, "I" voice. Starting draft: "I build distinct visual worlds for brands. No stock-image residue. No AI tells. A look that earns its place in your brand system."]
             </p>
 
-            <!-- IN PRODUCTION: V101 moved this up from the bottom of the page so commercial
-                 shipping work reads before the exploration content.
-                 V110: merged "I hate AI-slop" into .service-intro above, removed creative-act1.
-                 V113: bumped to page-hero scale (header at display, intro at subhead, cards
-                 taller). The closing CTA was lifted out of this section entirely and
-                 turned into a full-bleed cyan theme-light slab below — the page's primary
-                 commercial close.
-                 Promptgorillas card uses the actual shipping hero video; href="#" awaits real
-                 link. Chris le More card image awaits real Cloudinary URL too. -->
+            <!-- IN PRODUCTION: case studies. V114 retains the two cards (Promptgorillas
+                 + Chris le More) on this page; they were dropped from the homepage Lens AI
+                 section per the four-beat condensed structure. -->
             <section class="in-production">
                 <div class="in-production-header">
                     <h2 class="section-title">In production</h2>
-                    <p class="in-production-intro">Currently shipping AI hero videos and brand visuals for Promptgorillas. Building more for brands that want a distinct visual world.</p>
+                    <p class="in-production-intro">[CONTENT: in-production intro paragraph, "I" voice. Starting draft: "Currently shipping AI hero videos and brand visuals for Promptgorillas. Building more for brands that want a distinct visual world."]</p>
                 </div>
 
                 <div class="services-grid">
@@ -97,7 +103,7 @@
                         </video>
                         <span class="card-index">01</span>
                         <h3>Promptgorillas</h3>
-                        <p>AI hero videos and brand visuals currently running on their website and marketing.</p>
+                        <p>[CONTENT: Promptgorillas case framing, "I" voice. Starting draft: "AI hero videos and brand visuals currently running on their website and marketing."]</p>
                         <span class="visual-date">Promptgorillas &middot; 2026</span>
                     </a>
 
@@ -105,7 +111,7 @@
                         <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1776611245/Untitled_design_1_zpetbg.png" alt="Chris le More AI model visuals">
                         <span class="card-index">02</span>
                         <h3>Chris le More</h3>
-                        <p>AI-generated model visuals for fast and efficient production.</p>
+                        <p>[CONTENT: Chris le More case framing, "I" voice. Starting draft: "AI-generated model visuals for fast and efficient production."]</p>
                         <span class="visual-date">Chris le More &middot; 2026</span>
                     </a>
                 </div>
@@ -113,15 +119,11 @@
 
         </div>
 
-        <!-- V113: Production CTA promoted to full-bleed cyan theme-light slab.
-             Used to be a small paragraph + button at the bottom of .in-production.
-             Now it's the page's primary commercial close, with display-scale copy
-             and a prominent button. Rides the existing theme-light scroll
-             transition (script.js V106) automatically. -->
+        <!-- Production CTA (full-bleed cyan theme-light slab). Voice rewritten V114. -->
         <div class="production-cta theme-light">
             <div class="production-cta-content">
-                <p class="production-cta-statement">Available one day a week for independent visual work.</p>
-                <p class="production-cta-aside">If you want a brand world instead of another stock image, let&rsquo;s talk.</p>
+                <p class="production-cta-statement">[CONTENT: production CTA statement. Starting draft: "Available one day a week for independent visual work."]</p>
+                <p class="production-cta-aside">[CONTENT: production CTA aside. Starting draft: "If you want a brand world instead of another stock image, let's talk."]</p>
                 <a href="mailto:alexander@promptgorillas.com" class="contact-btn cta-btn-large" data-magnetic>Book a project <span class="btn-arrow">&rarr;</span></a>
             </div>
         </div>
@@ -136,11 +138,8 @@
                 <p class="visual-date">Self-initiated &middot; 2026</p>
             </div>
 
-            <!-- V113: Application restructured into a bold 2-column layout.
-                 Weavy workflow placeholder on the LEFT (asymmetric ~58% width),
-                 process text on the RIGHT (~38%). Section title at display scale.
-                 The placeholder is a striped/dashed box; swap with a real
-                 Cloudinary URL when the Weavy screenshot asset is ready. -->
+            <!-- Application section: 2-column layout with Weavy workflow placeholder
+                 on the left, process text on the right. Voice rewritten V114. -->
             <div class="creative-act-application">
                 <figure class="application-visual">
                     <div class="weavy-placeholder" aria-label="Placeholder for Weavy workflow screenshot">
@@ -152,8 +151,8 @@
                 <div class="application-text">
                     <h2 class="section-title">Application</h2>
                     <div class="text-content">
-                        <p>The work often begins exploratively, guided by a clear idea or question. I use my background in film studies to test ideas and how far they can stretch within this medium. From there, I design pipelines where variables are controlled: one character, multiple outputs, repeatable lighting.</p>
-                        <p>Because once visuals move beyond a single frame into campaigns or series, consistency decides whether they can scale. <strong style="color: #ffffff; font-weight: 500;">Good-looking images are one thing. Reproducible ones demand structure.</strong></p>
+                        <p>[CONTENT: application paragraph 1, "I" voice. Starting draft: "The work often begins exploratively, guided by a clear idea or question. I use my background in film studies to test ideas and how far they can stretch within this medium. From there, I design pipelines where variables are controlled: one character, multiple outputs, repeatable lighting."]</p>
+                        <p>[CONTENT: application paragraph 2, "I" voice. Starting draft: "Once visuals move beyond a single frame into campaigns or series, consistency decides whether they can scale. <strong style='color: #ffffff; font-weight: 500;'>Good-looking images are one thing. Reproducible ones demand structure.</strong>"]</p>
                     </div>
                 </div>
             </div>
@@ -181,8 +180,8 @@
                 </a>
             </div>
 
-            <a href="index.html#services" class="back-btn" data-magnetic>
-                <span class="btn-arrow">&larr;</span> Back to Services
+            <a href="index.html" class="back-btn" data-magnetic>
+                <span class="btn-arrow">&larr;</span> Back to Home
             </a>
         </div>
     </main>
@@ -196,7 +195,7 @@
     </footer>
 
 
-    <script src="script.js?v=94"></script>
+    <script src="script.js?v=95"></script>
 </body>
 
 </html>

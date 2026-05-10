@@ -236,38 +236,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // --- Visual Hook Parallax ---
-    const visualHookVideo = document.querySelector('.visual-hook video');
-    if (visualHookVideo) {
-        ScrollTrigger.matchMedia({
-            // Desktop
-            "(min-width: 768px)": function () {
-                gsap.to(visualHookVideo, {
-                    yPercent: 20,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: '.visual-hook',
-                        start: 'top bottom',
-                        end: 'bottom top',
-                        scrub: true
-                    }
-                });
-            },
-            // Mobile
-            "(max-width: 767px)": function () {
-                gsap.to(visualHookVideo, {
-                    yPercent: 10, // Reduced movement to prevent clipping on shorter container
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: '.visual-hook',
-                        start: 'top bottom',
-                        end: 'bottom top',
-                        scrub: true
-                    }
-                });
-            }
-        });
-    }
+    // V114: .visual-hook ScrollTrigger removed alongside the markup. The new hero v2
+    // portrait frame owns the imagery moment that .visual-hook previously delivered,
+    // and the new homepage sections (.lens-ai-section, .podcast-section) inherit
+    // the generic section opacity+y reveal above (the same scroll-rhythm pattern
+    // used by .rd-row). No dedicated hook needed.
 
     // --- Service Cards Hover Effect & Floating ---
     const cards = document.querySelectorAll('.service-card');
