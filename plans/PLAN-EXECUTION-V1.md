@@ -921,3 +921,39 @@ All flagged inline with `[CONTENT: ...]` placeholders per `.claude/rules/voice.m
 ## Rollback path
 
 `git revert` the V114 commit, or restore from the prior `24b4594 Hero Text fix` commit. The git history preserves the `creative-building.html` rename so a `git mv lens-ai.html creative-building.html` followed by reverting the firebase.json redirect would restore the old path. The glitch CSS, theme-light system, and all GSAP animations were untouched, so no animation regressions are possible from this change.
+
+## V115: Content pass on About, Lens AI hero, and homepage About section
+
+Date: 2026-05-11. Content-only edit landing Alex's rewritten copy across three pages. No CSS, JS, or structural changes. Layout, animations, theme-light transitions, and the Value Fit Model SVG are byte-identical to V114.
+
+### What changed
+
+**1. about.html.** Removed the intro paragraph beneath the "I keep exploring." hero (the `.intro-block` block). Replaced the segment titles "Reality / Scope / Recent build / Method" with "What I do / How I work / What I build / Value Fit Model" and rewrote every body paragraph in each rd-row. "Origin" title kept; body rewritten. Removed all five `<span class="rd-number">…</span>` labels (01, 03, 04, 04½, 05) per Alex's preference. New `.rd-row` inserted for "Lens AI" between "What I build" and "Value Fit Model" (no `.theme-light` modifier, so it doesn't disturb the inversion that fires on Value Fit Model). Pull-quote rewritten to "Training and visuals look like two jobs. They're <one practice>." Outro tightened.
+
+**2. lens-ai.html.** Page hero `<h1>` and `.service-intro` paragraph rewritten. Everything else on the page is unchanged.
+
+**3. index.html.** About section rewritten. Sticky `.section-header` `<h2>` is now "I didn't pick a lane." Right-side `.about-content` is two paragraphs: positioning sentence + PromptGorillas + edges line. "Read more" button preserved.
+
+### Files modified
+
+- `about.html` — hero intro removed, five rd-numbers removed, four segment titles renamed, every rd-row body rewritten, pull-quote rewritten, new Lens AI rd-row inserted, outro tightened. SVG Value Fit Model figure untouched.
+- `lens-ai.html` — lines 83 and 86 only (page hero + service intro).
+- `index.html` — lines 143 and 146-147 only (About section h2 + two paragraphs).
+
+### Cache state
+
+`style.css?v=113`, `script.js?v=95` across all 5 HTML files. No bump because neither asset changed.
+
+### Voice rule check
+
+All em dashes from Alex's draft converted to periods, commas, colons, or parens before shipping. Remaining em dashes in the three files all sit inside HTML comments (`<!-- … -->`), which is allowed per `.claude/rules/voice.md`. Grep confirmed.
+
+### Known follow-ups
+
+- Pull-quote replacement copy ("one practice") was drafted by Claude per Alex's request to "replace with new" — open for Alex to revise.
+- About hero "I keep exploring." retained as-is (Alex chose "remove intro only"). May want revisiting alongside the new dual-track framing.
+- V114 placeholder list in the prior entry is now mostly resolved for the About page, Lens AI hero, and homepage About section. Other V114 placeholders (homepage Lens AI/Podcast section copy, lens-ai.html in-production cards, application paragraphs) remain open.
+
+### Rollback path
+
+Single-commit revert. No structural, CSS, or JS changes to undo.
