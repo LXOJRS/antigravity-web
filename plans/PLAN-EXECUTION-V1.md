@@ -957,3 +957,77 @@ All em dashes from Alex's draft converted to periods, commas, colons, or parens 
 ### Rollback path
 
 Single-commit revert. No structural, CSS, or JS changes to undo.
+
+### Round 1: post-V114 punch list
+
+Follow-up cleanup after Alex reviewed the live site post-V115 R0. Round 1 covers nav rerouting, a theme-light layout bug, spacing tweaks, several About text edits, removal of non-client press credits across the site, two podcast page heading edits, a footer change across all five files, and two Lens AI page edits. CSS now changes too, so cache versions bump.
+
+**1. Nav rerouting (all 5 HTML files).** `LENS AI` link points to `lens-ai.html` and `AI-RATED PODCAST` link points to `podcast.html` (was: `index.html#lens-ai` / `index.html#podcast-section`). Applied in both desktop nav and `.mobile-nav-overlay` on every page. Homepage section anchors `#lens-ai` and `#podcast-section` retained in HTML but no longer used by the nav. ABOUT hover-fold structure untouched.
+
+**2. theme-light overflow fix (style.css).** Root cause: `.theme-light` padding formula used `calc(50vw - 576px)`, building a 1152px content area; surrounding `.container` is `max-width: 1200px` with no horizontal padding. The 48-px mismatch caused the "How I work" title (now wider than the V114 "Scope" title, with `white-space: nowrap`) to clip at the .theme-light inner edge on viewports ≥ 1200px. Changed `576` → `600` in both `padding-left` and `padding-right` formulas at style.css:3432-3433. Aligns .theme-light content area onto .container's 1200px edges. Fix cascades cleanly to all .theme-light sites (About How I work, About Value Fit Model, R&D Focus + Format, lens-ai.html production CTA).
+
+**3. Spacing audit (style.css).** Added `.about-page .rd-row.recent-build { padding: 96px 0 }` override to give "Things I build" more breathing room (default `.rd-row` padding is 64/64). Not pushed to 128 because the wrapping `.rd-grid` already has `margin-bottom: 128px`. Also bumped `.lens-ai-section` padding from `8rem` to `10rem` (128px → 160px) on index.html. `.podcast-section` left at 8rem.
+
+**4. About page text changes (about.html).**
+
+- **4a. Cultural-background paragraph removed from "How I work".** The "Prompting is composition. Editing a model's output…" `<p>` was moved INTO How I work in V115 R0; in R1 it's removed entirely. How I work is back to a single paragraph (the PromptGorillas content-cycle copy).
+- **4b. New "close-reading" pull-quote.** Split `.rd-grid-part2` into `.rd-grid-part2a` (Origin) and `.rd-grid-part2b` (Things I build + Lens AI + Value Fit Model) and inserted a new `.pull-quote.left` between them: `"Evaluating an AI model's output is the same close-reading I was doing on novels."` with `.highlight` on `close-reading`. CSS overrides for 2a/2b added next to the existing part2 rules; old part2 rule kept as harmless dead CSS.
+- **4c. Workshop sentence rewrite.** "how to actually integrate AI into a workflow that ships" → "how to make AI part of the work" in the What I do segment.
+- **4d. Film school → film studies.** One-word substitution in the Origin segment.
+- **4e. "What I build" renamed to "Things I build" with bullet list.** The `.rd-row.recent-build` now contains a `<ul class="text-content-list">` with three real-project bullets (this website, the YouTube-analytics MCP, the n8n podcast chapter automation) and a single closing paragraph (replaces the four-sentence "None of these are products" closer from V115 R0). Added `.rd-row .text-content-list` CSS rules with icy-blue brand-color bullets matching `.section-title`.
+- **4f. Closer rewrite.** "None of these are products. They're how I think. Exploration produces tools. That loop is the work." → "These examples resemble my work ethic: exploring new solutions to overcome stubborn hurdles." One sentence does the work of four.
+
+**5. Placeholder image removed (about.html).** The mid-page `.full-bleed-break` (Podcast YouTube Thumbnail at line 111) plus its visual-date caption "In session · 2026" deleted. Page now flows pull-quote → typography portal → Origin without a mid-page image. GSAP ScrollTrigger on `.full-bleed-break` silently early-exits when the element is absent.
+
+**6. Site-wide press-credit purge.** `.visual-date` elements kept only on commercial work. Removed: "In session · 2026" (about.html — covered in §5), "Self-initiated · 2026" (lens-ai.html, two locations), "Weavy pipeline · 2026" (lens-ai.html), "Morgan & Alex · 2026" (podcast.html). Retained: "Promptgorillas · 2026" and "Chris le More · 2026" (both lens-ai.html service cards).
+
+**7. Podcast page heading edits (podcast.html).**
+
+- **7a. Title trim.** H1 "AI-Rated Podcast" → "AI-Rated". Subtitle "We are the fun AI podcast." preserved underneath.
+- **7b. "The Podcast" header removed and intro paragraph promoted.** The `<h2 class="section-title">The Podcast</h2>` deleted; the paragraph below now wears a new `.podcast-intro-promoted` modifier that scales it to `clamp(1.75rem, 3vw, 2.5rem)` — bigger than body (1.5rem), smaller than section-title (clamp 3-4.5rem). Sits between body and display per Alex's "slightly smaller but keep as written" request.
+
+**8. Footer text — all 5 files.** "© 2026 Alex AI Trainer" → "© 2026 Alex Ojers · Lens AI". Dual attribution preserves alexojers.com personal-site framing while adding the Lens AI brand mark.
+
+**9. Lens AI page text changes (lens-ai.html).**
+
+- **9a. "Currently shipping" sentence.** "Currently shipping AI hero videos and brand visuals for Promptgorillas. Building more for brands that want a distinct visual world." → "Currently shipping brand visuals for Promptgorillas. Building more for brands that want a distinct visual world." Marked `[CONTENT: ...]` for further refinement.
+- **9b. Closing CTA reordered.** `.production-cta-statement` (BIG) and `.production-cta-aside` (smaller) swap roles. BIG is now a new call-to-value: "Working on a brand? Let me build the visual layer." (drafted by Claude, flagged as `[CONTENT: ...]` for Alex's refinement.) Smaller line is now "Available one day a week for independent visual work." (was previously the big statement). The previous aside copy ("If you want a brand world instead of another stock image, let's talk.") was retired because it overlapped with the homepage Lens AI tagline.
+
+### Files modified (R1)
+
+- `index.html` — nav (4), footer, cache bumps.
+- `about.html` — nav (4), text edits 4a/4b/4c/4d/4e/4f (segments + new pull-quote + .rd-grid split), placeholder image + visual-date removed, footer, cache bumps.
+- `lens-ai.html` — nav (4), in-production-intro rewrite, production-CTA reorder, three visual-date removals, footer, cache bumps.
+- `podcast.html` — nav (4), title trim, "The Podcast" h2 removed + paragraph promoted, Morgan & Alex visual-date removed, footer, cache bumps.
+- `service-rd.html` — nav (4), footer, cache bumps.
+- `style.css` — theme-light padding fix (576 → 600), `.about-page .rd-row.recent-build` spacing, `.lens-ai-section` 8rem → 10rem, `.about-page .rd-grid-part2a/2b` overrides, `.rd-row .text-content-list` rules, `.podcast-intro-promoted` rule. **No script.js changes.**
+- `CLAUDE.md` — Current shipped state line + cache version line updated to V115 R1 / v114 / v96.
+- `.claude/rules/architecture.md` — cache version line updated.
+
+### Cache state (R1)
+
+`style.css?v=114`, `script.js?v=96` across all 5 HTML files.
+
+### Voice rule check (R1)
+
+Grepped all 5 HTML files. Em-dashes outside HTML comments appear only in known-deferred podcast episode taglines/bodies (per `.claude/rules/voice.md` known-deferred clause). All new R1 copy uses periods, commas, colons.
+
+### Deferred to Round 2
+
+- Brand color shift
+- Alte Haas Grotesk wordmark
+- Lens AI page restructure (service split)
+- Contact-page gradient redesign
+- Hub-cards reflair
+- YouTube embed on podcast page
+- New top-image assets
+- "Book a project" CTA hierarchy
+
+### Open `[CONTENT: ...]` placeholders for Alex
+
+- `lens-ai.html` `.in-production-intro` — broader framing pending Alex's refinement.
+- `lens-ai.html` `.production-cta-statement` — call-to-value Claude-drafted, pending Alex's refinement.
+
+### Rollback path (R1)
+
+Single-commit revert. CSS additions are scoped to new classes (`.text-content-list`, `.podcast-intro-promoted`, `.rd-grid-part2a/2b`) so a revert cannot break adjacent rules. The theme-light padding change (576 → 600) is the one rule that touches existing CSS; verified mentally against all four .theme-light sites; needs browser verification at 1440 / 1200 / 1024 / 768 before deploy.

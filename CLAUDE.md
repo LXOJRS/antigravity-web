@@ -10,7 +10,7 @@ Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN.
 
 ## Current shipped state (as of 2026-05-10, V114)
 
-- **Version: V114** (style.css?v=113, script.js?v=95 across all 5 HTML files)
+- **Version: V115 R1** (style.css?v=114, script.js?v=96 across all 5 HTML files). V115 R0 was a content pass on About + Lens AI hero + homepage About. V115 R1 is the post-V114 punch list: nav rerouting (Lens AI / Podcast nav links go direct to subpages), theme-light cutoff fix, About text edits (workshop sentence, film studies, cultural-background removal, Things I build bullet list, new close-reading pull-quote, placeholder image removal), site-wide press-credit purge (visual-date kept only on Promptgorillas + Chris le More), podcast page title trim + intro promotion, lens-ai.html CTA reorder + intro rewrite, new footer copy.
 - V114 = Lens AI restructure (brand decomposition). Four-item nav with ABOUT hover-fold. Hero v2 with portrait video frame + unified pill subtitle. New homepage Lens AI + Podcast sections. `creative-building.html` renamed to `lens-ai.html` with voice rewrite drafts. About-page rewrite (landing text, first pull-quote, Recent Build rd-row, cultural-background thread, hub cards). Old homepage `.services` Capabilities block removed. `.visual-hook` removed. Glitch effect parked (CSS retained, HTML removed). Many `[CONTENT: ...]` placeholders pending Alex's approval.
 - theme-light live color transition working on About Scope/Method, R&D Focus+Format, AND the Lens AI subpage closing CTA
 - Value Fit Model is on About Method row, side-by-side with the text, titles inside the wedges (V112)
@@ -30,7 +30,7 @@ Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN.
 1. **No em dashes** (—) in shipped content. Use periods, commas, parentheses, or colons. This applies to all rendered text. HTML comments can contain em dashes; plan and execution-log markdown files can also contain them.
 2. **Voice is strategy-first, not abstract wisdom.** Alex's positioning is concrete problem-solving, not "judgment" or "discernment" or other consulting platitudes. See `.claude/rules/voice.md`.
 3. **Brand color is `#BFE8F8`** (icy blue). The old `#0000C5` deep blue has been globally replaced and should not reappear anywhere in the codebase.
-4. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=113`, `script.js?v=95`.
+4. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=114`, `script.js?v=96`.
 5. **theme-light padding is fixed at 50vh** top/bottom. Do NOT animate padding. Earlier versions (V103-V105) did and caused layout shift bugs that were architecturally fixed in V106 by moving to fixed padding with only color animating.
 
 ## Where things live

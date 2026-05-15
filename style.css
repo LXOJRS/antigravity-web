@@ -1653,6 +1653,35 @@ footer {
     margin-bottom: 0;
 }
 
+/* V115 R1: bullet-list variant inside .text-content. Used on the
+   "Things I build" row. Bullets in icy-blue brand color. */
+.rd-row .text-content-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+}
+
+.rd-row .text-content-list li {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    padding-left: 1.5em;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.rd-row .text-content-list li:last-child {
+    margin-bottom: 0;
+}
+
+.rd-row .text-content-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #BFE8F8;
+}
+
 /* --- Reversed Layout --- */
 .rd-row.reversed .section-title {
     grid-column: 8 / span 5;
@@ -1737,6 +1766,26 @@ footer {
        specificity tie and the inverted row gets the wider text-content slot. */
     .about-page .rd-grid-part2 .rd-row.inverted .section-title { grid-column: 1 / span 3; }
     .about-page .rd-grid-part2 .rd-row.inverted .text-content { grid-column: 5 / span 8; }
+
+    /* V115 R1: split rd-grid-part2 into 2a (Origin) and 2b (Things I build +
+       Lens AI + Value Fit Model) to accommodate the new pull-quote between
+       them. Mirrors the existing 1a/1b split around the first pull-quote. */
+    .about-page .rd-grid-part2a .rd-row.inverted .section-title { grid-column: 1 / span 3; }
+    .about-page .rd-grid-part2a .rd-row.inverted .text-content { grid-column: 5 / span 8; }
+
+    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted) .text-content { grid-column: 6 / span 5; }
+
+    .about-page .rd-grid-part2b .rd-row.reversed .section-title { grid-column: 8 / span 5; text-align: left; }
+    .about-page .rd-grid-part2b .rd-row.reversed .text-content { grid-column: 2 / span 4; }
+}
+
+/* V115 R1: "Things I build" row gets more vertical breathing room
+   (96px top/bottom vs the default 64). Not pushed to 128 because the
+   wrapping .rd-grid already has margin-bottom: 128px. */
+.about-page .rd-row.recent-build {
+    padding-top: 96px;
+    padding-bottom: 96px;
 }
 
 /* De Outro Statement (V101: left-aligned so longer outros read cleanly) */
@@ -1764,6 +1813,16 @@ footer {
 }
 
 /* --- Podcast 3-Act Editorial Layout (V73) --- */
+
+/* V115 R1: promoted intro paragraph (replaces the removed "The Podcast" h2).
+   Scale sits between body (1.5rem) and section-title (clamp 3-4.5rem). */
+.podcast-intro-promoted p {
+    font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+    line-height: 1.3 !important;
+    font-weight: 400 !important;
+    color: var(--text-color) !important;
+    max-width: 900px;
+}
 
 /* Act 1 */
 .podcast-grid-act1 {
@@ -3189,7 +3248,8 @@ footer {
 
 /* Lens AI homepage section (V114.1: reel claims 2/3 of the row, copy 1/3) */
 .lens-ai-section {
-    padding: 8rem 2rem;
+    /* V115 R1: padding bumped 8rem → 10rem for more breathing room. */
+    padding: 10rem 2rem;
 }
 
 .lens-ai-grid {
@@ -3429,8 +3489,12 @@ footer {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    padding-left: max(24px, calc(50vw - 576px));
-    padding-right: max(24px, calc(50vw - 576px));
+    /* V115 R1: padding formula anchor changed 576 → 600 to match .container
+       max-width (1200px / 2). Restores content alignment between .theme-light
+       inner area and surrounding .container, fixing the "How I work" cutoff
+       at viewports ≥ 1200px. */
+    padding-left: max(24px, calc(50vw - 600px));
+    padding-right: max(24px, calc(50vw - 600px));
     padding-top: 50vh;
     padding-bottom: 50vh;
     box-sizing: border-box;
