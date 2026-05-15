@@ -1750,8 +1750,13 @@ footer {
     .about-page .rd-grid-part1a .rd-row .section-title { grid-column: 1 / span 4; }
     .about-page .rd-grid-part1a .rd-row .text-content { grid-column: 8 / span 4; }
 
-    /* Grid 1b: Scope (reversed) */
-    .about-page .rd-grid-part1b .rd-row.reversed .section-title { grid-column: 9 / span 4; text-align: right; }
+    /* Grid 1b: How I work (reversed)
+       V116: title span bumped from 4 to 5 to fit the uppercased "HOW I WORK"
+       (441px at 72px font + letter-spacing). 4 cols = 379px was clipping the K
+       via .rd-row's overflow: hidden. Span 5 mirrors part2/part2b reversed
+       rules and gives the title 481px to breathe. text-content stays at cols
+       2-5; visual gap is cols 6-7 (2 cols + 1 gap, ~173px). */
+    .about-page .rd-grid-part1b .rd-row.reversed .section-title { grid-column: 8 / span 5; text-align: right; }
     .about-page .rd-grid-part1b .rd-row.reversed .text-content { grid-column: 2 / span 4; }
 
     /* Grid 2: Origin (standard or inverted) + Method (reversed) */
@@ -1884,6 +1889,33 @@ footer {
     user-select: none;
     white-space: nowrap;
     padding-left: max(24px, calc((100vw - 1200px) / 2));
+}
+
+/* V116: podcast featured-episode YouTube embed. Replaces the static
+   .full-bleed-break thumbnail that previously sat in this position.
+   Stays within .container width (no full-bleed), 16:9 aspect, rounded
+   corners. No parallax hook — iframe parallax reads awkwardly. */
+.podcast-featured-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+    margin: 128px 0;
+    position: relative;
+}
+
+.podcast-featured-video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .podcast-featured-video {
+        border-radius: 16px;
+        margin: 64px 0;
+    }
 }
 
 /* --- Full Bleed Cinematic Breaks (V81) --- */
@@ -2538,6 +2570,16 @@ footer {
 .application-visual {
     margin: 0;
     padding: 0;
+}
+
+/* V116: real Weavy workflow screenshot replaces the dashed-stripe placeholder.
+   Match the placeholder's visual footprint: full-width, subtle border radius,
+   no filter so the screenshot reads clearly. */
+.application-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
 }
 
 .application-text {

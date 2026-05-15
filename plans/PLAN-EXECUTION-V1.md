@@ -1031,3 +1031,69 @@ Grepped all 5 HTML files. Em-dashes outside HTML comments appear only in known-d
 ### Rollback path (R1)
 
 Single-commit revert. CSS additions are scoped to new classes (`.text-content-list`, `.podcast-intro-promoted`, `.rd-grid-part2a/2b`) so a revert cannot break adjacent rules. The theme-light padding change (576 → 600) is the one rule that touches existing CSS; verified mentally against all four .theme-light sites; needs browser verification at 1440 / 1200 / 1024 / 768 before deploy.
+
+## V116: Asset swaps + real fix for "How I work" clipping
+
+Date: 2026-05-15. Round 2 of the post-V114 punch list. Four asset swaps and the carried-over "How I work" cutoff that R1's padding change did NOT fix.
+
+### What changed
+
+**1. Lens AI top banner asset swap.** `lens-ai.html` `.article-banner img` src swapped from the V100 "Worn_Shoe_in_Mid-Stride" placeholder to `https://res.cloudinary.com/dnkcu6lne/image/upload/v1778851033/111_sewqgm.png`. All existing CSS preserved (V113 gradient overlay, object-fit, object-position). Only the src changed.
+
+**2. Podcast top banner asset swap.** `podcast.html` `.article-banner img` src swapped from `AI-Rated_Podcast_txn49s.png` to `https://res.cloudinary.com/dnkcu6lne/image/upload/v1778851114/ComfyUI_00163__z1wiiq.png`. Same preservation rules. The OG image meta is still on the old URL — flagged as known-deferred OG metadata refresh.
+
+**3. Weavy workflow screenshot lands.** `lens-ai.html` Application section's `.weavy-placeholder` (dashed-stripe div that telegraphed "asset incoming" since V101) replaced with a real `<img>` pointing at `https://res.cloudinary.com/dnkcu6lne/image/upload/v1777922388/Scherm_afbeelding_2026-05-04_om_15.23.09_a7lwem.png`. Added a small `.application-visual img { width: 100%; height: auto; display: block; border-radius: 4px; }` rule near the existing `.application-visual` rules in style.css. The `.weavy-placeholder` CSS rules (style.css:2578-2611) are kept as harmless dead CSS; safe to remove in a future cleanup pass.
+
+**4. Podcast featured-episode YouTube embed.** `podcast.html` `.full-bleed-break` block (the static `Podcast_YouTube_Thumbnail_ol7kid.png`) replaced with a new `.podcast-featured-video` wrapper containing an `<iframe>` pointing at `https://www.youtube-nocookie.com/embed/ubq7M79hbmc` (video ID `ubq7M79hbmc`). Wrapper enforces 16:9 via `aspect-ratio`, 24px border-radius, 128px top/bottom margin (64px on mobile). The previous `.full-bleed-break` treatment was wrong for a video embed (full-bleed 100vw + 75vh + grayscale filter + parallax). New CSS rule for `.podcast-featured-video` inserted in style.css next to the existing `.full-bleed-break` rule. iframe attributes: `loading="lazy"`, `allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"`, `allowfullscreen`, `title` for a11y. **No script.js change**: the existing `.full-bleed-break img, .full-bleed-break video` ScrollTrigger query (script.js:613) no longer matches anything on `podcast.html` because the element was renamed; parallax silently stops applying.
+
+**5. "How I work" cutoff — real fix.** V115 R1's padding-formula change (576 → 600) was correct for content alignment but did NOT fix the visible bug. Verified in browser at 1440/1200/1024 with Playwright. Root cause: `.section-title` carries `text-transform: uppercase` (style.css:1569). "How I work" renders as "HOW I WORK" at 72px font with `letter-spacing: -0.03em` and `white-space: nowrap` — measured rendered width 441px. The grid cell for the title (`.about-page .rd-grid-part1b .rd-row.reversed .section-title { grid-column: 9 / span 4 }`) is only 379px at 1440 viewport (4/12 of 1200px content with 32px gaps). The text overflowed its grid cell by 62px; `.rd-row { overflow: hidden }` then clipped the trailing K at the row's right boundary. **Fix**: change `grid-column: 9 / span 4` → `grid-column: 8 / span 5` on the same selector. Span 5 = 481px (5/12 of 1200 with gaps), which fits 441px text with 40px slack. Mirrors the `part2`/`part2b` reversed rules which already use span 5. Verified post-fix at 1440 (no overflow, K fully visible) and at 1200 (no overflow). The V115 R1 padding change is retained because it correctly aligns .theme-light content with `.container`'s 1200px max-width.
+
+### Files modified
+
+- `lens-ai.html` — `.article-banner img` src (top banner), `.weavy-placeholder` block replaced with real `<img>`, cache bump.
+- `podcast.html` — `.article-banner img` src (top banner), `.full-bleed-break` block replaced with `.podcast-featured-video` + iframe, cache bump.
+- `index.html` — cache bump only.
+- `about.html` — cache bump only.
+- `service-rd.html` — cache bump only.
+- `style.css` — `.about-page .rd-grid-part1b .rd-row.reversed .section-title` grid-column 9/span 4 → 8/span 5 (the real How I work fix), new `.application-visual img` rule, new `.podcast-featured-video` rule with 16:9 + border-radius + mobile breakpoint.
+- `CLAUDE.md` — current shipped state line + cache version line updated to V116 / v115. Removed the "Weavy workflow screenshot is a placeholder" line from Outstanding work.
+- `.claude/rules/architecture.md` — cache version line updated.
+
+### Cache state
+
+`style.css?v=115`, `script.js?v=96` across all 5 HTML files. (script.js unchanged.)
+
+### Voice rule check
+
+No new shipped copy. Em-dashes outside HTML comments: unchanged from V115 R1 (only known-deferred podcast episode taglines).
+
+### Diagnosis trail for posterity
+
+The V115 R1 diagnosis assumed the bug was content alignment between `.theme-light` (1152px content area, pre-fix) and `.container` (1200px max-width). It was a real misalignment but not what Alex saw. The actual visible bug was a single character clipping at the right edge of the row, caused by an interaction of three pre-existing rules:
+
+1. `.section-title { text-transform: uppercase }` — applies globally.
+2. `.about-page .rd-grid-part1b .rd-row.reversed .section-title { grid-column: 9 / span 4 }` — narrow cell sized for the older shorter title "Scope".
+3. `.rd-row { overflow: hidden }` — clips child overflow at row boundary.
+
+Playwright + `getBoundingClientRect`/`scrollWidth` confirmed the cell was 379px and text was 441px — 62px of K clipped on the right. The fix targets the specific grid placement, not a blanket overflow override.
+
+### Deferred to future versions
+
+- Brand color shift
+- Lens AI page case-study restructure
+- Lens AI service split
+- About-page Lens AI section rewrite
+- "Things I build" bullet list refinement / fill-in
+- "Book a project" CTA hierarchy
+- Contact-page gradient redesign
+- Hub-cards reflair
+- Alte Haas Grotesk wordmark
+- `lens-ai.html` closing call-to-value rewrite (V115 R1 placeholder still open)
+- `lens-ai.html` "Currently shipping..." line rewrite (V115 R1 placeholder still open)
+- `podcast.html` OG image meta refresh (still points at old `AI-Rated_Podcast_txn49s.png`)
+- `.weavy-placeholder` CSS dead-code removal (rules at style.css:2578-2611 no longer used)
+- Pre-existing `.podcast-closing-monument` overflow (margin-left override breaks the breakout pattern; contained by body overflow-x: hidden, not visible to user, but should be cleaned up alongside future podcast page rework)
+
+### Rollback path
+
+Single-commit revert. The grid-column change is the one substantive existing-rule modification; rolling it back returns to the V115 R1 state (with the K clipped). All other changes are HTML src/structural swaps + new CSS classes scoped to new wrappers, so a revert cannot affect unrelated rules.

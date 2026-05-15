@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=114">
+    <link rel="stylesheet" href="style.css?v=115">
 
     <!-- Open Graph -->
     <meta property="og:title" content="AI-Rated Podcast | Alex AI">
@@ -70,7 +70,7 @@
     <main class="service-page podcast-page">
         <!-- Banner -->
         <div class="article-banner">
-            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1766873091/AI-Rated_Podcast_txn49s.png"
+            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1778851114/ComfyUI_00163__z1wiiq.png"
                 alt="AI-Rated Podcast">
         </div>
 
@@ -90,8 +90,18 @@
                 </div>
             </div>
 
-            <div class="full-bleed-break">
-                <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1767459178/Podcast_YouTube_Thumbnail_ol7kid.png" alt="AI-Rated Podcast Hosts">
+            <!-- V116: featured episode YouTube embed replaces the static
+                 thumbnail. Wrapper enforces 16:9 + border-radius; iframe
+                 fills it. No GSAP parallax on this element (the previous
+                 .full-bleed-break hook was image-only). -->
+            <div class="podcast-featured-video">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/ubq7M79hbmc"
+                    title="AI-Rated podcast featured episode"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
             </div>
 
             <div class="text-block pull-quote left">
