@@ -22,7 +22,7 @@ Every HTML file carries versioned references:
 <script src="script.js?v=XXX"></script>
 ```
 
-**ALWAYS bump these versions on all 5 HTML files when style.css or script.js changes.** Current: `style.css?v=115`, `script.js?v=96`.
+**ALWAYS bump these versions on all 5 HTML files when style.css or script.js changes.** Current: `style.css?v=116`, `script.js?v=97`.
 
 ## theme-light system (V106 architecture)
 

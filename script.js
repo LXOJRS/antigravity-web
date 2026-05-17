@@ -370,18 +370,18 @@ document.addEventListener("DOMContentLoaded", () => {
         // so the first look at content is on full cyan background.
         gsap.fromTo(section,
             {
-                '--theme-bg': '#050505',
-                '--theme-fg': '#ffffff',
+                '--theme-bg': '#121212',
+                '--theme-fg': '#fafafa',
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
                 '--theme-border': 'rgba(255, 255, 255, 0.08)'
             },
             {
                 '--theme-bg': '#BFE8F8',
-                '--theme-fg': '#050505',
-                '--theme-muted': 'rgba(5, 5, 5, 0.75)',
-                '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
-                '--theme-border': 'rgba(5, 5, 5, 0.08)',
+                '--theme-fg': '#121212',
+                '--theme-muted': 'rgba(18, 18, 18, 0.75)',
+                '--theme-subtle': 'rgba(18, 18, 18, 0.12)',
+                '--theme-border': 'rgba(18, 18, 18, 0.08)',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
@@ -398,14 +398,14 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.fromTo(section,
             {
                 '--theme-bg': '#BFE8F8',
-                '--theme-fg': '#050505',
-                '--theme-muted': 'rgba(5, 5, 5, 0.75)',
-                '--theme-subtle': 'rgba(5, 5, 5, 0.12)',
-                '--theme-border': 'rgba(5, 5, 5, 0.08)'
+                '--theme-fg': '#121212',
+                '--theme-muted': 'rgba(18, 18, 18, 0.75)',
+                '--theme-subtle': 'rgba(18, 18, 18, 0.12)',
+                '--theme-border': 'rgba(18, 18, 18, 0.08)'
             },
             {
-                '--theme-bg': '#050505',
-                '--theme-fg': '#ffffff',
+                '--theme-bg': '#121212',
+                '--theme-fg': '#fafafa',
                 '--theme-muted': 'rgba(255, 255, 255, 0.75)',
                 '--theme-subtle': 'rgba(255, 255, 255, 0.12)',
                 '--theme-border': 'rgba(255, 255, 255, 0.08)',

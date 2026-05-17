@@ -1097,3 +1097,105 @@ Playwright + `getBoundingClientRect`/`scrollWidth` confirmed the cell was 379px 
 ### Rollback path
 
 Single-commit revert. The grid-column change is the one substantive existing-rule modification; rolling it back returns to the V115 R1 state (with the K clipped). All other changes are HTML src/structural swaps + new CSS classes scoped to new wrappers, so a revert cannot affect unrelated rules.
+
+## V117: Brand color shift + Alte Haas Grotesk wordmark
+
+Date: 2026-05-17. Design-system pass that should have ridden along with V116. Shipped as a single batch (no rounds) because Alex dropped the Alte Haas Grotesk font files at the repo root before execution started.
+
+### What changed
+
+**1. Brand color shift.** `#050505` (vantablack) → `#121212` (premium dark) for background; `#ffffff` (pure white) → `#fafafa` (off-white) for primary text. The accent `#BFE8F8`, gray-muted `#B3B3B3`, and the cyan `.theme-light` light-state are unchanged. Depth-compositing shadows (text-shadow, box-shadow) retain pure-black `rgba(0,0,0,…)` for cleaner falloff.
+
+**2. Alte Haas Grotesk Bold wordmark.** Scoped to the `lens-ai.html` hero `<h1>` only. NOT applied to the nav item or the homepage Lens AI section headline — both stay in Inter. Verified via Playwright.
+
+### Audit summary (color shift)
+
+Conversions performed:
+- `style.css :root --bg-color: #050505 → #121212` (cascades to 6 `var(--bg-color)` uses)
+- `style.css :root --text-color: #ffffff → #fafafa` (cascades to 32 `var(--text-color)` uses)
+- `style.css` 6 hardcoded `#050505` hits (hero radial-gradient stops, `.typography-portal`, `.typography-portal.pulse`, `.theme-light --theme-bg` dark-state default) → `#121212`
+- `style.css` 7 `rgba(5, 5, 5, X)` hits (article-banner gradient stops at lines 1408-1411, two other linear-gradients, dark-text-on-cyan at line 2756) → `rgba(18, 18, 18, X)`
+- `style.css` 2 of 5 `rgba(0, 0, 0, X)` hits (linear-gradient fades at lines 601, 999) → `rgba(18, 18, 18, X)` so they vignette into the new bg
+- `style.css` 3 additional hardcoded `#ffffff` hits caught on second sweep (one rule-level `color`, one `.theme-light --theme-fg` default, one `var()` fallback) → `#fafafa`
+- `script.js` 4 theme-light GSAP color blocks (lines 373–411): `#050505 → #121212`, `#ffffff → #fafafa`, `rgba(5,5,5,X) → rgba(18,18,18,X)`. Dark-state defaults AND light-state dark-on-cyan text both shift; the cyan value (`#BFE8F8`) is unchanged.
+- `lens-ai.html` 1 inline `style="color: #ffffff"` → `style="color: #fafafa"`
+- All 5 HTML files: 7 URL-encoded `%23050505` video-poster SVG fills → `%23121212` so the placeholder shown before video load matches the new bg
+
+Kept as pure-black (per "intentional compositing" rule):
+- `style.css:788` — `text-shadow: 0 4px 24px rgba(0,0,0,0.5)` (text depth glow)
+- `style.css:3310, 3426` — `box-shadow: 0 30px 80px rgba(0,0,0,0.5)` (deep drop shadows for elevated cards)
+
+Kept as pure-white (per "fades on dark bg, optical white is wanted"):
+- 56 `rgba(255, 255, 255, X)` hits across `style.css` (low-alpha borders, low-alpha backgrounds, high-alpha text overrides, text-stroke outlines). None visually wrong against `#121212` at the alphas in use; convert in V118+ if any specific one reads off after deploy.
+
+Kept untouched:
+- `404.html` `rgba(0, 0, 0, …)` Material-design 404 page colors — different palette / error page.
+
+### Alte Haas Grotesk Bold wordmark
+
+- Font file: `AlteHaasGroteskBold.ttf` at repo root (provided by Alex). Companion `AlteHaasGroteskRegular.ttf` is in the repo too but not loaded by the @font-face rule — kept for future weights.
+- `@font-face` declared at the top of `style.css` (above `:root`):
+  ```css
+  @font-face {
+      font-family: 'Alte Haas Grotesk';
+      src: url('AlteHaasGroteskBold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+  }
+  ```
+- `.lens-ai-wordmark` class added next to `.about-hero` in style.css (line 2086-area):
+  ```css
+  .lens-ai-wordmark {
+      font-family: 'Alte Haas Grotesk', 'Inter', sans-serif;
+      font-weight: 700;
+  }
+  ```
+  Pairs with `.about-hero` (which already has `text-transform: uppercase`, the clamp() sizing, and `letter-spacing: -0.04em`). Only the font-family and weight change.
+- Applied to `lens-ai.html:83`: `<h1 ... class="about-hero lens-ai-wordmark">Visuals that say something.</h1>`. The sentence-case source text renders as "VISUALS THAT SAY SOMETHING." via `text-transform: uppercase` (accessibility-preserving — screen readers see the source casing).
+- Verified Playwright: font-family computed as `"Alte Haas Grotesk", Inter, sans-serif`, font status `loaded`. Homepage `.hero-title`, `.lens-ai-headline`, and nav `Lens AI` link all confirmed still Inter.
+
+### Files modified
+
+- `style.css` — `@font-face` rule, root variable shifts, `.lens-ai-wordmark` class, all the color conversions above, 3 additional `#ffffff` cleanups on second sweep
+- `script.js` — 12 color tokens in the 4 theme-light GSAP blocks (lines 373–411)
+- `lens-ai.html` — 1 inline-style swap, `.lens-ai-wordmark` class added to hero h1, cache bump
+- `index.html`, `about.html`, `podcast.html`, `service-rd.html` — cache bumps + URL-encoded SVG poster fills swept
+- `CLAUDE.md` — current shipped state line, new "Background is #121212 / text is #fafafa" critical rule inserted as rule 4 (existing rules renumbered), cache version line
+- `DESIGN-RULES.md` — Color system section updated, "Last updated" bumped V106 → V117
+- `.claude/rules/architecture.md` — cache version line
+
+### Cache state
+
+`style.css?v=116`, `script.js?v=97` across all 5 HTML files.
+
+### Voice rule check
+
+No copy changes. Em-dashes outside HTML comments: only the known-deferred podcast episode taglines (9 lines in podcast.html). Same as V116.
+
+### Verification (Playwright)
+
+1. `lens-ai.html` at 1440 — hero h1 renders in Alte Haas Grotesk Bold uppercase ("VISUALS THAT SAY SOMETHING."). Font status: `loaded`. Color: `rgb(250, 250, 250)`. Body bg: `rgb(18, 18, 18)`.
+2. `index.html` at 1440 — homepage `.hero-title` font-family resolves to `Inter, sans-serif` (Alte Haas correctly scoped out). `.lens-ai-headline` and nav `Lens AI` both Inter. Body bg: `rgb(18, 18, 18)`.
+3. `about.html` "How I work" theme-light section — cyan bg unchanged (`rgb(188, 229, 244)`), dark text shifted into `rgb(22, 22, 22)` range (mid-scrub between #fafafa and #121212; lands at #121212 at full settle). V116 grid-column fix still intact — "HOW I WORK" fully visible, no clipping.
+4. Final greps: 0 `#050505` outside the V117 documentation comment; 0 `#ffffff` outside the same comment; 0 `rgba(5,…)`; 0 `%23050505`.
+
+### Deferred to future versions
+
+- Mobile pass + cross-page nav (still open from V114/V115)
+- Lens AI page case-study restructure
+- Lens AI service split
+- About-page Lens AI section rewrite
+- "Things I build" bullet list refinement
+- Contact-page gradient redesign
+- Hub-cards reflair
+- Alte Haas Grotesk rollout to nav and homepage Lens AI headline (deliberately deferred per V117 brief — Alex decides later)
+- `lens-ai.html` closing call-to-value rewrite + "Currently shipping" line refinement (V115 R1 placeholders still open)
+- `podcast.html` OG image meta refresh (still references old V100 asset)
+- `.weavy-placeholder` dead CSS removal
+- `.podcast-closing-monument` overflow fix (pre-existing, contained by `body { overflow-x: hidden }`)
+- Any `rgba(255,255,255,…)` instance that reads visually wrong against the new `#121212` (none identified in this pass; surface in V118 if found)
+
+### Rollback path
+
+Single-commit revert. The two `:root` variable changes are the highest-leverage edits — reverting those alone walks back ~38 cascading effects across selectors using `var(--bg-color)` and `var(--text-color)`. The script.js theme-light blocks revert cleanly. The Alte Haas font files at repo root can be deleted independently; the `@font-face` rule and `.lens-ai-wordmark` class are scoped to a single class so removing them only affects the lens-ai.html hero.

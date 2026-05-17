@@ -1,13 +1,14 @@
 # Alex.ai — Living Design Rules
 
-Last updated: V106. Reflects the current shipped state across all five pages.
+Last updated: V117. Reflects the current shipped state across all five pages.
 
 ---
 
 ## Color system
 
-- Background: `#050505` (near-black)
-- Text primary: `#ffffff`
+- Background: `#121212` (premium dark, V117)
+- Text primary: `#fafafa` (off-white, V117)
+- V117 shifted background and primary text away from absolute black/white (`#050505` / `#ffffff`) for reduced harshness. Accent and gray-muted unchanged. Pure-black `rgba(0,0,0,…)` is intentionally retained on depth-compositing shadows (text-shadow / box-shadow) where the cleaner falloff reads better.
 - Text muted (body copy): `var(--gray-color)` = `#B3B3B3`, or `rgba(255, 255, 255, 0.75)` for standard body paragraphs
 - Accent: `#BFE8F8` (icy blue). Used for card-index numbers, section titles, pull-quote highlights, subtle text shadows/glows. Used for decoration and display-scale typography, NOT for long-form body text.
 
