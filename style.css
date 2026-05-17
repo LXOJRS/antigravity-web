@@ -9,6 +9,19 @@
     font-display: swap;
 }
 
+/* V118: Overused Grotesk variable (Roman) replaces Inter as the primary
+   font-main site-wide. Italic isn't shipped in the source repo. Inter
+   remains loaded via Google Fonts in every HTML <head> as the fallback
+   if the woff2 fails. The .lens-ai-wordmark class still uses Alte Haas. */
+@font-face {
+    font-family: 'Overused Grotesk';
+    src: url('fonts/OverusedGrotesk-VF.woff2') format('woff2-variations'),
+         url('fonts/OverusedGrotesk-VF.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* V117: shifted from vantablack (was #050505) / pure white (was #ffffff)
        to a softer premium-dark + off-white pair. Accent (#BFE8F8) and
@@ -17,7 +30,9 @@
     --text-color: #fafafa;
     --accent-color: #BFE8F8;
     --gray-color: #B3B3B3;
-    --font-main: 'Inter', sans-serif;
+    /* V118: Overused Grotesk replaces Inter as the primary family.
+       Inter stays as the fallback. */
+    --font-main: 'Overused Grotesk', 'Inter', sans-serif;
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -2413,7 +2428,7 @@ footer {
     margin: 56px 0 0 auto;
     padding-top: 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.14);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Overused Grotesk', 'Inter', system-ui, sans-serif;
     line-height: 1.45;
     text-align: left;
 }
@@ -2652,7 +2667,7 @@ footer {
     justify-content: center;
     gap: 6px;
     color: rgba(255, 255, 255, 0.55);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Overused Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 .weavy-placeholder-label {
@@ -2756,7 +2771,7 @@ footer {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.42);
     font-weight: 500;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Overused Grotesk', 'Inter', system-ui, sans-serif;
     line-height: 1.4;
 }
 
@@ -3637,7 +3652,7 @@ footer {
     display: block;
     overflow: visible;
     color: var(--theme-fg, #fafafa);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Overused Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 .value-fit-model .vfm-wedges path {

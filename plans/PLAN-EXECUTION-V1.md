@@ -1219,3 +1219,73 @@ Verified Playwright:
 Note on font-weight: `.lens-ai-headline` declares `font-weight: 600`; `.lens-ai-wordmark` declares 700. The headline rule sits later in style.css (line 3346 vs ~2087), so 600 wins the cascade. The loaded font only ships Bold (700), so browsers render at 700 anyway via nearest-weight fallback. Visual rendering is correct; the computed-style discrepancy is harmless. If a future weight other than Bold is loaded, revisit by adding `!important` to `.lens-ai-wordmark`'s `font-weight` or moving the class definition to the end of style.css.
 
 Cache state unchanged: `style.css?v=116`, `script.js?v=97`. HTML class-attribute changes only.
+
+## V118: Overused Grotesk replaces Inter as the primary font
+
+Date: 2026-05-17. One-task batch. Inter swaps out as `--font-main`; Overused Grotesk variable Roman takes its place site-wide. Inter stays declared in every HTML `<head>` (Google Fonts link) and in every font stack as the fallback, so a font-load failure degrades cleanly. `.lens-ai-wordmark` (Alte Haas Grotesk Bold on the nav `LENS AI` and homepage `.lens-ai-headline`) is untouched per the V118 brief.
+
+### What changed
+
+**Font file.** Alex placed `OverusedGrotesk-VF.woff2` directly at the repo root (no cloned repo present despite the brief mentioning one — handled the simpler case). Moved to `fonts/OverusedGrotesk-VF.woff2`. No Italic variant in the source. Alte Haas Grotesk files remain at repo root; not relocated.
+
+**@font-face declaration.** Added in `style.css` immediately after the V117 Alte Haas block, before `:root`. Variable font, weight range 100-900:
+
+```css
+@font-face {
+    font-family: 'Overused Grotesk';
+    src: url('fonts/OverusedGrotesk-VF.woff2') format('woff2-variations'),
+         url('fonts/OverusedGrotesk-VF.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+```
+
+Dual `src` lines support browsers that prefer `woff2-variations` and fall back to plain `woff2`. Same file in both — minor extra parsing cost, broader compatibility.
+
+**--font-main variable.** Changed from `'Inter', sans-serif` to `'Overused Grotesk', 'Inter', sans-serif`. Cascades through every selector that uses `var(--font-main)` and through `body { font-family: var(--font-main) }`.
+
+**4 direct Inter font-family declarations.** style.css had `font-family: 'Inter', system-ui, sans-serif` baked into 4 component rules (lines 2431, 2670, 2774, 3655 — episode metadata footer, weavy-placeholder label, dictionary aside region label, value-fit-model text). Prepended Overused Grotesk to each so the entire stack now reads `'Overused Grotesk', 'Inter', system-ui, sans-serif`. Preserves the existing system-ui fallback.
+
+**script.js.** No font references found (only `Interval`/`setInterval` substring matches). No JS change.
+
+**HTML files.** No font-family inline styles. Inter still loaded via the Google Fonts `<link>` in every HTML `<head>` — kept intentionally as the fallback.
+
+**Untouched (per brief).** `.lens-ai-wordmark { font-family: 'Alte Haas Grotesk', 'Inter', sans-serif; font-weight: 700; }`. Applied to nav `LENS AI` link on all 5 pages and to `index.html` `.lens-ai-headline`. The lens-ai.html hero (Inter, was Alte Haas pre-swap) inherits `var(--font-main)` so it now uses Overused Grotesk — intentional.
+
+### Files modified
+
+- `style.css` — added @font-face for Overused Grotesk; updated `--font-main` variable; prepended Overused Grotesk to 4 direct Inter font stacks.
+- `fonts/OverusedGrotesk-VF.woff2` — new file (moved from repo root into the `fonts/` directory created for this purpose).
+- `index.html`, `about.html`, `lens-ai.html`, `podcast.html`, `service-rd.html` — cache bumps only (`style.css?v=116 → ?v=117`).
+- `CLAUDE.md` — current shipped state line, cache version line.
+- `.claude/rules/architecture.md` — cache version line.
+
+### Cache state
+
+`style.css?v=117`, `script.js?v=97` across all 5 HTML files. (script.js unchanged.)
+
+### Verification (Playwright)
+
+Loaded homepage at 1440 with `document.fonts.ready` resolved:
+- `Overused Grotesk` (weight 100 900): status `loaded` ✓
+- `Alte Haas Grotesk` (weight 700): status `loaded` ✓ (preserved from V117)
+- Inter weights (300-800): status `unloaded` ✓ — Inter is declared but not fetched because Overused Grotesk handled all current type. The Google Fonts link in the HTML head remains, so Inter loads on demand if Overused Grotesk fails.
+- `body { font-family }` resolves to `"Overused Grotesk", Inter, sans-serif` ✓
+- `.hero-title`, `.hero-subtitle`, `.about .section-header h2`: all resolve to `"Overused Grotesk", Inter, sans-serif` ✓
+- `.lens-ai-headline`, nav `Lens AI` link: still resolve to `"Alte Haas Grotesk", Inter, sans-serif` ✓ (untouched)
+- Screenshot of homepage hero confirms "CLEAN AI PRODUCTIONS" rendering in Overused Grotesk weights.
+
+### Voice rule check
+
+No copy changes. Em-dashes outside HTML comments: only the known-deferred podcast episode taglines (9 lines in podcast.html). Same as V116/V117.
+
+### Known follow-ups / deferred
+
+- No Overused Grotesk Italic shipped in the source. If Italic is ever needed, source the file separately and add a second @font-face with `font-style: italic`.
+- Alte Haas Grotesk TTF files at repo root could be moved into `fonts/` for organization (would require updating the `url()` path in the Alte Haas @font-face rule). Cosmetic, not required.
+- All previously-deferred items from V115-V117 still open: mobile pass, Lens AI page case-study restructure, About-page Lens AI section rewrite, "Things I build" bullet list refinement, contact-page gradient redesign, hub-cards reflair, lens-ai.html in-production-intro + closing CTA refinement, podcast.html OG image meta refresh, `.weavy-placeholder` dead CSS removal, `.podcast-closing-monument` overflow fix.
+
+### Rollback path
+
+Single-commit revert. The `--font-main` variable revert is the highest-leverage rollback — restores Inter across the entire site in one line. Remove the @font-face for Overused Grotesk. The 4 direct Inter font-family declarations had Overused Grotesk prepended, not replaced — reverting each just drops the first entry. Delete `fonts/OverusedGrotesk-VF.woff2` and the empty `fonts/` directory if desired (it can stay; harmless).

@@ -10,7 +10,7 @@ Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN.
 
 ## Current shipped state (as of 2026-05-10, V114)
 
-- **Version: V117** (style.css?v=116, script.js?v=97 across all 5 HTML files). V117 = brand color shift (`#050505 → #121212` background, `#ffffff → #fafafa` primary text) + Alte Haas Grotesk Bold wordmark scoped to the lens-ai.html hero only. Accent (#BFE8F8), gray-muted (#B3B3B3), and the cyan `.theme-light` light-state are unchanged. Pure-black depth shadows preserved.
+- **Version: V118** (style.css?v=117, script.js?v=97 across all 5 HTML files). V118 = Overused Grotesk variable replaces Inter as the primary `--font-main` site-wide. Inter stays loaded via Google Fonts as a fallback. `.lens-ai-wordmark` (nav `LENS AI` + homepage `.lens-ai-headline`) keeps its Alte Haas Grotesk Bold override from V117 follow-up. Earlier V117 = brand color shift to `#121212` / `#fafafa`; V116 = asset swaps + "How I work" cutoff fix; V115 R1 = post-V114 punch list.
 - V114 = Lens AI restructure (brand decomposition). Four-item nav with ABOUT hover-fold. Hero v2 with portrait video frame + unified pill subtitle. New homepage Lens AI + Podcast sections. `creative-building.html` renamed to `lens-ai.html` with voice rewrite drafts. About-page rewrite (landing text, first pull-quote, Recent Build rd-row, cultural-background thread, hub cards). Old homepage `.services` Capabilities block removed. `.visual-hook` removed. Glitch effect parked (CSS retained, HTML removed). Many `[CONTENT: ...]` placeholders pending Alex's approval.
 - theme-light live color transition working on About Scope/Method, R&D Focus+Format, AND the Lens AI subpage closing CTA
 - Value Fit Model is on About Method row, side-by-side with the text, titles inside the wedges (V112)
@@ -31,7 +31,7 @@ Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN.
 2. **Voice is strategy-first, not abstract wisdom.** Alex's positioning is concrete problem-solving, not "judgment" or "discernment" or other consulting platitudes. See `.claude/rules/voice.md`.
 3. **Brand color is `#BFE8F8`** (icy blue). The old `#0000C5` deep blue has been globally replaced and should not reappear anywhere in the codebase.
 4. **Background is `#121212` and primary text is `#fafafa` as of V117.** Pure black (`#050505` / `#000`) and pure white (`#fff` / `#ffffff`) should not appear as hardcoded color values in new code; use `var(--bg-color)` and `var(--text-color)` or the shifted hex values directly. Exceptions: depth-compositing shadows (text-shadow / box-shadow) intentionally retain pure-black `rgba(0,0,0,…)` for cleaner falloff.
-5. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=116`, `script.js?v=97`.
+5. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=117`, `script.js?v=97`.
 6. **theme-light padding is fixed at 50vh** top/bottom. Do NOT animate padding. Earlier versions (V103-V105) did and caused layout shift bugs that were architecturally fixed in V106 by moving to fixed padding with only color animating.
 
 ## Where things live
