@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=117">
+    <link rel="stylesheet" href="style.css?v=118">
 
     <!-- Open Graph -->
     <meta property="og:title" content="About Alex | AI Adoption Trainer">
@@ -138,24 +138,29 @@
 
             <div class="rd-grid rd-grid-part2b">
 
+                <!-- V119: Things I build redesigned with icy-blue rounded-pill bullets.
+                     Each pill animates in from the side on scroll (left/right/left per
+                     mockup) via GSAP — see script.js. -->
                 <div class="rd-row recent-build">
                     <h2 class="section-title">Things I build</h2>
                     <div class="text-content">
-                        <ul class="text-content-list">
-                            <li>This website (vibe-coded).</li>
-                            <li>A custom MCP server that connects the podcast's YouTube analytics to Claude.</li>
-                            <li>An n8n automation that creates chapter markers for the podcast.</li>
+                        <ul class="things-i-build-list">
+                            <li class="tib-pill tib-pill-1">This website (vibe-coded).</li>
+                            <li class="tib-pill tib-pill-2">A custom MCP server that connects the podcast's YouTube analytics to Claude.</li>
+                            <li class="tib-pill tib-pill-3">An n8n automation that creates chapter markers for the podcast.</li>
                         </ul>
                         <p>These examples resemble my work ethic: exploring new solutions to overcome stubborn hurdles.</p>
                     </div>
                 </div>
 
-                <div class="rd-row">
-                    <h2 class="section-title">Lens AI</h2>
+                <!-- V119: Lens AI block redesigned. Wordmark sits top-right, body
+                     spans the left. Tagline + body copy rewritten per V119 brief. -->
+                <div class="rd-row lens-ai-row">
+                    <h2 class="section-title lens-ai-wordmark">LENS AI</h2>
                     <div class="text-content">
-                        <p>AI visuals are everywhere. Most of them look like AI visuals.</p>
-                        <p>The difference isn't the tool. It's whether the person behind it understands lighting, framing, brand consistency, and what makes an image actually work. I do, because I spent years studying exactly that before I ever opened a generative model.</p>
-                        <p>I focus on the pipeline, not just the prompt. One good image is easy. A system that produces the same quality at scale, on brand, next week. That takes structure.</p>
+                        <p class="about-lens-ai-tagline">Lens AI is my visual production label.</p>
+                        <p>I make AI visuals that are <span class="highlight">art directed</span>, <span class="highlight">pipeline-built</span>, and made to actually work for a brand.</p>
+                        <p>Film studies is where I learned what makes an image hold. AI is how I make them now.</p>
                     </div>
                 </div>
 
@@ -280,7 +285,7 @@
     </footer>
 
 
-    <script src="script.js?v=97"></script>
+    <script src="script.js?v=98"></script>
 </body>
 
 </html>

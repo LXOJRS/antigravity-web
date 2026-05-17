@@ -1289,3 +1289,76 @@ No copy changes. Em-dashes outside HTML comments: only the known-deferred podcas
 ### Rollback path
 
 Single-commit revert. The `--font-main` variable revert is the highest-leverage rollback — restores Inter across the entire site in one line. Remove the @font-face for Overused Grotesk. The 4 direct Inter font-family declarations had Overused Grotesk prepended, not replaced — reverting each just drops the first entry. Delete `fonts/OverusedGrotesk-VF.woff2` and the empty `fonts/` directory if desired (it can stay; harmless).
+
+## V119: About-page Things I Build + Lens AI redesign
+
+Date: 2026-05-17. Visual redesign of two `about.html` sections per mockups: "Things I Build" gets rounded-pill bullets with horizontal swipe-in animation; "Lens AI" gets a wordmark-on-right layout with rewritten copy. Existing design tokens preserved (icy blue, Overused Grotesk, Alte Haas for the wordmark, current rgba values). Plus a site-wide spacing bump between rd-grid-part2b rows.
+
+### What changed
+
+**1. Things I Build redesigned.**
+- HTML: kept `.rd-row.recent-build` wrapper. Replaced `<ul class="text-content-list">` (V115 R1 plain bullets) with `<ul class="things-i-build-list">` containing 3 `<li class="tib-pill tib-pill-N">` items.
+- CSS: new `.things-i-build-list` rule (flex column, 16px gap). New `.tib-pill` rule (icy-blue background, dark text, border-radius: 999px, content-width via `width: max-content; align-self: flex-start`). Per-pill horizontal offsets via `.tib-pill-1/2/3` (0, clamp 40-120px, clamp 20-80px). Mobile breakpoint at 768px tightens offsets and reduces font-size.
+- Closing paragraph ("These examples resemble my work ethic…") unchanged.
+
+**2. Things I Build pill swipe-in animation.**
+- script.js: new block inserted before "Full-Bleed Break Parallax". Each `.tib-pill` gets its own ScrollTrigger; pill index 0 starts at `x: '-100vw'` (left), pill 1 starts at `x: '100vw'` (right), pill 2 at `x: '-100vw'` (left). Mockup-specified direction. GSAP `fromTo` animates `x → 0` and `opacity 0 → 1` over 0.9s with `power3.out` ease. Per-pill delay `i * 0.15` gives the ~150ms stagger. `start: 'top 85%'` triggers when pill enters viewport. `toggleActions: 'play none none none'` means once played the animation doesn't reverse on scroll-up. The `.rd-row { overflow: hidden }` clips the off-screen start position so the pill is invisible until it slides in.
+
+**3. Lens AI block redesigned.**
+- HTML: changed `<div class="rd-row">` to `<div class="rd-row lens-ai-row">`. Title `<h2 class="section-title lens-ai-wordmark">LENS AI</h2>` (gains the wordmark class for Alte Haas Grotesk Bold). Body content rewritten per V119 brief: a tagline `<p class="about-lens-ai-tagline">Lens AI is my visual production label.</p>` followed by two body paragraphs. The first body paragraph contains `<span class="highlight">art directed</span>` and `<span class="highlight">pipeline-built</span>`.
+- CSS layout: new grid rules under the @media (min-width: 769px) block — `.about-page .rd-grid-part2b .rd-row.lens-ai-row .section-title { grid-column: 8 / span 5; text-align: right; }` puts wordmark top-right. `.about-page .rd-grid-part2b .rd-row.lens-ai-row .text-content { grid-column: 1 / span 8; }` gives the body 8 cols on the left. Excluded from the default `:not()` rule by adding `:not(.lens-ai-row)` so my override wins.
+- CSS sizing: `.about-page .rd-grid-part2b .rd-row.lens-ai-row .section-title { font-size: clamp(4rem, 8vw, 7rem) !important; }` makes the wordmark substantially larger than the default `.rd-row .section-title` clamp.
+- CSS tagline: `.about-page .rd-grid-part2b .rd-row.lens-ai-row p.about-lens-ai-tagline { font-size: clamp(2rem, 3.5vw, 3rem) !important; color: var(--accent-color) !important; … }`. High specificity selector required to beat `.about-page .rd-row .text-content p` at style.css:2973 which forces 1.3rem on About body copy. Verified rendered at 48px (3rem) at 1440 viewport.
+- Class name `.about-lens-ai-tagline` chosen to avoid collision with the existing `.lens-ai-tagline` rule at style.css:3455 (which styles the homepage Lens AI section's gray subtitle).
+- New scoped `.lens-ai-row .highlight { color: var(--accent-color); font-weight: 700 }` because the existing `.highlight` rules are scoped to `.pull-quote` and `.hero-title` only — neither covers body copy. The new rule makes "art directed" and "pipeline-built" render icy-blue + bold.
+
+**4. Lens AI body text.**
+Replaced the three old paragraphs (AI visuals are everywhere / the difference isn't the tool / I focus on the pipeline) with the V119-specified copy:
+- Tagline: "Lens AI is my visual production label."
+- Body: "I make AI visuals that are <span class="highlight">art directed</span>, <span class="highlight">pipeline-built</span>, and made to actually work for a brand."
+- Body: "Film studies is where I learned what makes an image hold. AI is how I make them now."
+
+No em-dashes.
+
+**5. Spacing bump between part2b rows.**
+Added `.about-page .rd-grid-part2b .rd-row + .rd-row { margin-top: 64px; }`. Combined with the existing 96px padding-bottom on `.rd-row.recent-build` (Things I Build) and 64px padding-top on the next row (Lens AI), total visual gap is now 96 + 64 + 64 = 224px. Pushes the spacing into the upper end of DESIGN-RULES.md's 128-200 tier per the V119 brief. Applies to all adjacent rd-rows in part2b (also gives Lens AI → Value Fit Model an extra 64px, harmless since Value Fit Model is `.theme-light` with 50vh padding already).
+
+### Files modified
+
+- `about.html` — HTML replacement of the Things I Build `<ul>` and the Lens AI `<div class="rd-row">` block; cache bump.
+- `style.css` — `.things-i-build-list`, `.tib-pill`, `.tib-pill-1/2/3` (with mobile breakpoint); spacing rule for part2b adjacent rows; updated `.about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted):not(.lens-ai-row)` selectors to exclude the new row; new `.about-page .rd-grid-part2b .rd-row.lens-ai-row .section-title/.text-content` placement rules; display-scale font-size override for the Lens AI wordmark; `.about-page .rd-grid-part2b .rd-row.lens-ai-row p.about-lens-ai-tagline` tagline rule; `.lens-ai-row .highlight` body-highlight rule.
+- `script.js` — new "Things I Build pill swipe-in" block before the Full-Bleed Break Parallax.
+- `index.html`, `lens-ai.html`, `podcast.html`, `service-rd.html` — cache bumps only.
+- `CLAUDE.md` — current shipped state line, cache version line.
+- `.claude/rules/architecture.md` — cache version line.
+
+### Cache state
+
+`style.css?v=118`, `script.js?v=98` across all 5 HTML files.
+
+### Voice rule check
+
+No new em-dashes. Lens AI body copy uses sentences separated by periods. The replaced copy had no em-dashes either. Only known-deferred podcast episode taglines remain as em-dash sites in the codebase.
+
+### Verification (Playwright at 1440)
+
+- Things I Build pills: 3 rendered, all icy-blue background (`rgb(191, 232, 248)`) with dark text (`rgb(18, 18, 18)`), `border-radius: 999px`, content-width sizing, horizontal offsets 0/84/48 px per pill. Screenshot confirms staggered layout matching the mockup.
+- Lens AI: wordmark at `x=839, right=1320, width=481px, font-size 112px`, no overflow at 1440 viewport. Font-family resolves to `"Alte Haas Grotesk", Inter, sans-serif`. Tagline at 48px in icy blue. Body paragraphs in muted white (`rgba(255,255,255,0.6)` from existing About-page override) — kept as-is per the V119 brief's "preserve current rgba values".
+- `.highlight` spans on "art directed" and "pipeline-built": `color: rgb(191, 232, 248)`, `font-weight: 700` ✓.
+- Spacing between Things I Build and Lens AI: visually distinct gap, in the 200-225px range.
+- Pill animation: confirmed via initial scroll-into-view and DOM measurements. Pill 0 swipes from left, pill 1 from right, pill 2 from left, with ~150ms stagger.
+
+### Known design decision
+
+- Body paragraph color/size on Lens AI: rendered at 1.3rem (20.8px) with rgba(255,255,255,0.6) — that's the About-page muted-body styling from style.css:2973. The mockup shows brighter white at slightly larger size, but the V119 brief explicitly says "keep all existing design tokens" and "current rgba values", so the existing muted treatment wins. If Alex wants brighter body copy specifically on the Lens AI block, that's a future scope override.
+- Pill width at desktop: pills 2 and 3 hit the natural `.text-content` cell max-width (~481px in the existing cols 6-10 grid placement) plus left margin offset. The mockup shows pills stretching further right (closer to viewport edge). My implementation respects the existing 12-col grid; widening pills past the cell would require a per-row grid override.
+
+### Deferred to future versions
+
+- Wider pill range (closer to viewport-edge stretch per mockup) if Alex wants it
+- Mobile pass review for the new pill layout (CSS breakpoint exists but un-tested at narrow viewports beyond the desktop verification)
+- All previously-deferred items from V115-V118 still open
+
+### Rollback path
+
+Single-commit revert. The HTML changes are scoped to two rd-rows. The CSS changes are scoped to new classes (`.tib-pill*`, `.things-i-build-list`, `.about-lens-ai-tagline`, `.lens-ai-row .highlight`) plus targeted grid-placement additions for the `.lens-ai-row`. The script.js addition is a standalone block before an existing handler. Reverting any of these doesn't affect adjacent sections.

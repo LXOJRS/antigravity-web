@@ -609,6 +609,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- V119: Things I Build pill swipe-in ---
+    // Each pill animates in horizontally from the side as it enters view.
+    // Mockup-specified direction: pill 1 from left, pill 2 from right, pill 3
+    // from left. ~150ms stagger via per-pill delay. The .rd-row.overflow:hidden
+    // clips the off-screen start position so the pill is invisible until it
+    // slides in. ToggleActions 'play none none none' means once played, no
+    // reverse on scroll-up (the pill stays in place).
+    const tibPills = document.querySelectorAll('.tib-pill');
+    tibPills.forEach((pill, i) => {
+        const fromX = (i === 1) ? '100vw' : '-100vw';
+        gsap.fromTo(pill,
+            { x: fromX, opacity: 0 },
+            {
+                x: 0,
+                opacity: 1,
+                duration: 0.9,
+                delay: i * 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: pill,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            }
+        );
+    });
+
     // --- Full-Bleed Break Parallax ---
     const fullBleedMedia = document.querySelectorAll('.full-bleed-break img, .full-bleed-break video');
     fullBleedMedia.forEach(media => {

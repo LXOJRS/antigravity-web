@@ -1807,11 +1807,16 @@ footer {
     .about-page .rd-grid-part2a .rd-row.inverted .section-title { grid-column: 1 / span 3; }
     .about-page .rd-grid-part2a .rd-row.inverted .text-content { grid-column: 5 / span 8; }
 
-    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted) .section-title { grid-column: 1 / span 4; }
-    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted) .text-content { grid-column: 6 / span 5; }
+    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted):not(.lens-ai-row) .section-title { grid-column: 1 / span 4; }
+    .about-page .rd-grid-part2b .rd-row:not(.reversed):not(.inverted):not(.lens-ai-row) .text-content { grid-column: 6 / span 5; }
 
     .about-page .rd-grid-part2b .rd-row.reversed .section-title { grid-column: 8 / span 5; text-align: left; }
     .about-page .rd-grid-part2b .rd-row.reversed .text-content { grid-column: 2 / span 4; }
+
+    /* V119: Lens AI block — wordmark in cols 8-12 (right side, text-align right);
+       body copy spans cols 1-8 on the left. Excluded from the :not() rule above. */
+    .about-page .rd-grid-part2b .rd-row.lens-ai-row .section-title { grid-column: 8 / span 5; text-align: right; }
+    .about-page .rd-grid-part2b .rd-row.lens-ai-row .text-content { grid-column: 1 / span 8; }
 }
 
 /* V115 R1: "Things I build" row gets more vertical breathing room
@@ -1820,6 +1825,91 @@ footer {
 .about-page .rd-row.recent-build {
     padding-top: 96px;
     padding-bottom: 96px;
+}
+
+/* V119: bump the gap between Things I Build and Lens AI per the mockup
+   spacing rule. The natural padding (96 bottom + 64 top = 160px) is in
+   the 128–200 tier already; adding another 64 margin lifts the gap to
+   ~224 so the two redesigned sections feel like distinct moments. */
+.about-page .rd-grid-part2b .rd-row + .rd-row {
+    margin-top: 64px;
+}
+
+/* V119: Things I Build — bullet items styled as icy-blue rounded pills
+   wrapping each item's text. Pills are content-width (not full-width)
+   and staggered horizontally per the mockup. Animation handled in JS
+   (each pill swipes in from the side on scroll into view). */
+.things-i-build-list {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 56px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tib-pill {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 1.4vw, 1.5rem);
+    padding: 12px 28px;
+    border-radius: 999px;
+    width: max-content;
+    max-width: 100%;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+}
+
+/* Stagger pills horizontally per the mockup — pill 1 flush left, pill 2
+   offset most, pill 3 offset moderately. align-self lets the pill keep
+   its content-width without stretching. */
+.tib-pill-1 { margin-left: 0; align-self: flex-start; }
+.tib-pill-2 { margin-left: clamp(40px, 7vw, 120px); align-self: flex-start; }
+.tib-pill-3 { margin-left: clamp(20px, 4vw, 80px); align-self: flex-start; }
+
+@media (max-width: 768px) {
+    .tib-pill {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+    .tib-pill-2 { margin-left: 24px; }
+    .tib-pill-3 { margin-left: 12px; }
+}
+
+/* V119: Lens AI on About — display-scale wordmark on the right, tagline
+   in icy blue under it (well, on the left side per the layout), body
+   paragraphs in default text color. The .lens-ai-wordmark class on the
+   h2 keeps the Alte Haas font from V117. */
+.about-page .rd-grid-part2b .rd-row.lens-ai-row .section-title {
+    font-size: clamp(4rem, 8vw, 7rem) !important;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: var(--accent-color);
+}
+
+/* V119: scoped class (not .lens-ai-tagline — that name is already used for
+   the homepage tagline at line ~3455 with a gray, smaller treatment). High
+   specificity required to beat the .about-page .rd-row .text-content p
+   override at line ~2974 which forces 1.3rem on body copy. */
+.about-page .rd-grid-part2b .rd-row.lens-ai-row p.about-lens-ai-tagline {
+    font-size: clamp(2rem, 3.5vw, 3rem) !important;
+    color: var(--accent-color) !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.01em;
+    margin-bottom: 56px !important;
+    margin-top: 0 !important;
+}
+
+/* Body paragraphs inside the Lens AI row keep their existing .rd-row
+   .text-content p styling (1.5rem, weight 300, white at 75% opacity).
+   Scoped .highlight rule here because the existing .highlight is only
+   defined for .pull-quote .highlight and .hero-title .highlight — neither
+   applies inside a regular body paragraph. */
+.lens-ai-row .highlight {
+    color: var(--accent-color);
+    font-weight: 700;
 }
 
 /* De Outro Statement (V101: left-aligned so longer outros read cleanly) */
