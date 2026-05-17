@@ -1198,4 +1198,24 @@ No copy changes. Em-dashes outside HTML comments: only the known-deferred podcas
 
 ### Rollback path
 
-Single-commit revert. The two `:root` variable changes are the highest-leverage edits — reverting those alone walks back ~38 cascading effects across selectors using `var(--bg-color)` and `var(--text-color)`. The script.js theme-light blocks revert cleanly. The Alte Haas font files at repo root can be deleted independently; the `@font-face` rule and `.lens-ai-wordmark` class are scoped to a single class so removing them only affects the lens-ai.html hero.
+Single-commit revert. The two `:root` variable changes are the highest-leverage edits — reverting those alone walks back ~38 cascading effects across selectors using `var(--bg-color)` and `var(--text-color)`. The script.js theme-light blocks revert cleanly. The Alte Haas font files at repo root can be deleted independently; the `@font-face` rule and `.lens-ai-wordmark` class are scoped so removing them only affects the wordmark application sites.
+
+### V117 follow-up: wordmark scope swap (same day)
+
+Alex reviewed the shipped result and identified that the wordmark was applied to the wrong target. Original V117 brief said "ONLY the page hero title on lens-ai.html. NOT the nav item, NOT the homepage Lens AI section's headline." Alex's actual intent: the opposite — wordmark on the nav `LENS AI` link (all 5 pages) and the homepage `.lens-ai-headline`, NOT on the lens-ai.html hero.
+
+Changes (HTML only, no CSS or JS touched, no cache bump):
+- `lens-ai.html:83` — removed `lens-ai-wordmark` from the hero `<h1 class="about-hero">` (reverts to Inter via `--font-main`)
+- All 5 HTML files at line 52 — added `lens-ai-wordmark` to the desktop nav `<a class="nav-item">Lens AI</a>`
+- All 5 HTML files at line 65 — added `lens-ai-wordmark` to the mobile `<a class="mobile-link">Lens AI</a>`
+- `index.html:108` — added `lens-ai-wordmark` to `<h2 class="lens-ai-headline">LENS AI</h2>`
+
+Verified Playwright:
+- lens-ai.html h1 font-family: `Inter, sans-serif` ✓
+- lens-ai.html nav Lens AI font-family: `"Alte Haas Grotesk", Inter, sans-serif` ✓
+- index.html `.lens-ai-headline` font-family: `"Alte Haas Grotesk", Inter, sans-serif` ✓
+- Screenshot of homepage Lens AI section confirms wordmark rendering as intended.
+
+Note on font-weight: `.lens-ai-headline` declares `font-weight: 600`; `.lens-ai-wordmark` declares 700. The headline rule sits later in style.css (line 3346 vs ~2087), so 600 wins the cascade. The loaded font only ships Bold (700), so browsers render at 700 anyway via nearest-weight fallback. Visual rendering is correct; the computed-style discrepancy is harmless. If a future weight other than Bold is loaded, revisit by adding `!important` to `.lens-ai-wordmark`'s `font-weight` or moving the class definition to the end of style.css.
+
+Cache state unchanged: `style.css?v=116`, `script.js?v=97`. HTML class-attribute changes only.
