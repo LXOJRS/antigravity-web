@@ -1362,3 +1362,79 @@ No new em-dashes. Lens AI body copy uses sentences separated by periods. The rep
 ### Rollback path
 
 Single-commit revert. The HTML changes are scoped to two rd-rows. The CSS changes are scoped to new classes (`.tib-pill*`, `.things-i-build-list`, `.about-lens-ai-tagline`, `.lens-ai-row .highlight`) plus targeted grid-placement additions for the `.lens-ai-row`. The script.js addition is a standalone block before an existing handler. Reverting any of these doesn't affect adjacent sections.
+
+## V120: lens-ai.html "Featured work" collage restructure
+
+Date: 2026-05-18. Replaces the V113-era `.in-production` section on `lens-ai.html` with a "Featured work" collage layout. Two cases (Promptgorillas, Chris le More) with asymmetric brand-name vs. video placement per case and a CSS-only 2D corner overlap between cases. Each case is just brand-name + video — no body copy, no metadata, no role, no year. Mobile drops the collage and stacks each case vertically.
+
+### What changed
+
+**1. HTML.** Replaced lines 89-118 on `lens-ai.html`. Out: `<section class="in-production">` containing header (with "In production" h2 + subtitle paragraph) + `<div class="services-grid">` containing two `<a class="service-card">` blocks (Promptgorillas with video, Chris le More with static image, both with card-index, h3, body paragraph, visual-date). In: `<section class="featured-work">` containing one `<h2 class="featured-work-heading">Featured work</h2>` followed by two `<article class="featured-case">` blocks. PG article has media first, brand second (in HTML source order). CLM article has brand first, media second.
+
+Note: source order matters for the mobile fallback. CLM's brand-first ordering means mobile flex-column renders brand-above-video naturally. PG's media-first ordering would render video-above-brand on mobile, so `.featured-case-promptgorillas .featured-case-brand { order: -1; }` in the mobile media query reverses that.
+
+**2. Asymmetric per-case placement (CSS at style.css inserted after the V113 .in-production-cta block).** Each `.featured-case` is a `display: grid` container with `grid-template-columns: repeat(12, 1fr)`.
+
+- **Promptgorillas (z-index: 1).** `featured-case-media { grid-column: 1/9; grid-row: 1; aspect-ratio: 16/9 }` puts the landscape screen-recording in cols 1-8. `featured-case-brand { grid-column: 7/13; grid-row: 1; z-index: 2; align-self: end; justify-self: end; text-align: right; transform: translateY(40%) }` puts "PROMPT / GORILLAS" in cols 7-12, sharing cols 7-8 with the video, anchored bottom-right with `translateY(40%)` pushing it off the video's bottom edge so the two words hang below the video like a caption.
+- **Chris le More (z-index: 2, margin-top: -160px).** `featured-case-brand { grid-column: 1/7; padding-block: 96px; align-self: center }` puts "CHRIS LE / MORE" in cols 1-6 with breathing space. `featured-case-media { grid-column: 7/13; aspect-ratio: 3/4 }` puts the portrait video in cols 7-12. CLM video starts at col 7 — one column earlier than PG video's right edge at col 8 — so the LEFT edge of CLM video horizontally overlaps PG video's RIGHT edge in cols 7-8.
+
+The combination of (a) z-index 2 on CLM article + z-index 1 on PG article, (b) -160px margin-top on CLM, and (c) the 1-column horizontal extension of CLM video into PG's range produces a real 2D corner overlay: CLM video's top-left corner physically sits inside PG video's bottom-right area (165px horizontal × 160px vertical overlap measured at 1440 viewport).
+
+**3. Section heading.** `.featured-work-heading` at `clamp(4rem, 8vw, 7rem)` font-size, `color: var(--accent-color)` (icy blue), `font-weight: 700`, `letter-spacing: -0.03em`, `line-height: 0.95`, `max-width: 12ch` (caps the line so "Featured work" doesn't stretch across the full grid). Top-left. No subtitle.
+
+**4. Mobile fallback (max-width: 768px).** `.featured-case { display: flex; flex-direction: column; gap: 24px }` drops the grid. `.featured-case-clm { margin-top: 96px; z-index: auto }` cancels the desktop overlay. `.featured-case-brand` resets transform/text-align/padding/grid-column overrides. `.featured-case-promptgorillas .featured-case-brand { order: -1 }` lifts the PG brand above the PG media on mobile only (reverses the desktop source order without touching HTML). Video aspect ratios preserved (PG 16:9, CLM 3:4 capped at 70vh).
+
+**5. Chris le More asset swap.** Out: static `<img src=".../Untitled_design_1_zpetbg.png">`. In: `<video autoplay loop muted playsinline>` with source `https://res.cloudinary.com/dnkcu6lne/video/upload/v1779031588/CLMDRYCLEAN_hsdv7l.mp4`. Promptgorillas video keeps its existing source.
+
+**6. Scroll-reveal animation (script.js).** New V120 block inserted before the V119 Things I Build pill animation. Each `.featured-case` fades in with `opacity: 0 → 1` and `y: 60 → 0` on scroll, duration 1s, `power3.out` ease, `start: 'top 85%'`, `toggleActions: 'play none none reverse'`. Matches the existing `.rd-row` reveal pattern.
+
+**7. Dead CSS retained.** The V113-era `.in-production`, `.in-production-header`, `.in-production-intro`, `.in-production-cta`, `.services-grid`, `.service-card`, `.service-card + .service-card`, `.service-card::after`, `.service-card img/video`, `.card-index`, `.service-card h3/p` rules remain in style.css but no longer match any element on the page. Cleanup pass can drop them later — kept for now in case anything else references them.
+
+### Files modified
+
+- `lens-ai.html` — `.in-production` section replaced with `.featured-work` containing two `.featured-case` articles; cache bump.
+- `style.css` — large new block of `.featured-work*` / `.featured-case*` rules inserted after the legacy `.in-production-cta` rule; mobile breakpoint rules at the end of the block.
+- `script.js` — new `.featured-case` scroll-reveal block inserted before the V119 pill animation.
+- `index.html`, `about.html`, `podcast.html`, `service-rd.html` — cache bumps only.
+- `CLAUDE.md` — current shipped state line, cache version line.
+- `.claude/rules/architecture.md` — cache version line.
+
+### Cache state
+
+`style.css?v=119`, `script.js?v=99` across all 5 HTML files.
+
+### Voice rule check
+
+No new shipped copy. No em-dashes introduced. Only known-deferred podcast episode taglines remain as em-dash sites.
+
+### Verification (Playwright)
+
+At 1440 viewport with featured-work scrolled into view:
+- `.featured-work-heading` at x=152, font-size 112px, color `rgb(191, 232, 248)` ✓ (icy blue, Overused Grotesk via `var(--font-main)`)
+- PG article: width 1136, z-index 1
+- PG video: x=152, right=899.7, width=747.7, aspect-ratio 16/9 ✓
+- PG brand: x=847.6, right=1288, font-size 100.8px, white (`rgb(250, 250, 250)`), z-index 2, transform translateY(40%) ✓
+- CLM article: width 1136, z-index 2, margin-top -160px ✓
+- CLM brand: x=152, right=705.6, width=553.6, white ✓
+- CLM video: x=734.4, right=1288, width=553.6, aspect-ratio 3/4 ✓
+- **2D corner overlap measured**: verticalOverlapPx = 160 (CLM top crosses 160px above PG bottom), horizontalVideoOverlapPx = 165.3 (CLM video left edge at 734.4 crosses 165.3px into PG video's right area which ends at 899.7) ✓
+- Screenshot confirms CLM video's top-left corner physically sits inside PG video's bottom-right area, with CLM on top due to z-index.
+
+At 390 mobile viewport:
+- PG flex-direction: column ✓
+- PG child order: brand at y=185 with `order: -1` ABOVE media at y=259 ✓
+- CLM flex-direction: column ✓
+- CLM margin-top: 96px (collage dropped) ✓
+- CLM child order: brand at y=530 above media at y=830 (source order, brand first in HTML) ✓
+- Video aspect ratios preserved (PG 16:9, CLM 3:4) ✓
+- Full-page screenshot confirms vertical stacking, no overlap.
+
+### Deferred to future versions
+
+- Legacy `.in-production*` / `.services-grid` / `.service-card*` CSS removal (dead but harmless)
+- All previously-deferred items from V115-V119 still open
+- The hero subtitle rotating word `.hero-rotate` still uses the existing service vocabulary; revisit if "featured work" framing affects it (unlikely)
+
+### Rollback path
+
+Single-commit revert. The new CSS classes (`.featured-work*`, `.featured-case*`) are scoped — reverting restores the V113-era `.in-production` HTML, which still has full CSS coverage via the retained dead rules. The script.js V120 block is standalone (no shared state with adjacent handlers). The Chris le More video URL is the only new asset reference; rolling back restores the static image src.

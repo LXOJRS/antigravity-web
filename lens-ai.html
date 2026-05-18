@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=118">
+    <link rel="stylesheet" href="style.css?v=119">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Lens AI | Commercial AI Visuals">
@@ -86,35 +86,31 @@
                 A film background, a strategy lens, a pipeline that holds at scale. For brands that want to feel something specific.
             </p>
 
-            <!-- IN PRODUCTION: case studies. V114 retains the two cards (Promptgorillas
-                 + Chris le More) on this page; they were dropped from the homepage Lens AI
-                 section per the four-beat condensed structure. -->
-            <section class="in-production">
-                <div class="in-production-header">
-                    <h2 class="section-title">In production</h2>
-                    <p class="in-production-intro">Currently shipping brand visuals for Promptgorillas. Building more for brands that want a distinct visual world.</p>
-                    <!-- [CONTENT: Alex to refine. Drop "Currently shipping" framing or expand client list once ready.] -->
-                </div>
+            <!-- V120: Featured work collage. Replaces V113-era .in-production grid.
+                 Two cases, asymmetric brand-name vs. video placement per case, CSS-only
+                 vertical + horizontal overlap between cases. Scroll-reveal entry in JS. -->
+            <section class="featured-work">
+                <h2 class="featured-work-heading">Featured work</h2>
 
-                <div class="services-grid">
-                    <a href="#" class="service-card" data-magnetic>
-                        <video autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Crect fill='%23121212' width='4' height='5'/%3E%3C/svg%3E">
+                <article class="featured-case featured-case-promptgorillas">
+                    <div class="featured-case-media">
+                        <video autoplay loop muted playsinline
+                               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect fill='%23121212' width='16' height='9'/%3E%3C/svg%3E">
                             <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1776539032/Schermopname_2026-04-18_om_20.52.47_ykurwi.mp4" type="video/mp4">
                         </video>
-                        <span class="card-index">01</span>
-                        <h3>Promptgorillas</h3>
-                        <p>AI hero videos and brand visuals currently running on their website and marketing.</p>
-                        <span class="visual-date">Promptgorillas &middot; 2026</span>
-                    </a>
+                    </div>
+                    <h3 class="featured-case-brand">PROMPT<br>GORILLAS</h3>
+                </article>
 
-                    <a href="#" class="service-card" data-magnetic>
-                        <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1776611245/Untitled_design_1_zpetbg.png" alt="Chris le More AI model visuals">
-                        <span class="card-index">02</span>
-                        <h3>Chris le More</h3>
-                        <p>AI-generated model visuals for fast and efficient production.</p>
-                        <span class="visual-date">Chris le More &middot; 2026</span>
-                    </a>
-                </div>
+                <article class="featured-case featured-case-clm">
+                    <h3 class="featured-case-brand">CHRIS LE<br>MORE</h3>
+                    <div class="featured-case-media">
+                        <video autoplay loop muted playsinline
+                               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect fill='%23121212' width='3' height='4'/%3E%3C/svg%3E">
+                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1779031588/CLMDRYCLEAN_hsdv7l.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </article>
             </section>
 
         </div>
@@ -190,7 +186,7 @@
     </footer>
 
 
-    <script src="script.js?v=98"></script>
+    <script src="script.js?v=99"></script>
 </body>
 
 </html>

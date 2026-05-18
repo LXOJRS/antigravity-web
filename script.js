@@ -609,6 +609,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- V120: Featured work case reveal ---
+    // Each .featured-case fades in on scroll. Matches the existing .rd-row
+    // reveal pattern (opacity 0→1, y 60→0, power3.out, top 85% trigger).
+    const featuredCases = document.querySelectorAll('.featured-case');
+    featuredCases.forEach(caseEl => {
+        gsap.fromTo(caseEl,
+            { opacity: 0, y: 60 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: caseEl,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    });
+
     // --- V119: Things I Build pill swipe-in ---
     // Each pill animates in horizontally from the side as it enters view.
     // Mockup-specified direction: pill 1 from left, pill 2 from right, pill 3
