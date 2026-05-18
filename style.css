@@ -3294,34 +3294,38 @@ footer {
     position: relative;
 }
 
-/* Promptgorillas: video left (cols 1-8, landscape 16:9), brand right
-   (cols 7-12, overlapping the video's right edge). translateY pushes
-   the brand off the video's bottom so the two words hang below it
-   like a caption.
+/* Promptgorillas: video left (cols 1-8 + negative margin-left bleed),
+   brand top-right (cols 7-12, anchored to cell top).
    V120.1: min-height: 75vh on the video so PG dominates the first
    viewport when the section scrolls in. aspect-ratio stays as a hint
    but min-height wins when grid-width × 9/16 would render shorter;
    object-fit: cover crops the source to fill.
+   V120.2: PG video bleeds 200px past container's left edge (full-bleed
+   off viewport left), opening horizontal space on the right. PG brand
+   moved from align-self: end + translateY(40%) (which hung the brand
+   below PG video, overlapping CLM's top-left) to align-self: start
+   (brand sits at top of PG cell, upper-right of PG video). Small
+   translateY(48px) inset for breathing room from the top edge.
    Stacking: PG article does NOT establish its own stacking context
-   (no z-index here). PG brand gets z-index: 3 globally so it sits
-   ABOVE the CLM article (z-index: 2). PG media stays at default
-   stacking, so CLM article (z-index: 2) covers the PG media corner
-   for the collage, but the PG brand text remains visible on top. */
+   (no z-index here, and clearProps in JS wipes the inline transform
+   after the reveal animation). PG brand gets z-index: 3 globally so
+   it sits ABOVE the CLM article (z-index: 2). */
 .featured-case-promptgorillas .featured-case-media {
     grid-column: 1 / 9;
     grid-row: 1;
     aspect-ratio: 16 / 9;
     min-height: 75vh;
+    margin-left: -200px;
 }
 .featured-case-promptgorillas .featured-case-brand {
     grid-column: 7 / 13;
     grid-row: 1;
     position: relative;
     z-index: 3;
-    align-self: end;
+    align-self: start;
     justify-self: end;
     text-align: right;
-    transform: translateY(40%);
+    transform: translateY(48px);
 }
 
 /* Chris le More: brand left (cols 1-6, generous breathing space), video
@@ -3382,12 +3386,24 @@ footer {
     }
     .featured-case-promptgorillas .featured-case-brand {
         order: -1;
+        /* V120.2: the desktop align-self/justify-self/transform/text-align
+           overrides for the PG wordmark have higher specificity than the
+           generic .featured-case-brand mobile reset above. Re-assert each
+           here at matching specificity so the wordmark behaves like the
+           rest on mobile: full-width, left-aligned, no transform. */
+        align-self: stretch;
+        justify-self: stretch;
+        transform: none;
+        text-align: left;
     }
     .featured-case-promptgorillas .featured-case-media {
         aspect-ratio: 16 / 9;
         /* V120.1: reset desktop min-height so mobile cards aren't
-           forced to 75vh tall. */
+           forced to 75vh tall.
+           V120.2: also reset the desktop left-bleed so mobile cards
+           don't escape the container edge. */
         min-height: 0;
+        margin-left: 0;
     }
     .featured-case-clm .featured-case-media {
         aspect-ratio: 3 / 4;

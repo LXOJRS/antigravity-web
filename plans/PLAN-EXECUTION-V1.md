@@ -1485,3 +1485,56 @@ PG media grows slightly wider than its grid track at 1440 (1200px rendered vs ~7
 ### Rollback path
 
 Single-commit revert. The four CSS changes are localized to `.featured-case-promptgorillas` and `.featured-case-clm` rules; reverting restores the V120 -160px overlap with no min-height. The script.js change is a one-line tween config; reverting restores the play-none-reverse behavior with no clearProps.
+
+## V120.2: PG brand top-right + PG video left-bleed
+
+Date: 2026-05-18. Visual repositioning fix on the Featured work collage. After V120.1, the PG brand still hung in the lower-right of PG video and overlapped the top-left corner of the CLM video. V120.2 lifts the brand to the upper-right area and bleeds PG video off the left edge of the viewport to open horizontal separation.
+
+### What changed
+
+**1. PG brand: move up and right.**
+- `align-self: end → start` on `.featured-case-promptgorillas .featured-case-brand`. Brand now sits at the TOP of its grid cell instead of the bottom.
+- `transform: translateY(40%) → translateY(48px)`. The 40% relative shift (which dragged the brand below PG video's bottom into CLM's territory) is replaced with a small fixed 48px inset from the top edge of the cell — gives breathing room from the very top without losing the "upper-right" anchor.
+- Result at 1440: brand box top=198, bottom=379 (was bottom ~1190 before fix). CLM video top=705. Brand bottom clears CLM top by 326px — zero vertical overlap.
+- Horizontal anchor unchanged (`grid-column: 7 / 13`, `justify-self: end`, `text-align: right`). Brand right edge stays at container right (~1288 at 1440). Brand left at ~848. CLM video left at 734. Brand left clears CLM left by 113px — confident horizontal gap.
+
+**2. PG video: bleed off viewport left.**
+- `margin-left: -200px` on `.featured-case-promptgorillas .featured-case-media`. PG video's left edge moves from x=152 (container left) to x=-48 (48px off-viewport). Right edge moves from x=1352 to x=1152.
+- This opens 168px more horizontal space on the right between PG video's effective right edge (1152) and the container right (1320). That space is where the PG brand now lives.
+- The PG–CLM corner kiss is preserved: PG video right (1152) still extends past CLM video left (734) by ~418px horizontally, so the collage overlap survives the leftward bleed. CLM video at z-index 2 still covers PG video in the shared region.
+
+**3. Mobile re-assertion.**
+The desktop PG brand rules (`align-self: start`, `justify-self: end`, `transform: translateY(48px)`, `text-align: right`) target `.featured-case-promptgorillas .featured-case-brand` — specificity (0,2,0). The generic mobile reset rule `.featured-case-brand { align-self: stretch; transform: none; text-align: left; ... }` is only specificity (0,1,0). The desktop overrides bled into mobile, causing the brand to hover content-width and overlap PG video. Re-asserted each property inside the existing mobile media query at the same selector `.featured-case-promptgorillas .featured-case-brand` (specificity now matches and source order resolves to mobile-wins): `align-self: stretch`, `justify-self: stretch`, `transform: none`, `text-align: left`. Verified: mobile brand is full-width, left-aligned, no transform. Existing `order: -1` lift (so brand renders above PG video despite media-first source order) is preserved alongside.
+- Also added `margin-left: 0` reset on `.featured-case-promptgorillas .featured-case-media` inside the mobile media query, so the desktop -200px bleed doesn't leak into mobile.
+
+### Files modified
+
+- `style.css` — `.featured-case-promptgorillas .featured-case-media` gained `margin-left: -200px`; `.featured-case-promptgorillas .featured-case-brand` align-self end→start and transform `translateY(40%)` → `translateY(48px)`; mobile @media block gained `margin-left: 0` reset on PG media and a full PG brand reset block (align-self / justify-self / transform / text-align).
+- All 5 HTML files — `style.css?v=120 → ?v=121` cache bump. script.js unchanged.
+- `CLAUDE.md` — current shipped state line, cache version line.
+- `.claude/rules/architecture.md` — cache version line.
+
+### Cache state
+
+`style.css?v=121`, `script.js?v=100` across all 5 HTML files.
+
+### Verification (Playwright at 1440×900)
+
+- PG media: `left: -48` (bleeds 48px past viewport left edge), width 1200, right 1152.
+- PG brand: top=198, bottom=379, left=848, right=1288. Sits in upper-right area of PG video.
+- CLM video: top=705, left=734.
+- PG brand vs CLM:
+  - `noVerticalOverlap: true` (brand bottom 379 < CLM top 705, clearance 326px)
+  - `noHorizontalOverlap: true` (brand left 848 > CLM left 734, clearance 113px)
+- PG–CLM corner kiss preserved: horizontal collage overlap = 418px (PG right 1152 over CLM left 734).
+- Screenshot confirms PG video bleeds off the left, PROMPT/GORILLAS lands cleanly in the upper-right, CLM video peeks at the bottom-right.
+
+### Verification (Playwright at 390 mobile)
+
+- PG media: `min-height: 0`, `margin-left: 0`, aspect 16/9, fits container (x=40, width=310).
+- PG brand: `align-self: stretch`, `justify-self: stretch`, `transform: none`, `text-align: left`, `order: -1`.
+- Screenshot confirms brand renders full-width left-aligned ABOVE PG video, no overlap. Standard mobile stack preserved.
+
+### Rollback path
+
+Single-commit revert. The CSS changes are confined to four properties on two selectors plus one mobile reset block; reverting restores the V120.1 lower-right brand + container-aligned PG video. The corner kiss behavior is unchanged in either direction.
