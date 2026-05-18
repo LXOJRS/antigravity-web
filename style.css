@@ -3297,20 +3297,27 @@ footer {
 /* Promptgorillas: video left (cols 1-8, landscape 16:9), brand right
    (cols 7-12, overlapping the video's right edge). translateY pushes
    the brand off the video's bottom so the two words hang below it
-   like a caption. z-index: 1 so Chris le More sits above via parent
-   z-index. */
-.featured-case-promptgorillas {
-    z-index: 1;
-}
+   like a caption.
+   V120.1: min-height: 75vh on the video so PG dominates the first
+   viewport when the section scrolls in. aspect-ratio stays as a hint
+   but min-height wins when grid-width × 9/16 would render shorter;
+   object-fit: cover crops the source to fill.
+   Stacking: PG article does NOT establish its own stacking context
+   (no z-index here). PG brand gets z-index: 3 globally so it sits
+   ABOVE the CLM article (z-index: 2). PG media stays at default
+   stacking, so CLM article (z-index: 2) covers the PG media corner
+   for the collage, but the PG brand text remains visible on top. */
 .featured-case-promptgorillas .featured-case-media {
     grid-column: 1 / 9;
     grid-row: 1;
     aspect-ratio: 16 / 9;
+    min-height: 75vh;
 }
 .featured-case-promptgorillas .featured-case-brand {
     grid-column: 7 / 13;
     grid-row: 1;
-    z-index: 2;
+    position: relative;
+    z-index: 3;
     align-self: end;
     justify-self: end;
     text-align: right;
@@ -3322,10 +3329,12 @@ footer {
    than where PG video ends at col 8) so CLM video's LEFT edge horizontally
    overlaps PG video's RIGHT edge at cols 7-8. Combined with the negative
    top margin, CLM video's top-left corner physically lands inside PG's
-   bottom-right area — true 2D collage corner overlap. */
+   bottom-right area — a small corner kiss, not a half-section overlap.
+   V120.1: margin-top reduced from -160px to -120px so the overlap is
+   ~15-20% of PG video height (smaller corner kiss). */
 .featured-case-clm {
     z-index: 2;
-    margin-top: -160px;
+    margin-top: -120px;
 }
 .featured-case-clm .featured-case-brand {
     grid-column: 1 / 7;
@@ -3376,6 +3385,9 @@ footer {
     }
     .featured-case-promptgorillas .featured-case-media {
         aspect-ratio: 16 / 9;
+        /* V120.1: reset desktop min-height so mobile cards aren't
+           forced to 75vh tall. */
+        min-height: 0;
     }
     .featured-case-clm .featured-case-media {
         aspect-ratio: 3 / 4;

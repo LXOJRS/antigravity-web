@@ -612,6 +612,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- V120: Featured work case reveal ---
     // Each .featured-case fades in on scroll. Matches the existing .rd-row
     // reveal pattern (opacity 0→1, y 60→0, power3.out, top 85% trigger).
+    // V120.1: clearProps wipes the inline transform + opacity after the
+    // animation. GSAP otherwise leaves `transform: translate(0,0)` and
+    // `opacity: 1` as inline styles, and even identity transforms create
+    // a CSS stacking context. That context would trap the PG brand's
+    // z-index: 3 inside PG article's local context, letting the CLM
+    // article (z-index: 2 in parent context) cover the PG brand text.
+    // `once: true` plays the animation a single time so clearProps can
+    // do its job (no reverse to restore the from-state later).
     const featuredCases = document.querySelectorAll('.featured-case');
     featuredCases.forEach(caseEl => {
         gsap.fromTo(caseEl,
@@ -621,10 +629,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 y: 0,
                 duration: 1,
                 ease: 'power3.out',
+                clearProps: 'transform,opacity',
                 scrollTrigger: {
                     trigger: caseEl,
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    once: true
                 }
             }
         );

@@ -1438,3 +1438,50 @@ At 390 mobile viewport:
 ### Rollback path
 
 Single-commit revert. The new CSS classes (`.featured-work*`, `.featured-case*`) are scoped — reverting restores the V113-era `.in-production` HTML, which still has full CSS coverage via the retained dead rules. The script.js V120 block is standalone (no shared state with adjacent handlers). The Chris le More video URL is the only new asset reference; rolling back restores the static image src.
+
+## V120.1: Featured work rhythm tuning
+
+Date: 2026-05-18. Three tuning fixes on the V120 Featured work collage. The layout was right but the rhythm was wrong: PG video too small vertically (CLM stole attention immediately), CLM too close to PG (50% overlap instead of corner kiss), and PG brand text was hidden behind CLM video.
+
+### What changed
+
+**1. PG video dominates the first viewport.** Added `min-height: 75vh` to `.featured-case-promptgorillas .featured-case-media`. At 1440×900: PG video height = 675px (= 75vh). When the section heading is positioned ~100px below the nav, PG video fills 565px of the viewport below the heading and CLM is fully below the fold (top at y=949 vs vh=900). The visitor lands on PG and only sees PG.
+
+The `aspect-ratio: 16/9` rule stays as a hint. When the grid-determined width (~789px) × 9/16 = ~444px is less than min-height 675px, min-height wins and aspect-ratio breaks. `object-fit: cover` on the inner video handles the crop. (Side effect: PG media renders 1200px wide at 1440 viewport — slightly wider than its grid track — because the aspect-ratio satisfies itself by extending width. This bleeds past the .featured-case grid cell visually but stays within `.featured-work`/.container width. Acceptable for the dominant-PG effect.)
+
+**2. Smaller corner kiss.** Reduced `.featured-case-clm { margin-top: -160px → -120px }`. At 675px PG height: vertical overlap = 120/675 = 17.8% — comfortably in the user's 15–25% target. CLM's top-left corner sits inside PG's bottom-right area rather than overlapping by half.
+
+**3. PG brand text visibility (z-index + GSAP cleanup).** Two coordinated fixes:
+
+- **CSS**: removed `z-index: 1` from `.featured-case-promptgorillas` (no more PG-article-level stacking context); bumped `.featured-case-promptgorillas .featured-case-brand { z-index: 2 → 3 }` and added `position: relative` to make the z-index apply. In the parent `.featured-work` stacking context, PG brand (z-index 3) now sits above CLM article (z-index 2).
+
+- **JS**: added `clearProps: 'transform,opacity'` and changed `toggleActions: 'play none none reverse'` to `once: true` on the `.featured-case` GSAP reveal. The diagnosis: GSAP's `fromTo({ opacity: 0, y: 60 }, { opacity: 1, y: 0 })` leaves `transform: translate(0,0)` and `opacity: 1` as INLINE styles even at the rest state. Identity transforms still create a CSS stacking context (per spec). With PG article having an inline transform, it formed its own stacking context — trapping PG brand's z-index 3 inside PG's context, where it could only compete against PG's children. In the parent context, PG article (no z-index, default stacking) was beneath CLM article (z-index 2). CLM article therefore covered PG entirely, including the brand. `clearProps` wipes the inline transform/opacity after animation, removing PG's stacking context and letting PG brand's z-index 3 take effect in the parent context. `once: true` ensures the animation plays a single time so clearProps doesn't fight a reverse-on-scroll-up.
+
+**4. Mobile reset.** Added `min-height: 0` to `.featured-case-promptgorillas .featured-case-media` inside the `@media (max-width: 768px)` block so the desktop 75vh override doesn't bleed into mobile. The brief explicitly said "don't introduce min-height there."
+
+### Verification (Playwright at 1440×900)
+
+- **Dominance test**: section heading at y=100, PG video bottom at y=1009 (off-screen 109px below), CLM video top at y=949 (below viewport bottom). PG video fills 565px of post-heading viewport. CLM not yet in view. ✓
+- **Corner overlap**: after animations settle, PG bbox bottom = CLM bbox top + 120px → overlap 120px = 17.8% of PG height. ✓
+- **PG brand visibility**: `elementFromPoint` at PG brand center returns `<h3 class="featured-case-brand">PROMPTGORILLAS</h3>` (the brand itself, not CLM video). PG article inline transform/opacity = "cleared". ✓
+- **Mobile (390px)**: PG media `min-height: 0px`, `aspect-ratio: 16/9`, height 174px (natural at 16:9 of ~310px grid width); CLM margin-top: `96px` (collage canceled). ✓
+
+### Files modified
+
+- `style.css` — `.featured-case-promptgorillas .featured-case-media { min-height: 75vh }` added; `.featured-case-promptgorillas { z-index: 1 }` removed; `.featured-case-promptgorillas .featured-case-brand` z-index 2→3 + `position: relative` added; `.featured-case-clm { margin-top: -160px → -120px }`; mobile `.featured-case-promptgorillas .featured-case-media { min-height: 0 }` reset added.
+- `script.js` — `.featured-case` reveal tween gained `clearProps: 'transform,opacity'` and `once: true` (replacing `toggleActions: 'play none none reverse'`).
+- All 5 HTML files — cache bumps `style.css?v=119 → ?v=120`, `script.js?v=99 → ?v=100`.
+- `CLAUDE.md` — current shipped state line, cache version line.
+- `.claude/rules/architecture.md` — cache version line.
+
+### Cache state
+
+`style.css?v=120`, `script.js?v=100` across all 5 HTML files.
+
+### Known design note
+
+PG media grows slightly wider than its grid track at 1440 (1200px rendered vs ~789px cell) because `aspect-ratio: 16/9` + `min-height: 75vh` forces width to satisfy the ratio. Visually this lets the PG video occupy more horizontal area near the top of the section, which reads as more dominant — aligns with the brief's intent. If this becomes a problem (e.g. PG video overlaps the PG brand text in unintended ways at certain viewport sizes), drop `aspect-ratio` entirely and rely on `min-height + object-fit: cover` alone.
+
+### Rollback path
+
+Single-commit revert. The four CSS changes are localized to `.featured-case-promptgorillas` and `.featured-case-clm` rules; reverting restores the V120 -160px overlap with no min-height. The script.js change is a one-line tween config; reverting restores the play-none-reverse behavior with no clearProps.
