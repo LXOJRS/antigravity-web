@@ -4179,9 +4179,9 @@ footer {
 }
 .wyg-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
   align-items: baseline;
-  column-gap: clamp(24px, 4vw, 64px);
+  column-gap: clamp(48px, 9vw, 180px);
   padding: clamp(28px, 4.5vh, 56px) max(32px, calc(50vw - 600px));
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   position: relative;
@@ -4308,7 +4308,7 @@ footer {
     [title] minmax(0, 2fr)
     [body] minmax(220px, 340px) [end];
   align-items: center;
-  column-gap: clamp(20px, 3vw, 48px);
+  column-gap: clamp(28px, 4vw, 72px);
   padding: clamp(20px, 3.5vh, 36px) max(32px, calc(50vw - 600px));
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
@@ -4373,6 +4373,7 @@ footer {
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
   align-self: center;
+  text-align: right;
 }
 
 /* Inverted frame: row 03 flips to icy blue */
@@ -4664,7 +4665,7 @@ footer {
   .proc-row-body { grid-column: 1; }
   .proc-row-numeral { font-size: clamp(3rem, 16vw, 5rem); }
   .proc-row-title { font-size: clamp(1.6rem, 7vw, 2.5rem); }
-  .proc-row-body { font-size: clamp(1.05rem, 4vw, 1.2rem); }
+  .proc-row-body { font-size: clamp(1.05rem, 4vw, 1.2rem); text-align: left; }
 
   /* FAQ: stack the header, tighten the row gutters. */
   .faq-meta { grid-template-columns: 1fr; gap: 1rem; }

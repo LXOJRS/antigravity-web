@@ -1585,3 +1585,41 @@ Date: 2026-05-30. Migrated four sections from a Claude Design handoff bundle int
 ### Rollback path
 
 Revert the three edits in `lens-ai.html`, the appended CSS block + mobile block in `style.css`, and the accordion handler in `script.js`; restore cache versions to v=121 / v=100. No existing sections were modified (only the closing "Get in Touch" CTA was replaced), so a revert restores the prior page exactly.
+
+## V121.1: lens-ai.html — V121 section refinements
+
+Date: 2026-05-30. Four follow-up tweaks from Alex after reviewing V121. CSS-and-HTML only; `script.js` untouched (so it stays at `?v=101`).
+
+### What changed
+
+**1. Removed the sticky / magnetic cursor-trailing from the new sections.** The `data-magnetic` attribute (bound in `script.js` to translate the element toward the cursor) was stripped from all `.wyg-row` (×3), `.proc-row` (×4), and `.faq-item` (×5). Alex found the trailing motion annoying; the on-hover color changes (pure CSS `:hover`) are kept. The `.lens-contact-btn` keeps `data-magnetic`, matching the site-wide button/nav magnet pattern. No JS change needed: the magnetic handler only binds elements that still carry the attribute.
+
+**2. Pushed the right-side body copy further from the titles.** Both new sections had the small body paragraph reading too close to its large left title.
+- `.wyg-row`: `column-gap` `clamp(24px,4vw,64px)` → `clamp(48px,9vw,180px)`; body track `minmax(280px,420px)` → `minmax(220px,340px)`. Body stays right-aligned but now sits in a tighter block at the far right with a wide gap from the title.
+- `.proc-row`: `column-gap` `clamp(20px,3vw,48px)` → `clamp(28px,4vw,72px)`; `.proc-row-body` gained `text-align: right` so the paragraph hugs the right edge of its column (mirrors the wyg treatment). The mobile `@media (max-width:768px)` block re-asserts `.proc-row-body { text-align: left }` so the single-column stack stays left-aligned.
+
+**3. Moved The Process up.** Previously sat after `.creative-break-full`. Now placed directly under the first cinematic showcase (`.creative-act2-feature`), above Application. The shared content `.container` was split: container A holds the cinematic showcase, then `.proc` (full-bleed, direct child of `<main>`), then container B holds Application + `.creative-break-full`. New vertical order: What you get → cinematic showcase → **The Process** → Application → creative-break-full → FAQ → Contact → Back to Home → footer.
+
+**4. Typo fix.** "everytime" → "every time" in the SCALABLE body copy (What you get).
+
+### Files modified
+
+- `lens-ai.html` — removed `data-magnetic` from the 12 new rows/items; moved the Process `<section>` between the cinematic showcase and Application (container split); fixed the typo; `style.css?v=122 → ?v=123`.
+- `style.css` — `.wyg-row` gap + body track; `.proc-row` gap; `.proc-row-body` right-align (desktop) with mobile left-align override.
+- Other 4 HTML files — `style.css?v=122 → ?v=123` cache bump only.
+- `CLAUDE.md`, `.claude/rules/architecture.md` — version + cache lines.
+
+### Cache state
+
+`style.css?v=123`, `script.js?v=101` across all 5 HTML files.
+
+### Verification (Playwright)
+
+- Order confirmed: `wyg → cinematic-showcase → proc → creative-act-application → creative-break-full → faq → lens-contact → back-btn`.
+- `data-magnetic` count in the new sections: `.wyg-row` 0/3, `.proc-row` 0/4, `.faq-item` 0/5. `.lens-contact-btn` still magnetic.
+- Desktop 1440: wyg + proc body copy now sit flush right with a clear gap from the titles (screenshots). "every time" renders correctly; no "everytime" in the DOM.
+- Mobile 390: 0px horizontal overflow; `.proc-row-body` and `.wyg-row-body` both compute `text-align: left` (right-align scoped to desktop only). 0 console errors.
+
+### Rollback path
+
+Re-add `data-magnetic` to the 12 elements, restore the two `column-gap` values + the wyg body track + drop `.proc-row-body { text-align: right }` (and its mobile override), move the Process section back below `.creative-break-full` (rejoin the single container), revert the typo, and restore `style.css?v=122`. Confined to `lens-ai.html` + the four-section CSS block.
