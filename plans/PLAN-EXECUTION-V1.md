@@ -1538,3 +1538,50 @@ The desktop PG brand rules (`align-self: start`, `justify-self: end`, `transform
 ### Rollback path
 
 Single-commit revert. The CSS changes are confined to four properties on two selectors plus one mobile reset block; reverting restores the V120.1 lower-right brand + container-aligned PG video. The corner kiss behavior is unchanged in either direction.
+
+## V121: lens-ai.html — four new sections (What you get / Process / FAQ / Contact)
+
+Date: 2026-05-30. Migrated four sections from a Claude Design handoff bundle into `lens-ai.html`. The handoff was authored against a React architecture (`.jsx` components, `window.X` globals, `React.useState`, an assumed `src/components/` folder). This repo is plain static HTML/CSS/JS with no build step, so each component was hand-translated to static HTML, its CSS folded into `style.css`, and the FAQ's `useState` reimplemented as a vanilla-JS handler in `script.js`. All four existing page sections were preserved.
+
+### What changed
+
+**1. New sections + placement.** Inserted as full-bleed direct children of `<main>` so they span the viewport (the handoff CSS assumed an existing full-width context; this repo's `.container` is max-width 1200px). Final page order, with placement confirmed by Alex:
+- `ThemeLightSlab` ("Working on a brand?") → **What you get** (`.wyg`) → cinematic `.creative-act2-feature` → `.creative-act-application` → `.creative-break-full` (the full-bleed video) → **The Process** (`.proc`) → **The Questions** (`.faq`) → **Contact** (`#contact.lens-contact`) → "Back to Home" → footer.
+- The prior "Get in Touch" closing CTA (`.platform-links-centered` → `index.html#contact`) was removed and replaced by the new Contact section. "Back to Home" was kept below it (moved into its own trailing `.container`). The second content `.container` is now closed right after `.creative-break-full`.
+
+**2. CSS (appended to style.css).** Source `lens-ai-migration.css` pasted with the handoff's token names mapped onto the live system via aliases scoped to the four section roots (`.wyg, .proc, .faq, .lens-contact`) so nothing leaks globally:
+- `--bg1 → --bg-color`, `--fg1 → --text-color`, `--fg2 → --gray-color`, `--fg4 → rgba(255,255,255,0.35)`, `--accent → --accent-color` (#BFE8F8 icy blue), `--font-display → --font-main` (Overused Grotesk, per Alex's "overused grotesk only"), `--duration-base → 0.6s`, `--duration-fast → 0.3s`. `--font-main` and `--easing` already exist globally.
+- Full-bleed horizontal breakout (100vw + left/right 50% + -50vw margins + border-box) added to the four section roots, matching the existing `.theme-light` pattern.
+- The handoff's closing CTA classes collided with the site-wide `.contact` / `.contact-btn`, so they were renamed `.contact* → .lens-contact*` (and `@keyframes rotate → lens-contact-rotate`). The `id="contact"` on the section is preserved per the handoff.
+
+**3. JS (script.js).** Added a vanilla FAQ accordion (before the DOMContentLoaded close) replacing the React `useState`: one row open at a time, clicking the open row collapses all, and the `01 / 05` counter tracks the active row (shows `00` when all closed). The icy-blue inversion of the open row is pure CSS (`.faq-item--open`). `data-magnetic` / cursor / generic section-reveal behaviors bind automatically since the markup is in the initial DOM.
+
+**4. Mobile pass (not in the handoff).** The handoff shipped no breakpoints; its multi-column grids keep fixed track minimums (280/220/140px) that overlapped body copy onto the titles below ~768px (verified broken in Playwright). Added a `@media (max-width: 768px)` block collapsing `.wyg-row` and `.proc-row` to single stacked columns (staircase shift flattened, body left-aligned) and tightening the FAQ header/gutters.
+
+### Content notes
+
+- All copy is verbatim from the handoff data arrays and is em-dash-free (complies with the no-em-dash rule). One verbatim spelling from the source is retained: "everytime" in the SCALABLE body (`WhatYouGetSection`). Flag for Alex if "every time" is preferred.
+- "THE PROCESS" is rendered without a trailing period so the `::after { content: '.' }` accent dot yields a single dot (the source JSX text included a period, which would have produced a visible double dot). Matches the FAQ header's `THE QUESTIONS.` accent-dot pattern.
+- The new Contact's "Book a project" mailto duplicates the "Book a project" button in the "Working on a brand?" slab higher up the page. Left as-is per the handoff; worth a second look if the repetition reads heavy.
+
+### Files modified
+
+- `lens-ai.html` — three insertions (What you get after the theme-light slab; Process/FAQ/Contact in the lower region), old "Get in Touch" CTA removed, container split, cache bumps.
+- `style.css` — appended the four-section CSS (token aliases + full-bleed breakout + renamed contact classes) and a 768px mobile block.
+- `script.js` — vanilla FAQ accordion handler.
+- All 5 HTML files — `style.css?v=121 → ?v=122`, `script.js?v=100 → ?v=101`.
+- `CLAUDE.md`, `.claude/rules/architecture.md` — version + cache lines.
+
+### Cache state
+
+`style.css?v=122`, `script.js?v=101` across all 5 HTML files.
+
+### Verification (Playwright)
+
+- Desktop 1440×900: `main >` children render in the confirmed order; `.wyg` full-bleed width = 1440 = viewport; inverted rows resolve to `rgb(191,232,248)` (#BFE8F8); Process frame 03 inverted; FAQ row 1 open by default with `01 / 05` counter; Contact gradient + glass pill + preserved "Back to Home". 0 console errors.
+- Accordion: opening row 2 closes row 1 (counter → 02); clicking the open row collapses all (counter → 00); single-open invariant holds.
+- Mobile 390×844: 0px horizontal overflow; after the 768px block, `.wyg-row` and `.proc-row` stack cleanly with no title/body overlap (re-verified by screenshot; the pre-fix state overlapped).
+
+### Rollback path
+
+Revert the three edits in `lens-ai.html`, the appended CSS block + mobile block in `style.css`, and the accordion handler in `script.js`; restore cache versions to v=121 / v=100. No existing sections were modified (only the closing "Get in Touch" CTA was replaced), so a revert restores the prior page exactly.

@@ -731,4 +731,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // --- Lens AI FAQ accordion (V121) ---
+    // Replaces the React useState in the source component: one row open at a
+    // time; clicking the open row collapses all. The icy-blue inversion is
+    // pure CSS (.faq-item--open); JS only toggles the class + counter.
+    const faqList = document.querySelector('.faq-list');
+    if (faqList) {
+        const faqItems = Array.from(faqList.querySelectorAll('.faq-item'));
+        const counterNow = document.querySelector('.faq-meta-counter-now');
+
+        const setOpen = (idx) => {
+            faqItems.forEach((item, i) => {
+                const open = i === idx;
+                item.classList.toggle('faq-item--open', open);
+                const trigger = item.querySelector('.faq-item-trigger');
+                if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            if (counterNow) {
+                counterNow.textContent = idx >= 0 ? String(idx + 1).padStart(2, '0') : '00';
+            }
+        };
+
+        faqItems.forEach((item, i) => {
+            const trigger = item.querySelector('.faq-item-trigger');
+            if (!trigger) return;
+            trigger.addEventListener('click', () => {
+                const isOpen = item.classList.contains('faq-item--open');
+                setOpen(isOpen ? -1 : i);
+            });
+        });
+    }
 });

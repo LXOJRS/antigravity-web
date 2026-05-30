@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=121">
+    <link rel="stylesheet" href="style.css?v=122">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Lens AI | Commercial AI Visuals">
@@ -125,6 +125,27 @@
             </div>
         </div>
 
+        <!-- What you get: typographic poster, three stacked title lines (V121). Middle line inverts to icy-blue. -->
+        <section class="wyg full-bleed" data-screen-label="What You Get">
+            <div class="wyg-stack">
+                <article class="wyg-row wyg-row--filled" data-magnetic>
+                    <h3 class="wyg-row-title">
+                        <span class="wyg-row-line">AI IMAGES &amp;</span>
+                        <span class="wyg-row-line">VIDEOS.</span>
+                    </h3>
+                    <p class="wyg-row-body">From still campaign images to moving content.</p>
+                </article>
+                <article class="wyg-row wyg-row--inverted" data-magnetic>
+                    <h3 class="wyg-row-title">ON BRAND.</h3>
+                    <p class="wyg-row-body">Your brand story, told with your look and feel.</p>
+                </article>
+                <article class="wyg-row wyg-row--stroked" data-magnetic>
+                    <h3 class="wyg-row-title">SCALABLE.</h3>
+                    <p class="wyg-row-body">Consistent visuals, everytime you need them.</p>
+                </article>
+            </div>
+        </section>
+
         <div class="container" style="padding-bottom: 128px;">
             <div class="creative-act2-feature">
                 <div class="cinematic-showcase">
@@ -160,17 +181,136 @@
                     </video>
                 </div>
             </section>
+        </div>
 
-            <!-- V110: closing statement removed. Page now concludes on .creative-break-full
-                 then transitions directly to the Get-in-Touch CTA. -->
+        <!-- The Process: diagonal staircase, four numbered frames; frame 03 inverts (V121). -->
+        <section class="proc full-bleed" data-screen-label="Process">
+            <header class="proc-meta-bar">
+                <h2 class="proc-meta-title">THE PROCESS</h2>
+            </header>
+            <div class="proc-stair" role="list">
+                <article class="proc-row proc-row--shift-0" data-magnetic role="listitem">
+                    <div class="proc-row-rule" aria-hidden="true"></div>
+                    <div class="proc-row-numeral">01</div>
+                    <div class="proc-row-titlewrap">
+                        <h3 class="proc-row-title">Concept</h3>
+                    </div>
+                    <p class="proc-row-body">Via a call, we define what you want to make, for whom, and what it needs to do. Abstract is fine, that is exactly what this conversation is for.</p>
+                </article>
+                <article class="proc-row proc-row--shift-1" data-magnetic role="listitem">
+                    <div class="proc-row-rule" aria-hidden="true"></div>
+                    <div class="proc-row-numeral">02</div>
+                    <div class="proc-row-titlewrap">
+                        <h3 class="proc-row-title">Art direction</h3>
+                    </div>
+                    <p class="proc-row-body">I bring together what is already there: references, style guide, brand assets. I combine that with branding expertise to present the overall artistic direction.</p>
+                </article>
+                <article class="proc-row proc-row--shift-2 proc-row--invert" data-magnetic role="listitem">
+                    <div class="proc-row-rule" aria-hidden="true"></div>
+                    <div class="proc-row-numeral">03</div>
+                    <div class="proc-row-titlewrap">
+                        <h3 class="proc-row-title">Production</h3>
+                    </div>
+                    <p class="proc-row-body">During production, two rounds of your feedback are scheduled to confirm the direction.</p>
+                </article>
+                <article class="proc-row proc-row--shift-3" data-magnetic role="listitem">
+                    <div class="proc-row-rule" aria-hidden="true"></div>
+                    <div class="proc-row-numeral">04</div>
+                    <div class="proc-row-titlewrap">
+                        <h3 class="proc-row-title">Delivery</h3>
+                    </div>
+                    <p class="proc-row-body">Final delivery, typically within three weeks from the kickoff. I stay in touch after, because a good working relationship is built on that.</p>
+                </article>
+            </div>
+        </section>
 
-            <!-- CTA -->
-            <div class="platform-links-centered" style="margin-bottom: 96px;">
-                <a href="index.html#contact" class="contact-btn" data-magnetic>
-                    Get in Touch
+        <!-- The Questions: accordion; the open row inverts to a full-bleed icy-blue slab (V121). First row open by default; toggled in script.js. -->
+        <section class="faq full-bleed" data-screen-label="FAQ">
+            <header class="faq-meta">
+                <h2 class="faq-meta-title">THE QUESTIONS<span class="faq-meta-title-dot">.</span></h2>
+                <div class="faq-meta-counter">
+                    <span class="faq-meta-counter-now">01</span>
+                    <span class="faq-meta-counter-sep">/</span>
+                    <span class="faq-meta-counter-total">05</span>
+                </div>
+            </header>
+            <div class="faq-list" role="list">
+                <article class="faq-item faq-item--open" role="listitem" data-magnetic>
+                    <button class="faq-item-trigger" aria-expanded="true" aria-controls="faq-answer-0">
+                        <span class="faq-item-num">01</span>
+                        <span class="faq-item-q">What does this cost roughly?</span>
+                        <span class="faq-item-toggle" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-item-answer" id="faq-answer-0" role="region">
+                        <div class="faq-item-answer-inner">
+                            <p>Scope drives the price. A single visual, a campaign series, and a hero video are different animals, and the work scales with what is being built. The fastest way to a real number is the price-indication form: five short questions, an honest range in return, no obligation.</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="faq-item" role="listitem" data-magnetic>
+                    <button class="faq-item-trigger" aria-expanded="false" aria-controls="faq-answer-1">
+                        <span class="faq-item-num">02</span>
+                        <span class="faq-item-q">How do I know if my project is a fit?</span>
+                        <span class="faq-item-toggle" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-item-answer" id="faq-answer-1" role="region">
+                        <div class="faq-item-answer-inner">
+                            <p>Best fit: brands that need distinct visuals and want to think seriously about how they show up. Whether you have a full style guide or are still figuring out your visual direction, that is something we can work through together in the first conversation. Less of a fit: copywriting, marketing strategy, or projects where the brief is still completely undefined. Not sure? Send a short note through the form. I will tell you honestly whether it is something I can do well for you.</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="faq-item" role="listitem" data-magnetic>
+                    <button class="faq-item-trigger" aria-expanded="false" aria-controls="faq-answer-2">
+                        <span class="faq-item-num">03</span>
+                        <span class="faq-item-q">Can I submit existing visuals or a style as a starting point?</span>
+                        <span class="faq-item-toggle" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-item-answer" id="faq-answer-2" role="region">
+                        <div class="faq-item-answer-inner">
+                            <p>Yes, and it sharpens the work. References, mood boards, a style guide, examples of work you like, anything is useful input for the Concept phase. AI visual production thrives on clear anchors: the more direction you bring, the less the work drifts. A blank canvas is not a requirement; a visual starting point is a head start.</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="faq-item" role="listitem" data-magnetic>
+                    <button class="faq-item-trigger" aria-expanded="false" aria-controls="faq-answer-3">
+                        <span class="faq-item-num">04</span>
+                        <span class="faq-item-q">Can you work with my existing brand assets (logo, product, house style)?</span>
+                        <span class="faq-item-toggle" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-item-answer" id="faq-answer-3" role="region">
+                        <div class="faq-item-answer-inner">
+                            <p>For style elements (colors, typography, mood, visual identity, character direction) yes, those translate well into AI-generated work. AI video and image models have real technical limitations, and some project types run into them. I go through that honestly in the intro call, before anything is agreed or paid for, so you know exactly what is feasible for your specific situation before we move forward.</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="faq-item" role="listitem" data-magnetic>
+                    <button class="faq-item-trigger" aria-expanded="false" aria-controls="faq-answer-4">
+                        <span class="faq-item-num">05</span>
+                        <span class="faq-item-q">What if I want to make adjustments during the process?</span>
+                        <span class="faq-item-toggle" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-item-answer" id="faq-answer-4" role="region">
+                        <div class="faq-item-answer-inner">
+                            <p>Two structured feedback rounds are built into every project, tied to the natural checkpoints: Concept, Visual Direction, and Production. What does not work: open-ended iteration where the idea keeps shifting after sign-off. Not because I am unwilling to think along, but because every shift costs time and production budget, and at some point that comes out of the quality of the final result. Scope and rounds are agreed upfront, not renegotiated halfway.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Closing CTA: animated radial-gradient background, glass pill button (V121). Replaces the prior "Get in Touch" CTA. -->
+        <section id="contact" class="lens-contact full-bleed" data-screen-label="06 Contact">
+            <div class="lens-contact-bg" aria-hidden="true"></div>
+            <div class="lens-contact-content">
+                <p class="lens-contact-eyebrow">GET IN TOUCH</p>
+                <h2>Working on<br>something specific?</h2>
+                <a href="mailto:alexander@promptgorillas.com" class="lens-contact-btn" data-magnetic>
+                    Book a project <span>&rarr;</span>
                 </a>
             </div>
+        </section>
 
+        <div class="container">
             <a href="index.html" class="back-btn" data-magnetic>
                 <span class="btn-arrow">&larr;</span> Back to Home
             </a>
@@ -186,7 +326,7 @@
     </footer>
 
 
-    <script src="script.js?v=100"></script>
+    <script src="script.js?v=101"></script>
 </body>
 
 </html>
