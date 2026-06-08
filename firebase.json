@@ -9,8 +9,19 @@
     "redirects": [
       {
         "source": "/creative-building.html",
-        "destination": "/lens-ai.html",
+        "destination": "/lensai",
         "type": 301
+      },
+      {
+        "source": "/lens-ai.html",
+        "destination": "/lensai",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/lensai",
+        "destination": "/lens-ai.html"
       }
     ]
   }
