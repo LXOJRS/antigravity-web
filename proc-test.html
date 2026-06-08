@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proc Test</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #121212; font-family: Arial, Helvetica, sans-serif; }
+:root {
+  --bg1: #121212; --fg1: #fafafa; --fg2: rgba(250,250,250,0.5);
+  --accent: #BFE8F8; --font-display: Arial, sans-serif; --font-main: Arial, sans-serif;
+  --duration-base: 0.25s; --easing: ease;
+}
+.proc { background: var(--bg1); position: relative; padding: 6rem 0 7rem; overflow: hidden; }
+.proc-meta-bar { display: flex; flex-direction: column; gap: 1.25rem; padding: 0 max(32px, calc(50vw - 600px)) 3.5rem; }
+.proc-meta-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.035em; color: var(--fg1); margin: 0; }
+.proc-meta-title::after { content: '.'; color: var(--accent); }
+.proc-stair { display: flex; flex-direction: column; }
+.proc-row {
+  display: grid;
+  grid-template-columns: [start] minmax(0, var(--shift, 0px)) [num] minmax(140px, 1fr) [title] minmax(0, 2fr) [body] minmax(220px, 340px) [end];
+  align-items: center;
+  column-gap: clamp(28px, 4vw, 72px);
+  padding: clamp(20px, 3.5vh, 36px) 32px clamp(20px, 3.5vh, 36px) max(32px, calc(50vw - 700px));
+  border-top: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+.proc-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.proc-row--shift-0 { --shift: 0px; }
+.proc-row--shift-1 { --shift: clamp(48px, 8vw, 140px); }
+.proc-row--shift-2 { --shift: clamp(96px, 16vw, 280px); }
+.proc-row--shift-3 { --shift: clamp(144px, 24vw, 420px); }
+.proc-row-numeral { grid-column: num; font-family: var(--font-display); font-size: clamp(4rem, 8vw, 8rem); font-weight: 800; line-height: 0.85; letter-spacing: -0.045em; color: transparent; -webkit-text-stroke: 2px var(--accent); }
+.proc-row-titlewrap { grid-column: title; }
+.proc-row-title { font-family: var(--font-display); font-size: clamp(1.75rem, 3.2vw, 3rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.025em; text-transform: uppercase; color: var(--fg1); margin: 0; }
+.proc-row-body { grid-column: body; font-family: var(--font-main); font-size: clamp(1.05rem, 1.25vw, 1.25rem); font-weight: 400; line-height: 1.5; color: rgba(255,255,255,0.85); margin: 0; align-self: center; text-align: right; }
+.proc-row--invert { background: var(--accent); border-top-color: var(--accent); }
+.proc-row--invert + .proc-row { border-top-color: var(--accent); }
+.proc-row--invert .proc-row-numeral { color: var(--bg1); -webkit-text-stroke: 2px var(--bg1); }
+.proc-row--invert .proc-row-title { color: var(--bg1); }
+.proc-row--invert .proc-row-body { color: rgba(18,18,18,0.85); }
+</style>
+</head>
+<body>
+<section class="proc full-bleed">
+  <header class="proc-meta-bar">
+    <h2 class="proc-meta-title">THE PROCESS</h2>
+  </header>
+  <div class="proc-stair">
+    <article class="proc-row proc-row--shift-0">
+      <div class="proc-row-numeral">01</div>
+      <div class="proc-row-titlewrap"><h3 class="proc-row-title">Concept</h3></div>
+      <p class="proc-row-body">Via a call, we define what you want to make, for whom, and what it needs to do.</p>
+    </article>
+    <article class="proc-row proc-row--shift-1">
+      <div class="proc-row-numeral">02</div>
+      <div class="proc-row-titlewrap"><h3 class="proc-row-title">Art direction</h3></div>
+      <p class="proc-row-body">I bring together what is already there: references, style guide, brand assets.</p>
+    </article>
+    <article class="proc-row proc-row--shift-2 proc-row--invert">
+      <div class="proc-row-numeral">03</div>
+      <div class="proc-row-titlewrap"><h3 class="proc-row-title">Production</h3></div>
+      <p class="proc-row-body">During production, two rounds of your feedback are scheduled to confirm the direction.</p>
+    </article>
+    <article class="proc-row proc-row--shift-3">
+      <div class="proc-row-numeral">04</div>
+      <div class="proc-row-titlewrap"><h3 class="proc-row-title">Delivery</h3></div>
+      <p class="proc-row-body">Final delivery, typically within three weeks from the kickoff. I stay in touch after.</p>
+    </article>
+  </div>
+</section>
+</body>
+</html>

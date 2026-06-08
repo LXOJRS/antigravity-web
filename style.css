@@ -4309,7 +4309,7 @@ footer {
     [body] minmax(220px, 340px) [end];
   align-items: center;
   column-gap: clamp(28px, 4vw, 72px);
-  padding: clamp(20px, 3.5vh, 36px) 32px clamp(20px, 3.5vh, 36px) max(32px, calc(50vw - 600px));
+  padding: clamp(20px, 3.5vh, 36px) 32px clamp(20px, 3.5vh, 36px) max(32px, calc(50vw - 700px));
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   transition: background-color var(--duration-base) var(--easing);
