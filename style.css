@@ -2820,6 +2820,29 @@ footer {
     align-self: flex-start;
 }
 
+/* Side-by-side button row for production CTA */
+.production-cta .cta-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-top: 32px;
+}
+.production-cta .cta-btn-row .contact-btn {
+    margin-top: 0;
+}
+
+/* Dark-fill + icy-blue text variant for production CTA Price Indication button */
+.cta-btn-price {
+    background-color: #121212 !important;
+    border-color: #BFE8F8 !important;
+    color: #BFE8F8 !important;
+}
+.cta-btn-price:hover {
+    background-color: #BFE8F8 !important;
+    color: #121212 !important;
+}
+
 /* Larger CTA button variant for the cyan slab. Pulls from the existing
    .contact-btn pattern; the larger size + theme-aware colors make it the
    page's primary call to action rather than an inline link. */
@@ -4627,6 +4650,26 @@ footer {
   color: var(--bg1);
 }
 .lens-contact-btn:active { transform: scale(0.97); }
+
+/* Icy-blue filled variant for the lens-contact Price Indication button */
+.lens-contact-btn--price {
+  background: #BFE8F8;
+  color: #121212;
+  border-color: #BFE8F8;
+}
+.lens-contact-btn--price:hover {
+  background: #fafafa;
+  color: #121212;
+  border-color: #fafafa;
+}
+
+/* Side-by-side button row for lens-contact */
+.lens-contact-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
 
 /* ----------- V121 mobile pass -----------
    The handoff CSS shipped no breakpoints; its multi-column grids keep their
