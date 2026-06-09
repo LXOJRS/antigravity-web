@@ -2832,17 +2832,6 @@ footer {
     margin-top: 0;
 }
 
-/* Dark-fill + icy-blue text variant for production CTA Price Indication button */
-.cta-btn-price {
-    background-color: #121212 !important;
-    border-color: #BFE8F8 !important;
-    color: #BFE8F8 !important;
-}
-.cta-btn-price:hover {
-    background-color: #BFE8F8 !important;
-    color: #121212 !important;
-}
-
 /* Larger CTA button variant for the cyan slab. Pulls from the existing
    .contact-btn pattern; the larger size + theme-aware colors make it the
    page's primary call to action rather than an inline link. */
@@ -2867,6 +2856,19 @@ footer {
         padding: 16px 32px !important;
         font-size: 1rem !important;
     }
+}
+
+/* Dark-fill + icy-blue text for the Price Indication button.
+   Must come after .cta-btn-large so these !important rules win. */
+.cta-btn-price {
+    background-color: #121212 !important;
+    border-color: #BFE8F8 !important;
+    color: #BFE8F8 !important;
+}
+.cta-btn-price:hover {
+    background-color: #BFE8F8 !important;
+    border-color: #BFE8F8 !important;
+    color: #121212 !important;
 }
 
 /* ============================================================
@@ -4669,6 +4671,7 @@ footer {
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
+  justify-content: center;
 }
 
 /* ----------- V121 mobile pass -----------
