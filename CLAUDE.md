@@ -1,101 +1,36 @@
-# alexojers.com — Project Context for Claude
+# CLAUDE.md
 
-Entry point for any Claude session working in this repository. Read this first.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## What this is
+## YOU MUST follow these rules on every change
 
-Static website for Alex Ojers: AI adoption trainer + AI visuals producer. Dual positioning: he trains teams on AI, and he builds AI visuals commercially (currently shipping work for Promptgorillas, Chris le More). Site is hosted on Firebase.
+1. **NEVER use em dashes (—) in shipped content.** Use periods, commas, parentheses, or colons instead. HTML comments and files in `plans/` may contain em dashes; rendered page text never may. Exception: podcast episode bodies contain legacy em dashes from before V102 — do not rewrite them unless explicitly asked.
+2. **NEVER use `#0000C5`** (old deep blue). Brand color is `#BFE8F8` (icy blue).
+3. **NEVER hardcode pure black or white** (`#000`, `#fff`, `#ffffff`, `#050505`) as color values in new CSS. Use `var(--bg-color)` / `var(--text-color)` or `#121212` / `#fafafa` directly. Exception: shadow values (`rgba(0,0,0,…)`) are fine.
+4. **ALWAYS bump `style.css?v=` and `script.js?v=`** on all 5 HTML files whenever either asset changes. Current versions: `style.css?v=123`, `script.js?v=101`.
+5. **NEVER animate `.theme-light` padding.** It is fixed at `50vh` top/bottom; only CSS color variables animate on scroll. Animating padding causes layout-shift bugs (broke in V103-V105, architecturally fixed in V106).
+6. **Before any structural work**, check `plans/` for the latest `HANDOFF-*.md` file and read it. Discuss anything in it with Alex before implementing — plans there are open for verification, not commitments.
 
-Stack: plain HTML / CSS / JS. No build step. GSAP 3.12.5 + Lenis 1.0.45 via CDN. Five pages: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html`. (`creative-building.html` was renamed to `lens-ai.html` in V114; a Firebase 301 redirect catches old URLs.)
+## Stack
 
-## Current shipped state (as of 2026-05-10, V114)
+Plain HTML/CSS/JS. No build step, no bundler, no npm. Five pages at root: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html`. Single stylesheet (`style.css`, ~2800 lines) and single script (`script.js`, ~615 lines). GSAP 3.12.5 + Lenis 1.0.45 loaded via CDN on every page. Firebase hosting.
 
-- **Version: V121.1** (style.css?v=123, script.js?v=101 across all 5 HTML files). V121.1 = refinements to the V121 sections per Alex: removed `data-magnetic` (sticky cursor-trailing) from the What-you-get rows, Process rows, and FAQ items (color hovers retained; Contact CTA button stays magnetic); pushed the right-side body copy further from the titles (wider gap on `.wyg-row`, right-aligned `.proc-row-body`); moved The Process up to sit directly under the first cinematic showcase, above Application; fixed "everytime" → "every time". V121 = four new sections migrated into `lens-ai.html` from a Claude Design handoff (What you get, The Process, The Questions/FAQ, closing Contact CTA). Handoff was written for a React architecture; hand-translated to this repo's static HTML/CSS/JS (JSX → inline HTML, migration CSS folded into style.css with token aliases + renamed `.contact*`→`.lens-contact*` to avoid collisions, FAQ `useState` → vanilla accordion in script.js, plus a 768px mobile pass the handoff omitted). Existing sections preserved; only the old "Get in Touch" CTA was replaced. See PLAN-EXECUTION-V1.md V121. Earlier V120.2 = PG brand / PG video repositioning on the Featured work collage. PG brand moved from align-self: end + translateY(40%) (hung below PG video, overlapping CLM's top-left) to align-self: start + translateY(48px) inset, landing in the upper-right area well above CLM video. PG video gains margin-left: -200px so it bleeds past the container's left edge for full-bleed off the viewport left, opening horizontal space on the right. Mobile (≤768px) overrides re-asserted at matching specificity (align-self: stretch, transform: none, text-align: left) so the desktop wordmark behavior doesn't bleed into the stacked layout. Earlier V120.1 = rhythm tuning (PG min-height 75vh, CLM corner kiss 17.8%, GSAP clearProps).
-- V114 = Lens AI restructure (brand decomposition). Four-item nav with ABOUT hover-fold. Hero v2 with portrait video frame + unified pill subtitle. New homepage Lens AI + Podcast sections. `creative-building.html` renamed to `lens-ai.html` with voice rewrite drafts. About-page rewrite (landing text, first pull-quote, Recent Build rd-row, cultural-background thread, hub cards). Old homepage `.services` Capabilities block removed. `.visual-hook` removed. Glitch effect parked (CSS retained, HTML removed). Many `[CONTENT: ...]` placeholders pending Alex's approval.
-- theme-light live color transition working on About Scope/Method, R&D Focus+Format, AND the Lens AI subpage closing CTA
-- Value Fit Model is on About Method row, side-by-side with the text, titles inside the wedges (V112)
-- Homepage hero says "CLEAN / AI / PRODUCTIONS" with the V114 portrait-frame video behind the type stack
-- Full execution history in `plans/PLAN-EXECUTION-V1.md`
+## Architecture
 
-## ⚠ New session picking up this repo: read the handoff first
+- All scroll animations via GSAP ScrollTrigger. Smooth scroll via Lenis.
+- `.theme-light` sections invert colors via scoped CSS variables (`--theme-bg`, `--theme-fg`, etc.) animated by GSAP on scroll enter/exit.
+- Full-bleed breakouts: `width: 100vw; position: relative; left: 50%; margin-left: -50vw` with internal padding to re-align content.
+- Assets (images, video) on Cloudinary account `dnkcu6lne`. No local asset pipeline.
+- Version numbering increments linearly (V96, V97 …). Never skip. Full history in `plans/PLAN-EXECUTION-V1.md`.
 
-**Current handoff: `plans/HANDOFF-2026-05-10-RESTRUCTURE.md`** — this is the active document. It captures the Lens AI brand decomposition decision (Lens AI = visuals only; R&D = Alex's personal practice; Podcast = personal/cultural), the new four-item nav with `ABOUT` as a hover-fold menu, the hero v2 spec (no `ALEX.AI`, portrait photo frame, unified subtitle pill, rotating-word widening to `[training / consulting / visuals]`), the planned homepage section structure (Lens AI section + Podcast section get homepage real estate; R&D does not), and the planned About page rewrite items. **Read this before any structural work.**
+For detailed CSS/JS patterns → `.claude/rules/architecture.md`
+For design system and visual primitives → `DESIGN-RULES.md` and `.claude/rules/design.md`
+For copy and voice constraints → `.claude/rules/voice.md`
 
-`plans/HANDOFF-2026-05-04.md` is still relevant for the V114 + V115 deferred items (mobile pass + cross-page nav) which were not addressed in the 2026-05-10 session. The Lens AI brand-integration brainstorm in that earlier handoff is now superseded by the 2026-05-10 decisions.
+## Shipping
 
-**Discuss anything in either handoff with Alex before implementing.** Plans there are open for verification, not commitments.
-
-## Critical rules (read before any change)
-
-1. **No em dashes** (—) in shipped content. Use periods, commas, parentheses, or colons. This applies to all rendered text. HTML comments can contain em dashes; plan and execution-log markdown files can also contain them.
-2. **Voice is strategy-first, not abstract wisdom.** Alex's positioning is concrete problem-solving, not "judgment" or "discernment" or other consulting platitudes. See `.claude/rules/voice.md`.
-3. **Brand color is `#BFE8F8`** (icy blue). The old `#0000C5` deep blue has been globally replaced and should not reappear anywhere in the codebase.
-4. **Background is `#121212` and primary text is `#fafafa` as of V117.** Pure black (`#050505` / `#000`) and pure white (`#fff` / `#ffffff`) should not appear as hardcoded color values in new code; use `var(--bg-color)` and `var(--text-color)` or the shifted hex values directly. Exceptions: depth-compositing shadows (text-shadow / box-shadow) intentionally retain pure-black `rgba(0,0,0,…)` for cleaner falloff.
-5. **Cache bumping**: always bump `style.css?v=` and `script.js?v=` on every HTML file when those assets change. Current: `style.css?v=123`, `script.js?v=101`.
-6. **theme-light padding is fixed at 50vh** top/bottom. Do NOT animate padding. Earlier versions (V103-V105) did and caused layout shift bugs that were architecturally fixed in V106 by moving to fixed padding with only color animating.
-
-## Where things live
-
-### Source
-- HTML pages at root: `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html`
-- `style.css` at root (single file, ~2815 lines)
-- `script.js` at root (single file, ~615 lines)
-
-### Documentation
-- `DESIGN-RULES.md` — current living design system (updated V106)
-- `DESIGN-RECOMMENDATIONS.md` — historical pre-V101 input audit (most recommendations shipped, kept for reference)
-
-### Plans
-- `plans/PLAN-EXECUTION-V1.md` — master execution log with all versions (V96-V106+). Update this when shipping work.
-- `plans/PLAN-NARRATIVE-PACING.md`, `plans/PLAN-WEBSITE-OVERHAUL.md`, `plans/DESIGN-UX-QUICK-WINS.md` — historical phase plans, all shipped
-
-### Prompts
-- `PROMPT-1-HTML-RESTRUCTURE.md` through `PROMPT-10-FINAL-TOUCHES.md` at root — historical prompt files from the initial phases. All executed. Kept for reference only.
-
-### Agent rules
-- `.claude/rules/design.md` — design system pointers for agent context
-- `.claude/rules/voice.md` — writing and voice constraints
-- `.claude/rules/architecture.md` — CSS and JS architecture notes
-
-### Assets
-- Images and videos are hosted on Cloudinary (account `dnkcu6lne`). No local asset pipeline.
-- Firebase config in `firebase.json`, project id `website-dea0d`.
-
-## Outstanding work (as of V114)
-
-For detailed open threads, see `plans/HANDOFF-2026-05-04.md` and `plans/HANDOFF-2026-05-10-RESTRUCTURE.md`. Quick summary:
-
-- **V114 content placeholders** await Alex's approval. Many `[CONTENT: ...]` placeholders shipped as part of the V114 restructure: about.html landing text + first pull-quote + Recent Build (MCP) anecdote + cultural-background paragraph + three hub-card descriptions; index.html Lens AI section headline + tagline; index.html Podcast featured-episode title + blurb; lens-ai.html page-hero + service-intro + two case-card framings + production-CTA + application paragraphs.
-- **V114 reel asset URL** for the homepage Lens AI section. Currently using the same nature loop as the hero as a placeholder. Alex will provide a portrait Lens AI reel.
-- **Mobile pass + cross-page nav** (formerly slated for V114/V115 in the 2026-05-04 handoff) — shifted to a future version since V114 is now consumed by the restructure.
-- **Glitch effect** parked. CSS keyframes retained at style.css 113–303. No HTML uses `data-glitch="ALEX.AI"` anymore. Available for future use (e.g. a Lens AI accent or hover treatment).
-- **Chris le More card href="#"** still awaits real destination link
-- **Promptgorillas card href="#"** still awaits real destination link
-- **Podcast episode taglines and episode bodies still contain em dashes** (existing content predating the V102 copy rewrite, intentionally not modified)
-- **OG image metadata** on `index.html` and `about.html` still references the old abstract profile image URL
-- **KVK number** for Lens AI is not yet in hand; once received, footer credit can be added
-- **Dead CSS** from earlier phases is still present (`.floating`, `.creative-text-col`, etc.). Harmless; safe to leave
-
-## How to ship new work
-
-1. Read `plans/PLAN-EXECUTION-V1.md` to understand where things stand.
-2. Make the changes in source files.
-3. Bump cache versions on all 5 HTML files if you changed `style.css` or `script.js`.
-4. Add a new entry to the execution log in `plans/PLAN-EXECUTION-V1.md` with:
-   - Version number (continue from latest, e.g. V107)
-   - What changed and why
-   - Files modified
-   - New cache versions
-   - Any known follow-ups or rollback paths
-5. Verify no em dashes were introduced in new content.
-6. Test visually in browser before declaring done.
-
-## Philosophy / voice direction (brief)
-
-Alex is positioned as strategy-first, concrete, uncertainty-forward. His work starts with "what do you actually need?" before touching a tool. Commercial framing around AI visuals is "for brands that want a distinct visual world, not another stock image." Podcast is "the fun AI podcast" (in Dutch, with his girlfriend Morgan). Visual building is "I hate AI-slop. My mission is to create AI visuals that always feel intentional and impressive."
-
-See `.claude/rules/voice.md` for the full voice direction and placeholder conventions.
-
-## Deployment
-
-Firebase hosting. From repo root: `firebase deploy`. No build step, no bundler. What's in the repo is what goes live.
+1. Edit source files.
+2. Bump `style.css?v=` and `script.js?v=` on all 5 HTML files if either asset changed.
+3. Log the change in `plans/PLAN-EXECUTION-V1.md`: version number, what changed, files modified, new cache versions, any follow-ups.
+4. Verify no em dashes in new rendered content.
+5. `firebase deploy` from repo root.
