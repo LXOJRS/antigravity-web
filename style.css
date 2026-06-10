@@ -2697,6 +2697,8 @@ footer {
 .application-visual {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    border-radius: 4px;
 }
 
 /* V116: real Weavy workflow screenshot replaces the dashed-stripe placeholder.
@@ -2707,6 +2709,16 @@ footer {
     height: auto;
     display: block;
     border-radius: 4px;
+    transition: transform 0.5s ease;
+}
+
+/* Zoom on hover — desktop/pointer only. overflow: hidden on the figure clips the
+   scaled image within the rounded border, so it never bleeds outside. Skipped on
+   touch devices (hover: hover query) where there is no pointer hover interaction. */
+@media (hover: hover) {
+    .application-visual:hover img {
+        transform: scale(1.06);
+    }
 }
 
 .application-text {
