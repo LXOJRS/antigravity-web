@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=130">
+    <link rel="stylesheet" href="style.css?v=131">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -258,6 +258,10 @@
         </section>
 
         <section class="contact" id="contact">
+            <!-- V131: animated WebGL shader gradient (replaces the CSS radial mesh).
+                 Sits behind .container (z-index 2) and the grain overlay (.contact::after,
+                 z-index 1). #121212 background-color on .contact is the WebGL fallback. -->
+            <canvas class="contact-gradient" aria-hidden="true"></canvas>
             <div class="container">
                 <div class="contact-wrapper">
                     <h2 class="contact-title">Let's talk about what you actually need.</h2>
@@ -284,6 +288,14 @@
     </footer>
 
 
+    <script src="shader-gradient-background.js?v=1"></script>
+    <script>
+        // V131: drive the closing contact section's gradient.
+        const contactCanvas = document.querySelector('.contact-gradient');
+        if (contactCanvas) shaderGradientBackground(contactCanvas, {
+            color1: '#121212', color2: '#bfe8f8', color3: '#fafafa'
+        });
+    </script>
     <script src="script.js?v=101"></script>
 </body>
 
