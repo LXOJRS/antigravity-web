@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1. **NEVER use em dashes (—) in shipped content.** Use periods, commas, parentheses, or colons instead. HTML comments and files in `plans/` may contain em dashes; rendered page text never may. Exception: podcast episode bodies contain legacy em dashes from before V102 — do not rewrite them unless explicitly asked.
 2. **NEVER use `#0000C5`** (old deep blue). Brand color is `#BFE8F8` (icy blue).
 3. **NEVER hardcode pure black or white** (`#000`, `#fff`, `#ffffff`, `#050505`) as color values in new CSS. Use `var(--bg-color)` / `var(--text-color)` or `#121212` / `#fafafa` directly. Exception: shadow values (`rgba(0,0,0,…)`) are fine.
-4. **ALWAYS bump `style.css?v=` and `script.js?v=`** on all 5 HTML files whenever either asset changes. Current versions: `style.css?v=131`, `script.js?v=101`.
+4. **ALWAYS bump `style.css?v=` and `script.js?v=`** on all 5 HTML files whenever either asset changes. Current versions: `style.css?v=123`, `script.js?v=101`.
 5. **NEVER animate `.theme-light` padding.** It is fixed at `50vh` top/bottom; only CSS color variables animate on scroll. Animating padding causes layout-shift bugs (broke in V103-V105, architecturally fixed in V106).
 6. **Before any structural work**, check `plans/` for the latest `HANDOFF-*.md` file and read it. Discuss anything in it with Alex before implementing — plans there are open for verification, not commitments.
 

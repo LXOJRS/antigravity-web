@@ -1623,35 +1623,3 @@ Date: 2026-05-30. Four follow-up tweaks from Alex after reviewing V121. CSS-and-
 ### Rollback path
 
 Re-add `data-magnetic` to the 12 elements, restore the two `column-gap` values + the wyg body track + drop `.proc-row-body { text-align: right }` (and its mobile override), move the Process section back below `.creative-break-full` (rejoin the single container), revert the typo, and restore `style.css?v=122`. Confined to `lens-ai.html` + the four-section CSS block.
-
-
-## V131
-
-### What changed
-
-Replaced the homepage closing contact section's animated CSS radial-gradient mesh with the hand-written WebGL "shader gradient" background (the Lens AI handoff component). Filmic near-black smoke dissolving into icy-blue (`#bfe8f8`) and off-white (`#fafafa`) peaks, with in-shader film grain. The existing `.contact::after` CSS grain overlay and the `#121212` background-color (now the WebGL fallback) are kept.
-
-### Files modified
-
-- `shader-gradient-background.js` (NEW) — framework-agnostic vanilla initializer, dropped in verbatim from the handoff bundle. Identical GLSL to the JSX version. Respects `prefers-reduced-motion` (freezes on a representative frame), caps DPR at 2, no-ops if WebGL is unavailable.
-- `index.html` — added `<canvas class="contact-gradient">` inside `.contact` (behind `.container`/grain); loaded `shader-gradient-background.js?v=1` + a small inline init (`color1 #121212, color2 #bfe8f8, color3 #fafafa`) before `script.js`; `style.css?v=130 → ?v=131`.
-- `style.css` — removed `.contact::before` (the 6-stop radial mesh) and the now-unused `@keyframes fluidMovement`; added `.contact-gradient` canvas styling (`position:absolute; inset:0; z-index:0`).
-- Other 4 HTML files (`about`, `podcast`, `lens-ai`, `service-rd`) — `style.css?v=130 → ?v=131` cache bump only.
-
-### Cache state
-
-`style.css?v=131`, `script.js?v=101` across all 5 HTML files. New asset `shader-gradient-background.js?v=1` (index only).
-
-### Verification (Playwright)
-
-- `.contact-gradient` canvas present, sized 2400×1274 (DPR 2, 1200×637 CSS), `getContext('webgl')` OK, init fn present, 0 shader/console errors.
-- `.contact::before` computed content now `none` (old mesh removed).
-- Screenshot confirms dark smoke → icy-blue → white field with grain.
-
-### Known follow-up
-
-The shader's lower zone renders bright (icy-blue/white). The MAIL button keeps a dark translucent fill (`rgba(18,18,18,0.4)`) so it stays legible, but the secondary LINKEDIN button (grey text `#b3b3b3`, transparent fill, faint white border) loses contrast over the bright area. Consider a subtle dark content scrim between the canvas and `.contact .container`, or darkening the secondary button, if this reads poorly in motion.
-
-### Rollback path
-
-Restore the `.contact::before` radial-gradient block + `@keyframes fluidMovement` in `style.css`; remove `.contact-gradient`; delete the canvas + shader `<script>` + inline init from `index.html`; delete `shader-gradient-background.js`; revert `style.css?v=131 → ?v=130` on all 5 files.
