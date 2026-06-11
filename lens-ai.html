@@ -15,14 +15,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=130">
+    <link rel="stylesheet" href="style.css?v=131">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -61,12 +59,60 @@
       "provider": { "@type": "Person", "name": "Alex Ojers" }
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does this cost roughly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scope drives the price. A single visual, a campaign series, and a hero video are different animals, and the work scales with what is being built. The fastest way to a real number is the price-indication form: five short questions, an honest range in return, no obligation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if my project is a fit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Best fit: brands that need distinct visuals and want to think seriously about how they show up. Whether you have a full style guide or are still figuring out your visual direction, that is something we can work through together in the first conversation. Less of a fit: copywriting, marketing strategy, or projects where the brief is still completely undefined. Not sure? Send a short note through the form."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I submit existing visuals or a style as a starting point?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it sharpens the work. References, mood boards, a style guide, examples of work you like, anything is useful input for the Concept phase. AI visual production thrives on clear anchors: the more direction you bring, the less the work drifts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you work with my existing brand assets (logo, product, house style)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For style elements (colors, typography, mood, visual identity, character direction) yes, those translate well into AI-generated work. AI video and image models have real technical limitations, and some project types run into them. I go through that honestly in the intro call, before anything is agreed or paid for."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if I want to make adjustments during the process?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two structured feedback rounds are built into every project, tied to the natural checkpoints: Concept, Visual Direction, and Production. Scope and rounds are agreed upfront, not renegotiated halfway."
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- GSAP & Lenis -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="vendor/TextPlugin.min.js"></script>
+    <script src="vendor/lenis.min.js"></script>
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
@@ -86,7 +132,7 @@
             </div>
             <a href="/lensai" class="nav-item lens-ai-wordmark" data-magnetic>Lens AI</a>
             <a href="podcast.html" class="nav-item" data-magnetic>AI-Rated Podcast</a>
-            <a href="index.html#contact" class="nav-item nav-contact" data-magnetic>Contact</a>
+            <a href="#contact" class="nav-item nav-contact" data-magnetic>Contact</a>
         </div>
         <div class="hamburger-btn" data-magnetic>
             <span></span>
@@ -99,13 +145,13 @@
         <a href="service-rd.html" class="mobile-link" data-magnetic>R&amp;D</a>
         <a href="/lensai" class="mobile-link lens-ai-wordmark" data-magnetic>Lens AI</a>
         <a href="podcast.html" class="mobile-link" data-magnetic>AI-Rated Podcast</a>
-        <a href="index.html#contact" class="mobile-link" data-magnetic>Contact</a>
+        <a href="#contact" class="mobile-link" data-magnetic>Contact</a>
     </div>
 
     <main class="service-page creative-page lens-ai-page">
         <!-- Banner -->
         <div class="article-banner lighter-filter">
-            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1778851033/111_sewqgm.png"
+            <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/f_auto,q_auto,w_1920/v1778851033/111_sewqgm.png"
                 alt="Lens AI commercial visual work">
         </div>
 
@@ -131,7 +177,7 @@
                     <div class="featured-case-media">
                         <video autoplay loop muted playsinline
                                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect fill='%23121212' width='16' height='9'/%3E%3C/svg%3E">
-                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1776539032/Schermopname_2026-04-18_om_20.52.47_ykurwi.mp4" type="video/mp4">
+                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/q_auto/v1776539032/Schermopname_2026-04-18_om_20.52.47_ykurwi.mp4" type="video/mp4">
                         </video>
                     </div>
                     <h3 class="featured-case-brand">PROMPT<br>GORILLAS</h3>
@@ -142,7 +188,7 @@
                     <div class="featured-case-media">
                         <video autoplay loop muted playsinline
                                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect fill='%23121212' width='3' height='4'/%3E%3C/svg%3E">
-                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1779031588/CLMDRYCLEAN_hsdv7l.mp4" type="video/mp4">
+                            <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/q_auto/v1779031588/CLMDRYCLEAN_hsdv7l.mp4" type="video/mp4">
                         </video>
                     </div>
                 </article>
@@ -188,7 +234,7 @@
             <div class="creative-act2-feature">
                 <div class="cinematic-showcase">
                     <video autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 9'%3E%3Crect fill='%23121212' width='21' height='9'/%3E%3C/svg%3E">
-                        <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1771765670/202602221402_ovtz0c.mp4" type="video/mp4">
+                        <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/q_auto/v1771765670/202602221402_ovtz0c.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -241,7 +287,7 @@
                  on the left, process text on the right. Voice rewritten V114. -->
             <div class="creative-act-application">
                 <figure class="application-visual">
-                    <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/v1777922388/Scherm_afbeelding_2026-05-04_om_15.23.09_a7lwem.png"
+                    <img src="https://res.cloudinary.com/dnkcu6lne/image/upload/f_auto,q_auto/v1777922388/Scherm_afbeelding_2026-05-04_om_15.23.09_a7lwem.png"
                          alt="Weavy workflow pipeline" loading="lazy">
                 </figure>
                 <div class="application-text">
@@ -255,11 +301,11 @@
 
             <section class="creative-break-full">
                 <video class="creative-break-bg" autoplay loop muted playsinline aria-hidden="true">
-                    <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1771769691/202602221448_ap8fa0.mp4" type="video/mp4">
+                    <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/q_auto/v1771769691/202602221448_ap8fa0.mp4" type="video/mp4">
                 </video>
                 <div class="creative-break-video">
                     <video autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3Crect fill='%23121212' width='4' height='3'/%3E%3C/svg%3E">
-                        <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/v1771769691/202602221448_ap8fa0.mp4" type="video/mp4">
+                        <source src="https://res.cloudinary.com/dnkcu6lne/video/upload/q_auto/v1771769691/202602221448_ap8fa0.mp4" type="video/mp4">
                     </video>
                 </div>
             </section>
@@ -368,7 +414,7 @@
     </footer>
 
 
-    <script src="script.js?v=101"></script>
+    <script src="script.js?v=102"></script>
 </body>
 
 </html>

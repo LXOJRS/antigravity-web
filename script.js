@@ -1,4 +1,8 @@
-console.log("Alex AI Script Loaded v4");
+console.log("Alex AI Script Loaded v5");
+
+// Signal that JS is running. style.css scopes `cursor: none` to html.js so
+// the native cursor is never hidden if this script fails to load or run.
+document.documentElement.classList.add('js');
 
 document.addEventListener("DOMContentLoaded", () => {
     // Check if libraries are loaded
@@ -11,24 +15,45 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // Initialize Lenis for smooth scrolling
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-    });
+    // V131: respect the OS-level reduced-motion preference. When set, smooth
+    // scroll, decorative reveal/parallax animations, the scramble effect, and
+    // video autoplay are skipped. Functional JS (nav, accordions, scroll-top)
+    // still runs. Reveal animations set their initial hidden state at runtime,
+    // so skipping them simply leaves the content visible and static.
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function raf(time) {
-        lenis.raf(time);
+    // Initialize Lenis for smooth scrolling (native scroll under reduced motion)
+    let lenis;
+    if (!prefersReduced) {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        const raf = (time) => {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        };
         requestAnimationFrame(raf);
+    } else {
+        // Minimal shim so the hamburger menu and scroll-top button keep working.
+        lenis = {
+            stop() { document.documentElement.style.overflow = 'hidden'; },
+            start() { document.documentElement.style.overflow = ''; },
+            scrollTo(y) { window.scrollTo({ top: typeof y === 'number' ? y : 0 }); }
+        };
+        // Autoplaying background video is motion too: leave posters/first frames.
+        document.querySelectorAll('video[autoplay]').forEach(v => {
+            v.removeAttribute('autoplay');
+            v.pause();
+        });
     }
-
-    requestAnimationFrame(raf);
 
     // Register GSAP ScrollTrigger and TextPlugin
     gsap.registerPlugin(ScrollTrigger, TextPlugin);
@@ -105,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Magnetic Effect ---
-    const magneticElements = document.querySelectorAll('[data-magnetic]');
+    const magneticElements = prefersReduced ? [] : document.querySelectorAll('[data-magnetic]');
 
     magneticElements.forEach(el => {
         el.addEventListener('mousemove', (e) => {
@@ -132,31 +157,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Text Scramble Effect ---
+    // V131: scrambles ONLY the element's own label text node. The previous
+    // version wrote to el.innerText, which replaces ALL children with plain
+    // text: the first hover permanently destroyed child elements like
+    // <span class="btn-arrow">, breaking the arrow's styling and layout.
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const scrambleElements = document.querySelectorAll('.nav-links a, .contact-btn');
 
     scrambleElements.forEach(el => {
-        el.dataset.value = el.innerText;
+        const textNode = Array.from(el.childNodes).find(
+            n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim().length > 0
+        );
+        if (!textNode) return;
 
-        el.addEventListener('mouseenter', event => {
+        const original = textNode.nodeValue;
+
+        el.addEventListener('mouseenter', () => {
+            if (prefersReduced) return;
             let iteration = 0;
-            const target = event.currentTarget;
 
-            clearInterval(target.interval);
+            clearInterval(el.scrambleInterval);
 
-            target.interval = setInterval(() => {
-                target.innerText = target.innerText
+            el.scrambleInterval = setInterval(() => {
+                textNode.nodeValue = original
                     .split("")
                     .map((letter, index) => {
-                        if (index < iteration) {
-                            return target.dataset.value[index];
+                        if (letter === " " || index < iteration) {
+                            return original[index];
                         }
-                        return letters[Math.floor(Math.random() * 26)]
+                        return letters[Math.floor(Math.random() * 26)];
                     })
                     .join("");
 
-                if (iteration >= target.dataset.value.length) {
-                    clearInterval(target.interval);
+                if (iteration >= original.length) {
+                    clearInterval(el.scrambleInterval);
+                    textNode.nodeValue = original;
                 }
 
                 iteration += 1 / 3;
@@ -165,22 +200,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Hero Animations ---
-    const heroTimeline = gsap.timeline();
+    // Hero title spans start translated out of view in CSS, so reduced-motion
+    // mode must still snap them to their final position.
+    if (!prefersReduced) {
+        const heroTimeline = gsap.timeline();
 
-    heroTimeline
-        .to('.hero-title span', {
-            y: 0,
-            duration: 1.5,
-            ease: 'power4.out',
-            stagger: 0.1,
-            delay: 0.5
-        })
-        .from('.hero-subtitle', {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-            ease: 'power2.out'
-        }, '-=0.4');
+        heroTimeline
+            .to('.hero-title span', {
+                y: 0,
+                duration: 1.5,
+                ease: 'power4.out',
+                stagger: 0.1,
+                delay: 0.5
+            })
+            .from('.hero-subtitle', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                ease: 'power2.out'
+            }, '-=0.4');
+    } else {
+        gsap.set('.hero-title span', { y: 0 });
+    }
 
     // V114.1: Hero portrait-frame video reveal. The frame is hidden in CSS
     // (opacity: 0) and faded in here ~2s after the hero text begins, so the
@@ -189,17 +230,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // after the hero text, not before that."
     const heroFrame = document.querySelector('.hero-frame');
     if (heroFrame) {
-        gsap.to(heroFrame, {
-            opacity: 1,
-            duration: 1.2,
-            ease: 'power2.out',
-            delay: 2.0
-        });
+        if (prefersReduced) {
+            gsap.set(heroFrame, { opacity: 1 });
+        } else {
+            gsap.to(heroFrame, {
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power2.out',
+                delay: 2.0
+            });
+        }
     }
 
     // --- Hero subtitle rotating word (V95) ---
     const heroRotate = document.querySelector('.hero-rotate');
-    if (heroRotate) {
+    if (heroRotate && !prefersReduced) {
         const heroWords = ['training', 'consulting', 'visuals'];
         let heroWordIndex = 0;
 
@@ -228,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Section Animations ---
-    const sections = document.querySelectorAll('section:not(.hero):not(.insights):not(.typography-portal)');
+    const sections = prefersReduced ? [] : document.querySelectorAll('section:not(.hero):not(.insights):not(.typography-portal)');
 
     sections.forEach(section => {
         gsap.fromTo(section,
@@ -314,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     // --- Typography Portal (V95: multi-instance, supports subpage marquees) ---
-    const portals = document.querySelectorAll('.typography-portal');
+    const portals = prefersReduced ? [] : document.querySelectorAll('.typography-portal');
 
     portals.forEach(portal => {
         const marquee = portal.querySelector('.marquee-content');
@@ -422,7 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update de Insights animatie naar een 'staggered reveal'
     const insightCards = document.querySelectorAll('.insight-card');
-    if (insightCards.length > 0) {
+    if (insightCards.length > 0 && !prefersReduced) {
         gsap.from(insightCards, {
             opacity: 0,
             y: 60,
@@ -439,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Parallax voor About Portrait
     const aboutImg = document.querySelector('.about-portrait img');
-    if (aboutImg) {
+    if (aboutImg && !prefersReduced) {
         gsap.to(aboutImg, {
             yPercent: -15,
             ease: "none",
@@ -466,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // V106: reverted to plain trigger. Since theme-light sections now have
     // fixed padding (no more layout shift on scroll), cached positions stay
     // valid and the V105 invalidateOnRefresh workaround is no longer needed.
-    const rdRows = document.querySelectorAll('.rd-row');
+    const rdRows = prefersReduced ? [] : document.querySelectorAll('.rd-row');
     rdRows.forEach(row => {
         gsap.fromTo(row,
             {
@@ -489,7 +534,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. De Mic-Drop Outro (Subtiele Scale + Fade in)
     const outroText = document.querySelector('.service-outro p');
-    if (outroText) {
+    if (outroText && !prefersReduced) {
         gsap.fromTo(outroText,
             {
                 opacity: 0,
@@ -571,7 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Episode Row Stagger Reveal ---
     const episodeRowsForAnim = document.querySelectorAll('.episode-row');
-    if (episodeRowsForAnim.length > 0) {
+    if (episodeRowsForAnim.length > 0 && !prefersReduced) {
         gsap.fromTo(episodeRowsForAnim,
             { opacity: 0, y: 30 },
             {
@@ -591,7 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Text Block Stagger Reveal (Subpages) ---
     const textBlocks = document.querySelectorAll('.text-block');
-    if (textBlocks.length > 0) {
+    if (textBlocks.length > 0 && !prefersReduced) {
         textBlocks.forEach(block => {
             gsap.fromTo(block,
                 { opacity: 0, y: 40 },
@@ -620,7 +665,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // article (z-index: 2 in parent context) cover the PG brand text.
     // `once: true` plays the animation a single time so clearProps can
     // do its job (no reverse to restore the from-state later).
-    const featuredCases = document.querySelectorAll('.featured-case');
+    const featuredCases = prefersReduced ? [] : document.querySelectorAll('.featured-case');
     featuredCases.forEach(caseEl => {
         gsap.fromTo(caseEl,
             { opacity: 0, y: 60 },
@@ -646,7 +691,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // clips the off-screen start position so the pill is invisible until it
     // slides in. ToggleActions 'play none none none' means once played, no
     // reverse on scroll-up (the pill stays in place).
-    const tibPills = document.querySelectorAll('.tib-pill');
+    const tibPills = prefersReduced ? [] : document.querySelectorAll('.tib-pill');
     tibPills.forEach((pill, i) => {
         const fromX = (i === 1) ? '100vw' : '-100vw';
         gsap.fromTo(pill,
@@ -667,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Full-Bleed Break Parallax ---
-    const fullBleedMedia = document.querySelectorAll('.full-bleed-break img, .full-bleed-break video');
+    const fullBleedMedia = prefersReduced ? [] : document.querySelectorAll('.full-bleed-break img, .full-bleed-break video');
     fullBleedMedia.forEach(media => {
         const isVideo = media.tagName === 'VIDEO';
         gsap.to(media, {
@@ -684,7 +729,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Cinematic Showcase Parallax ---
     const cinematicVideo = document.querySelector('.cinematic-showcase video');
-    if (cinematicVideo) {
+    if (cinematicVideo && !prefersReduced) {
         gsap.to(cinematicVideo, {
             yPercent: 10,
             ease: 'none',
@@ -699,7 +744,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Podcast Closing CTA Reveal ---
     const podcastClosing = document.querySelector('.podcast-closing');
-    if (podcastClosing) {
+    if (podcastClosing && !prefersReduced) {
         gsap.fromTo(podcastClosing,
             { opacity: 0, scale: 0.95, y: 40 },
             {
@@ -718,7 +763,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Monument Text Horizontal Parallax ---
-    const monumentTexts = document.querySelectorAll('.monument-text');
+    const monumentTexts = prefersReduced ? [] : document.querySelectorAll('.monument-text');
     monumentTexts.forEach(text => {
         gsap.to(text, {
             xPercent: -10,

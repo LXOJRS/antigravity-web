@@ -40,6 +40,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* V131: cursor hiding is scoped to html.js (class added by script.js at load).
+   If the script fails to load or run, visitors keep their native cursor
+   instead of being left with no pointer at all. */
+html.js * {
     cursor: none !important;
 }
 
@@ -353,7 +359,6 @@ a {
     display: none;
     flex-direction: column;
     gap: 6px;
-    cursor: none;
     z-index: 101;
 }
 
@@ -962,7 +967,9 @@ footer {
         display: none;
     }
 
-    * {
+    /* V131: matches the html.js scoping of the global cursor:none rule,
+       so this mobile override keeps winning on specificity. */
+    html.js * {
         cursor: auto !important;
     }
 
@@ -3483,7 +3490,6 @@ footer {
 .nav-links .nav-about-wrapper > a {
     color: var(--text-color);
     text-decoration: none;
-    cursor: none;
 }
 
 /* ABOUT hover-fold (desktop only). The padding-bottom on the wrapper +
@@ -3522,7 +3528,6 @@ footer {
     padding: 0.4rem 0;
     color: var(--text-color);
     text-decoration: none;
-    cursor: none;
     transition: opacity 0.3s;
 }
 
@@ -3747,7 +3752,6 @@ footer {
     color: var(--text-color);
     text-decoration: none;
     transition: color 0.25s ease;
-    cursor: none;
 }
 
 .podcast-see-all:hover {
@@ -3799,7 +3803,6 @@ footer {
     flex-direction: column;
     gap: 0.75rem;
     min-height: 200px;
-    cursor: none;
 }
 
 .hub-card:hover {
@@ -4504,7 +4507,6 @@ footer {
   color: inherit;
   font-family: inherit;
   text-align: left;
-  cursor: none;
 }
 .faq-item-num {
   grid-column: 1;

@@ -1623,3 +1623,50 @@ Date: 2026-05-30. Four follow-up tweaks from Alex after reviewing V121. CSS-and-
 ### Rollback path
 
 Re-add `data-magnetic` to the 12 elements, restore the two `column-gap` values + the wyg body track + drop `.proc-row-body { text-align: right }` (and its mobile override), move the Process section back below `.creative-break-full` (rejoin the single container), revert the typo, and restore `style.css?v=122`. Confined to `lens-ai.html` + the four-section CSS block.
+
+## V131: Backend hardening, security, performance, and bug-fix pass
+
+Date: 2026-06-11. Full backend audit + fix pass (Claude Code). No visual/design changes intended; front end preserved. Note: versions V122–V130 were shipped without log entries here (files were at v=130 while this log stopped at V121.1/v=123); V131 resumes the log.
+
+### What changed
+
+**1. Hosting lockdown (firebase.json).** `"public": "."` was deploying the entire repo. Verified live before the fix: `alexojers.com/CLAUDE.md`, `/plans/*.md`, `/Website notes.zip`, `/DESIGN-RULES.md`, `/insights/article-template.html` all returned 200. The hosting `ignore` list now excludes `**/*.md`, `plans/**`, `**/*.zip`, `AlteHaasGroteskRegular.ttf` (unused; Bold stays, it's referenced by CSS), and `insights/article-template.html`. Added security headers (X-Content-Type-Options nosniff, X-Frame-Options SAMEORIGIN, Referrer-Policy strict-origin-when-cross-origin) and cache-control (css/js 7d; fonts/images 1y immutable; html must-revalidate). Added 301 `/index.html` -> `/` (was serving as a duplicate homepage; Google had indexed the old copy).
+
+**2. Self-hosted vendor libraries.** GSAP 3.12.5 (core/ScrollTrigger/TextPlugin) and Lenis 1.0.45 moved from cdnjs/unpkg CDNs to `vendor/`. Removes the third-party single point of failure (no SRI was in place; a CDN failure killed nav, accordions, and the cursor). cdnjs/unpkg preconnects removed from all heads.
+
+**3. Scramble bug fix (script.js).** The hover scramble wrote `el.innerText`, which replaced ALL children with plain text: first hover permanently destroyed `<span class="btn-arrow">` inside `.contact-btn` buttons (arrow dropped below the label afterward). Now scrambles only the element's own label text node; child elements untouched. Spaces are preserved during the scramble; the original string is force-restored at the end.
+
+**4. Native-cursor failsafe (style.css + script.js).** `* { cursor: none !important }` is now scoped to `html.js` (class added by script.js at load). If JS fails, visitors keep their native cursor. The ≤768px `cursor: auto` override got the same scoping so specificity still wins.
+
+**5. prefers-reduced-motion support (script.js).** When the OS reduced-motion setting is on: Lenis is replaced by a native-scroll shim (hamburger/scroll-top still work), all decorative reveal/parallax/scramble/magnetic animations are skipped (reveal tweens set hidden states at runtime, so skipping leaves content visible), hero title/frame snap to final state, the rotating hero word is static, and `video[autoplay]` is paused. Functional JS (nav, FAQ + episode accordions) unchanged. theme-light color transition kept (color, not motion).
+
+**6. Media optimization (all HTML).** All Cloudinary page assets now use delivery transformations: videos `q_auto` (the 11.2 MB `202602221448` is now ~1.6 MB), images `f_auto,q_auto`, the three page banners `f_auto,q_auto,w_1920` (the 3.0 MB lens banner PNG is now ~0.7 MB). lens-ai.html drops from ~24 MB to roughly 6 MB. og:image URLs already carried transformations and were left as-is.
+
+**7. Lens AI conversion fixes.** Nav + mobile "Contact" on lens-ai.html now point to the on-page `#contact` CTA section instead of routing prospects to `index.html#contact` (different email/brand, away from the Tally form). service-rd.html outro "let's talk" was dead plain text; now links to `index.html#contact` (underline inline style matching the lens FAQ link treatment). index.html LinkedIn button got `rel="noopener"`.
+
+**8. FAQPage JSON-LD on lens-ai.html.** Second structured-data block marking up the five existing FAQ questions verbatim (condensed answers, links/markup stripped).
+
+**9. Insights cache drift fixed.** insights pages referenced `script.js?v=81` (stale since the "bump all 5 files" rule ignored them). All 9 HTML files now at `style.css?v=131` / `script.js?v=102`; CLAUDE.md + architecture.md rules updated to say 9 files and current versions/line counts.
+
+**10. sitemap.xml** gained `lastmod` (2026-06-11) on all URLs to encourage recrawl (Google still serves the pre-V114 title/description for the homepage; the old copy exists nowhere in the repo).
+
+**11. 404.html** replaced the stock Firebase boilerplate with a minimal on-brand page (dark bg, icy-blue 404, link home, `noindex`).
+
+### Files modified
+
+All 9 HTML files (vendor script srcs, preconnect removals, media transforms, cache bumps), `script.js` (v5 header, html.js class, prefersReduced, scramble fix), `style.css` (cursor scoping ×2), `firebase.json`, `sitemap.xml`, `404.html`, `CLAUDE.md`, `.claude/rules/architecture.md`, new `vendor/` directory (4 files).
+
+### Cache state
+
+`style.css?v=131`, `script.js?v=102` across all 9 HTML files.
+
+### Manual follow-ups for Alex (cannot be done from the repo)
+
+- Add `www.alexojers.com` as a custom domain in Firebase Hosting console + DNS record, redirecting to the apex (www currently does not resolve at all).
+- Google Search Console: submit sitemap, request reindexing of `/` (stale "Unlock your potential with AI" snippet) and `/lensai`.
+- Verify the `info@lensaivisuals.com` mailbox actually receives mail (it is the Book-a-project CTA target).
+- Consider analytics (none installed) + UTM tag on the Tally link to measure /lensai conversion.
+
+### Rollback path
+
+Revert `firebase.json`, `sitemap.xml`, `404.html`, `script.js`, `style.css`, and the 9 HTML files to the prior commit; delete `vendor/`. No content/markup structure changed beyond the listed link hrefs and the FAQ JSON-LD block.

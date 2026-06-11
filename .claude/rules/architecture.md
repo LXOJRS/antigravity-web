@@ -3,14 +3,14 @@
 ## Files
 
 - `index.html`, `about.html`, `podcast.html`, `service-rd.html`, `lens-ai.html` — the five pages (`lens-ai.html` was renamed from `creative-building.html` in V114; firebase.json has a 301 redirect from the old path)
-- `style.css` — single stylesheet (~2815 lines)
-- `script.js` — single script (~615 lines)
+- `style.css` — single stylesheet (~4740 lines)
+- `script.js` — single script (~810 lines)
 - No build step. No bundler. No npm. What's in the repo is what goes live.
 
-## Dependencies (via CDN in every HTML file)
+## Dependencies (self-hosted in `vendor/` since V131, loaded in every HTML file)
 
-- GSAP 3.12.5 (core, ScrollTrigger, TextPlugin)
-- Lenis 1.0.45 (smooth scroll)
+- GSAP 3.12.5 (core, ScrollTrigger, TextPlugin) — `vendor/gsap.min.js` etc.
+- Lenis 1.0.45 (smooth scroll) — `vendor/lenis.min.js`
 - Google Fonts: Inter (300 / 400 / 500 / 600 / 800)
 
 ## Cache busting
@@ -22,7 +22,7 @@ Every HTML file carries versioned references:
 <script src="script.js?v=XXX"></script>
 ```
 
-**ALWAYS bump these versions on all 5 HTML files when style.css or script.js changes.** Current: `style.css?v=123`, `script.js?v=101`.
+**ALWAYS bump these versions on ALL 9 HTML files (5 root + 4 in `insights/`) when style.css or script.js changes.** Current: `style.css?v=131`, `script.js?v=102`.
 
 ## theme-light system (V106 architecture)
 
@@ -100,6 +100,8 @@ Safe to leave. Remove only if doing a general cleanup pass.
 ## Firebase deployment
 
 `firebase.json` at root configures hosting. Deploy with `firebase deploy`. Project id: `website-dea0d`.
+
+V131 hardening: the hosting `ignore` list excludes all `*.md`, `plans/**`, `*.zip`, the unused `AlteHaasGroteskRegular.ttf`, and `insights/article-template.html` from deployment (internal files were previously publicly served). `/index.html` 301s to `/`. Security headers (nosniff, SAMEORIGIN, referrer-policy) and cache-control headers are set per file type. Keep new internal files inside `plans/` or as `.md` so they stay excluded.
 
 ## Version numbering convention
 
